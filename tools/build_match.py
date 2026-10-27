@@ -1,0 +1,115 @@
+import pathlib,struct,zlib,sys
+BASE=pathlib.Path(__file__).resolve().parents[1];raw=(BASE/'tools/original.swf').read_bytes();D=b'FWS'+raw[3:8]+zlib.decompress(raw[8:]);nb=D[8]>>3;start=8+(5+4*nb+7)//8+4
+
+def P(v):
+ if isinstance(v,float):
+  d=b'\x01'+struct.pack('<f',v);return b'\x96'+struct.pack('<H',len(d))+d
+ d=b'\0'+v.encode()+b'\0' if isinstance(v,str) else b'\x07'+struct.pack('<i',v)
+ return b'\x96'+struct.pack('<H',len(d))+d
+
+def get(p):return P(p)+b'\x1c'
+def put(p,v):return P(p)+P(v)+b'\x1d'
+def copy(p,src):return P(p)+get(src)+b'\x1d'
+def member(p,k,v):return get(p)+P(k)+(get(v[1:]) if isinstance(v,str) and v.startswith('@') else P(v))+b'\x4f'
+def call(obj,method,args):return b''.join(P(v) if not isinstance(v,tuple) else get(v[0]) for v in reversed(args))+P(len(args))+get(obj)+P(method)+b'\x52\x17'
+def goto(label):return call('_root','gotoAndPlay',[label])
+def tag(t,p):return struct.pack('<HI',(t<<6)|63,len(p))+p
+patches={66:put('_root.liga',7)+goto('odabir')}
+# frame 67 is competition choice; jump directly into frame 68, which has no label.
+patches[66]=put('_root.liga',7)+call('_root','gotoAndPlay',[69])
+a=b''
+for i in range(32):
+ side='home' if i==0 else 'away'
+ a+=member('_root.timovi',i,'@_root.pp_'+side)
+ for ar,pr in [('dres1','c1'),('dres2','c2'),('shorts','shorts'),('drestip','pattern')]:a+=member('_root.'+ar,i,'@_root.pp_'+side+'_'+pr)
+ # The native number selector is a timeline index, not an RGB value.
+ a+=member('_root.boje_brojeva',i,1)
+
+for j in range(5):a+=member('_root.naziv_runde',j,'PATRAS')
+
+for i in range(32):
+ a+=member('_root.timovi_napad',i,5)+member('_root.timovi_odbrana',i,5)
+a+=put('_root.moj_tim_index',0)+goto('predstavljanje');patches[68]=a
+patches[69]=goto('zreb');patches[70]=put('_root.index_protivnika',1)+goto('najava_meca');patches[71]=goto('penali')
+# New pitch perimeter identity, leaving original penalty mechanics untouched.
+skin=call('_root','createEmptyMovieClip',['ppBrand',9000])+call('_root.ppBrand','beginFill',[0x4d25a6,100])
+for method,args in [('moveTo',[0,41]),('lineTo',[600,41]),('lineTo',[600,59]),('lineTo',[0,59]),('lineTo',[0,41]),('endFill',[])]:skin+=call('_root.ppBrand',method,args)
+skin+=call('_root','createTextField',['ppLabel',9001,20,41,560,18])+put('_root.ppLabel.text','P E N A L T Y   F E V E R   /   2 0 2 6   E D I T I O N')+put('_root.ppLabel.textColor',0xffffff)+put('_root.ppLabel.selectable',0)
+
+for x,w,text,name in [(0,170,'FEVER 2026','ppLeft'),(430,170,'PATRAS','ppRight')]:
+ skin+=call('_root.ppBrand','beginFill',[0x4d25a6,100])
+ for method,args in [('moveTo',[x,59]),('lineTo',[x+w,59]),('lineTo',[x+w,103]),('lineTo',[x,103]),('lineTo',[x,59]),('endFill',[])]:skin+=call('_root.ppBrand',method,args)
+ skin+=call('_root','createTextField',[name,9002+x,x+20,70,w-25,25])+put('_root.'+name+'.text',text)+put('_root.'+name+'.textColor',0xffffff)+put('_root.'+name+'.selectable',0)
+skin+=copy('_root.timIgrac','_root.pp_home')+copy('_root.timKomp','_root.pp_away')
+
+
+# Restore colors on the actual display instances of every animation frame.
+# Native Color references become stale when a timeline replaces a shirt/shorts clip.
+def assign(path,expr):return P(path)+expr+b'\x1d'
+def guarded(condition,body):return condition+b'\x12\x9d\x02\x00'+struct.pack('<h',len(body))+body
+def invoke(obj,method,args):
+ return b''.join(a if isinstance(a,bytes) else (get(a[0]) if isinstance(a,tuple) else P(a)) for a in reversed(args))+P(len(args))+get(obj)+P(method)+b'\x52'
+def color(var,path):return P(var)+get(path)+P(1)+P('Color')+b'\x40\x1d'
+refresh=b''
+for var,path in [('BojaDresa1','dres1'),('BojaUniPruga','unipruge'),('BojaBroja','brojka'),('BojaShortsaICarapa','shorts'),('BojaTena','glava.lice'),('BojaTena2','ten')]:
+ refresh+=color('_root.'+var,'_root.igr.'+path)
+refresh+=call('_root','izgled_igraca',[])+call('_root','pocetni_izgled_igraca',[])
+# Number color is applied after selecting the number frame.
+refresh+=guarded(get('_root.sutIgraca'),call('_root.BojaBroja','setRGB',[('_root.pp_home_number',)]))
+refresh+=guarded(get('_root.sutIgraca')+b'\x12',call('_root.BojaBroja','setRGB',[('_root.pp_away_number',)]))
+body=guarded(get('_root.igr'),refresh)+b'\0'
+fn=b'\0'+struct.pack('<HH',0,len(body))+body
+skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
+# Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
+# level 0..3.9 (marker timing), keeper 0..100 (following probability).
+for field,value in [('pp_speed',12),('pp_level',1),('pp_keeper',30),('pp_home_number',16777215),('pp_away_number',16777215)]:
+ skin+=guarded(get('_root.'+field)+b'\x12',put('_root.'+field,value))
+skin+=copy('_root.runda','_root.pp_level')
+skin+=call('flash.external.ExternalInterface','call',['patrasReady'])
+patches[75]=skin
+# A shooter's setup is frame101 (zero-based). Change the CPU speed both at
+# target-preview setup and at final trajectory setup in frame104, whose native
+# script resets pocbrzina to12. Recompute dependent target coordinates.
+scale=get('_root.pp_speed')+P(12)+b'\x0d'
+change=assign('_root.dex',get('_root.dex')+scale+b'\x0c')+assign('_root.dey',get('_root.dey')+scale+b'\x0c')+copy('_root.pocbrzina','_root.pp_speed')
+travel=invoke('Math','floor',[(get('_root.yBelaTacka')+get('_root.golLinija')+b'\x0b'+invoke('Math','abs',[('_root.dey',)])+b'\x0d')])
+change+=assign('_root.brojFrejmovaLopte',travel)
+count=get('_root.brojFrejmovaLopte')+P(1)+b'\x0b'
+change+=assign('_root.meta2._x',get('_root.osaGola')+count+get('_root.dex')+b'\x0c\x47')
+height=get('_root.maksvisina')+invoke('Math','sin',[get('_root.omega')+count+b'\x0c'+get('_root.faktorbrojaca')+b'\x0c'])+b'\x0c'
+change+=assign('_root.meta2._y',get('_root.yBelaTacka')+count+get('_root.dey')+b'\x0c\x47'+height+b'\x0b')
+speedhook=guarded(get('_root.sutIgraca')+b'\x12',change)
+# Greater pp_keeper increases the original precise-following branch, without
+# replacing its dive animations or the human aiming controls.
+keepercondition=invoke('Math','random',[])+P(100)+b'\x0c'+get('_root.pp_keeper')+b'\x48'
+keeper=guarded(get('_root.sutIgraca'),guarded(keepercondition,put('_root.odlukaOdbrana',-1)))
+patches[101]=speedhook+keeper+refresh+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),('_root.pp_speed',)])
+patches[104]=speedhook
+
+# Callback reports user score, CPU score; original turn resolution reaches frame 82.
+result=call('flash.external.ExternalInterface','call',['patrasResult',('_root.igr_golovi',),('_root.komp_golovi',)])+b'\x07';patches[82]=result
+
+check=get('_root.pp_allow_draw')+P(1)+b'\x49'+get('_root.serija_shuteva')+P(5)+b'\x48'+b'\x12\x10'
+# Callback after the fifth complete pair allows a league/group draw.
+stopdraw=result+b'\x00'; check+=b'\x12\x9d\x02\x00'+struct.pack('<h',len(stopdraw))+stopdraw
+progress=call('flash.external.ExternalInterface','call',['patrasProgress',('_root.serija_shuteva',),('_root.igr_golovi',),('_root.komp_golovi',)])
+patches[80]=progress
+out=D[8:start];pos=start;frame=0;seen=set()
+while pos<len(D):
+ s=pos;v=struct.unpack_from('<H',D,pos)[0];pos+=2;t=v>>6;n=v&63
+ if n==63:n=struct.unpack_from('<I',D,pos)[0];pos+=4
+ pos+=n
+ if t==12 and frame==80:
+  # The original phase increments the CPU attempt counter. Check the complete pair afterwards.
+  out+=D[s:pos]
+  condition=get('_root.pp_allow_draw')+P(1)+b'\x49'+get('_root.serija_shuteva')+P(4)+b'\x48\x12\x10'
+  branch=result
+  hook=progress+condition+b'\x12\x9d\x02\x00'+struct.pack('<h',len(branch))+branch+b'\0'
+  out+=tag(12,hook);seen.add(80);continue
+ if t==12 and frame==82:
+  out+=tag(12,result+b'\0');seen.add(82);continue
+ out+=D[s:pos]
+ if t==12 and frame in patches and frame not in seen:out+=tag(12,patches[frame]+b'\0');seen.add(frame)
+ if t==1:frame+=1
+ if not t:break
+(pathlib.Path(sys.argv[1]) if len(sys.argv)>1 else BASE/'app/match.swf').write_bytes(b'CWS'+D[3:4]+struct.pack('<I',len(out)+8)+zlib.compress(out));print('Match bridge frames',sorted(seen))

@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "date": "2026-10-27",
+  "competitions": 34,
+  "teams": 872,
+  "domesticClubs": 789,
+  "simulations": 170,
+  "matches": 66295,
+  "careerYears": 41,
+  "checks": [
+    "todas competições terminam com campeão válido",
+    "playoffs e seis acessos da Série D",
+    "dificuldade equilibrada e progressão no mata-mata",
+    "elencos por clube",
+    "empates e recusa de save inválido",
+    "quatro anos em nove países",
+    "divisões paralelas e expansão brasileira",
+    "sistemas fechados preservados",
+    "propostas e transferência",
+    "seleção exige título intercontinental",
+    "Mundiais 2026/2029/2030 e eliminatórias",
+    "compressão de save sem perda",
+    "derrota por abandono",
+    "WebAssembly sem rede em URLs file:"
+  ],
+  "limits": [
+    "teste visual em navegador via prévia HTTP local",
+    "abertura file: bloqueada pela política do navegador de testes; teste direto em Windows/macOS/Linux não realizado"
+  ]
+}

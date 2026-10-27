@@ -1,0 +1,6 @@
+* text=auto
+*.swf binary
+*.png binary
+*.zip binary
+*.wasm binary
+app/wasm-local.js -text
