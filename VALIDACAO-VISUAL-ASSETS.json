@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "teamsAndNations": 888,
+  "competitions": 34,
+  "artworkFiles": 910,
+  "formats": {
+    "PNG": 898,
+    "WEBP": 11,
+    "SVG": 1
+  },
+  "artworkBytes": 14257164,
+  "actorFramesWithPostPlacementRecolor": 20,
+  "motionRootFramesWithRecolor": [
+    75,
+    102,
+    103,
+    104,
+    105,
+    106
+  ],
+  "matchSha256": "4a49b6ba171785eb1ff1e39dcabd46780f2293cc1503498275c3cd3826996407"
+}

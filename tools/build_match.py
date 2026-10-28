@@ -1,4 +1,5 @@
 import pathlib,struct,zlib,sys
+from stadium_art import build_stadium
 BASE=pathlib.Path(__file__).resolve().parents[1];raw=(BASE/'tools/original.swf').read_bytes();D=b'FWS'+raw[3:8]+zlib.decompress(raw[8:]);nb=D[8]>>3;start=8+(5+4*nb+7)//8+4
 
 def P(v):
@@ -31,15 +32,8 @@ for i in range(32):
  a+=member('_root.timovi_napad',i,5)+member('_root.timovi_odbrana',i,5)
 a+=put('_root.moj_tim_index',0)+goto('predstavljanje');patches[68]=a
 patches[69]=goto('zreb');patches[70]=put('_root.index_protivnika',1)+goto('najava_meca');patches[71]=goto('penali')
-# New pitch perimeter identity, leaving original penalty mechanics untouched.
-skin=call('_root','createEmptyMovieClip',['ppBrand',9000])+call('_root.ppBrand','beginFill',[0x4d25a6,100])
-for method,args in [('moveTo',[0,41]),('lineTo',[600,41]),('lineTo',[600,59]),('lineTo',[0,59]),('lineTo',[0,41]),('endFill',[])]:skin+=call('_root.ppBrand',method,args)
-skin+=call('_root','createTextField',['ppLabel',9001,20,41,560,18])+put('_root.ppLabel.text','P E N A L T Y   F E V E R   /   2 0 2 6   E D I T I O N')+put('_root.ppLabel.textColor',0xffffff)+put('_root.ppLabel.selectable',0)
-
-for x,w,text,name in [(0,170,'FEVER 2026','ppLeft'),(430,170,'PATRAS','ppRight')]:
- skin+=call('_root.ppBrand','beginFill',[0x4d25a6,100])
- for method,args in [('moveTo',[x,59]),('lineTo',[x+w,59]),('lineTo',[x+w,103]),('lineTo',[x,103]),('lineTo',[x,59]),('endFill',[])]:skin+=call('_root.ppBrand',method,args)
- skin+=call('_root','createTextField',[name,9002+x,x+20,70,w-25,25])+put('_root.'+name+'.text',text)+put('_root.'+name+'.textColor',0xffffff)+put('_root.'+name+'.selectable',0)
+# Native vector grandstand and fictional advertising, behind goal/players.
+skin=build_stadium(call,put,P,get)
 skin+=copy('_root.timIgrac','_root.pp_home')+copy('_root.timKomp','_root.pp_away')
 
 
@@ -50,14 +44,50 @@ def guarded(condition,body):return condition+b'\x12\x9d\x02\x00'+struct.pack('<h
 def invoke(obj,method,args):
  return b''.join(a if isinstance(a,bytes) else (get(a[0]) if isinstance(a,tuple) else P(a)) for a in reversed(args))+P(len(args))+get(obj)+P(method)+b'\x52'
 def color(var,path):return P(var)+get(path)+P(1)+P('Color')+b'\x40\x1d'
-refresh=b''
-for var,path in [('BojaDresa1','dres1'),('BojaUniPruga','unipruge'),('BojaBroja','brojka'),('BojaShortsaICarapa','shorts'),('BojaTena','glava.lice'),('BojaTena2','ten')]:
- refresh+=color('_root.'+var,'_root.igr.'+path)
-refresh+=call('_root','izgled_igraca',[])+call('_root','pocetni_izgled_igraca',[])
-# Number color is applied after selecting the number frame.
-refresh+=guarded(get('_root.sutIgraca'),call('_root.BojaBroja','setRGB',[('_root.pp_home_number',)]))
-refresh+=guarded(get('_root.sutIgraca')+b'\x12',call('_root.BojaBroja','setRGB',[('_root.pp_away_number',)]))
+# Recolor after each actor timeline change, rather than before it. The old
+# onEnterFrame-only hook ran before gotoAndStop replaced the shirt instances.
+def recolor_side(side):
+ b=copy('_root.tip_dresa','_root.pp_'+side+'_pattern')
+ frame=get('_root.igr._currentframe')+get('_root.pp_'+side+'_pattern')+P(1)+b'\x0b'+P(20)+b'\x0c\x47'
+ b+=invoke('_root.igr.unipruge','gotoAndStop',[frame])+b'\x17'
+ for var,path,param in [('BojaDresa1','dres1','c1'),('BojaUniPruga','unipruge','c2'),('BojaBroja','brojka','number'),('BojaShortsaICarapa','shorts','shorts')]:
+  b+=color('_root.'+var,'_root.igr.'+path)+call('_root.'+var,'setRGB',[('_root.pp_'+side+'_'+param,)])
+ return b
+refresh=guarded(get('_root.sutIgraca'),recolor_side('home'))+guarded(get('_root.sutIgraca')+b'\x12',recolor_side('away'))
 body=guarded(get('_root.igr'),refresh)+b'\0'
+fn=b'\0'+struct.pack('<HH',0,len(body))+body
+skin+=P('_root.ppRecolor')+b'\x9b\x05\x00'+fn+b'\x1d'
+repaint=call('_root','ppRecolor',[])
+# Five per-team attempt indicators, updated only when a kick is resolved.
+skin+=P('_root.ppHomeShots')+P(0)+b'\x42\x1d'+P('_root.ppAwayShots')+P(0)+b'\x42\x1d'
+skin+=call('_root.ppBrand','createEmptyMovieClip',['ppShots',9300])
+def dot(x,y,r,c):
+ import math
+ a=call('_root.ppBrand.ppShots','beginFill',[c,100])
+ for j in range(9):
+  point=[round(x+math.cos(j*math.pi/4)*r,2),round(y+math.sin(j*math.pi/4)*r,2)]
+  a+=call('_root.ppBrand.ppShots','moveTo' if j==0 else 'lineTo',point)
+ return a+call('_root.ppBrand.ppShots','endFill',[])
+paint=call('_root.ppBrand.ppShots','clear',[])+assign('_root.ppShotStart',invoke('Math','max',[P(0),get('_root.serija_shuteva')+P(4)+b'\x0b']))
+for ar,y in [('ppHomeShots',13),('ppAwayShots',28)]:
+ for j in range(5):
+  x=151+j*10
+  paint+=dot(x,y,3.4,0x68838A)+dot(x,y,2.3,0x102932)
+  value=get('_root.'+ar)+get('_root.ppShotStart')+P(j)+b'\x47\x4e'
+  paint+=guarded(value+P(1)+b'\x49',dot(x,y,3.4,0x62D49A))
+  paint+=guarded(value+P(0)+b'\x49',dot(x,y,3.4,0xF16D7A))
+body=paint+b'\0';fn=b'\0'+struct.pack('<HH',0,len(body))+body
+skin+=P('_root.ppPaintShots')+b'\x9b\x05\x00'+fn+b'\x1d'+call('_root','ppPaintShots',[])
+def shot(side):
+ ar='_root.ppHomeShots' if side=='home' else '_root.ppAwayShots'
+ a=get(ar)+get('_root.serija_shuteva')+get('_root.gol')+P(1)+b'\x0c\x4f'
+ a+=call('_root','ppPaintShots',[])
+ return a+call('flash.external.ExternalInterface','call',['patrasShot',('_root.serija_shuteva',),1 if side=='home' else 0,('_root.gol',),('_root.igr_golovi',),('_root.komp_golovi',)])
+shot_away=shot('away');patches[78]=shot('home')
+score=copy('_root.ppBrand.ppNameHome.text','_root.pp_home')+copy('_root.ppBrand.ppNameAway.text','_root.pp_away')
+score+=copy('_root.ppBrand.ppScoreHome.text','_root.igr_golovi')+copy('_root.ppBrand.ppScoreAway.text','_root.komp_golovi')
+score+=assign('_root.ppBrand.ppTurnLabel.text',P('RODADA ')+get('_root.serija_shuteva')+P(1)+b'\x47\x47')
+body=repaint+score+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
 # Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
@@ -83,8 +113,9 @@ speedhook=guarded(get('_root.sutIgraca')+b'\x12',change)
 # replacing its dive animations or the human aiming controls.
 keepercondition=invoke('Math','random',[])+P(100)+b'\x0c'+get('_root.pp_keeper')+b'\x48'
 keeper=guarded(get('_root.sutIgraca'),guarded(keepercondition,put('_root.odlukaOdbrana',-1)))
-patches[101]=speedhook+keeper+refresh+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),('_root.pp_speed',)])
-patches[104]=speedhook
+patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),('_root.pp_speed',)])
+patches[104]=speedhook+repaint
+for f in [102,103,105,106]:patches[f]=repaint
 
 # Callback reports user score, CPU score; original turn resolution reaches frame 82.
 result=call('flash.external.ExternalInterface','call',['patrasResult',('_root.igr_golovi',),('_root.komp_golovi',)])+b'\x07';patches[82]=result
@@ -94,17 +125,31 @@ check=get('_root.pp_allow_draw')+P(1)+b'\x49'+get('_root.serija_shuteva')+P(5)+b
 stopdraw=result+b'\x00'; check+=b'\x12\x9d\x02\x00'+struct.pack('<h',len(stopdraw))+stopdraw
 progress=call('flash.external.ExternalInterface','call',['patrasProgress',('_root.serija_shuteva',),('_root.igr_golovi',),('_root.komp_golovi',)])
 patches[80]=progress
+def actor_postframes(payload):
+ out=payload[:4];p=4;frames=0
+ while p<len(payload):
+  begin=p;v=struct.unpack_from('<H',payload,p)[0];p+=2;t=v>>6;n=v&63
+  if n==63:n=struct.unpack_from('<I',payload,p)[0];p+=4
+  p+=n
+  if t==1:out+=tag(12,repaint+b'\0');frames+=1
+  out+=payload[begin:p]
+  if not t:break
+ assert frames==20,frames
+ return out
+
 out=D[8:start];pos=start;frame=0;seen=set()
 while pos<len(D):
  s=pos;v=struct.unpack_from('<H',D,pos)[0];pos+=2;t=v>>6;n=v&63
  if n==63:n=struct.unpack_from('<I',D,pos)[0];pos+=4
  pos+=n
+ if t==39 and struct.unpack_from('<H',D,pos-n)[0]==661:
+  out+=tag(39,actor_postframes(D[pos-n:pos]));continue
  if t==12 and frame==80:
   # The original phase increments the CPU attempt counter. Check the complete pair afterwards.
   out+=D[s:pos]
   condition=get('_root.pp_allow_draw')+P(1)+b'\x49'+get('_root.serija_shuteva')+P(4)+b'\x48\x12\x10'
   branch=result
-  hook=progress+condition+b'\x12\x9d\x02\x00'+struct.pack('<h',len(branch))+branch+b'\0'
+  hook=shot_away+progress+condition+b'\x12\x9d\x02\x00'+struct.pack('<h',len(branch))+branch+b'\0'
   out+=tag(12,hook);seen.add(80);continue
  if t==12 and frame==82:
   out+=tag(12,result+b'\0');seen.add(82);continue

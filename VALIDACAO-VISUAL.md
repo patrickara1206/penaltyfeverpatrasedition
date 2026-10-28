@@ -20,3 +20,9 @@ Prévias em `previas/`. O relatório automatizado independente está em `VALIDAC
 ## Limite de validação
 
 A abertura direta `file:` foi bloqueada pela política do navegador de testes. O carregador offline e seus módulos WebAssembly passaram em verificação sem rede, mas o duplo clique no pacote extraído não foi testado em cada sistema operacional. Teste em HTTP local não comprova comportamento de todos os navegadores com arquivos locais. Windows/macOS/Linux precisam de navegador moderno com JavaScript/WebAssembly; não há garantia para computadores antigos ou restritos.
+
+## Atualização visual e correção da corrida
+
+Arquibancada e placas fictícias conferidas no navegador, atrás da rede. Logos dos clubes conferidas na seleção e no cabeçalho. Marca RODADA e cinco indicadores por equipe adicionados ao placar. Leitura real de RGB percorreu os 20 quadros de ambos os times, sem divergências (VALIDACAO-CORES.json). Todos os arquivos dos 888 nomes e das 34 competições passaram na validação de formato e integridade (VALIDACAO-VISUAL-ASSETS.json).
+
+Placar de pênaltis validado em uma partida real encerrada em 0 × 2: quatro perdas do mandante e duas conversões/uma perda do visitante, encerramento antecipado normal. Os círculos e os gols acompanharam os eventos reais; RODADA atualizou junto com as cobranças. Dados em VALIDACAO-PENALTIS.json. O escudo da seleção de equipe também foi conferido em tela menor.

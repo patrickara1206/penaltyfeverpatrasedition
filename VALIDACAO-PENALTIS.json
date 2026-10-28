@@ -1,0 +1,17 @@
+{
+  "shots": {
+    "home": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "away": [
+      true,
+      true,
+      false
+    ]
+  },
+  "result": "0 × 2",
+  "case": "Partida real; círculos verdes/vermelhos e resultado conferidos"
+}

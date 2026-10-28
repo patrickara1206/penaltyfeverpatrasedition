@@ -46,7 +46,7 @@ Nos acessos, playoffs de Inglaterra, Espanha e Itália são adaptados aos pênal
 
 Nos Mundiais: seleções em 2026/2030/2034…; clubes em 2029/2033/2037… Para 2030 em diante, as eliminatórias do jogo usam 64 seleções em 16 grupos, com as três primeiras de cada grupo classificadas. O título intercontinental abre a possibilidade de comandar a seleção e garante uma vaga de clube no próximo ciclo dentro da janela de quatro anos. As demais vagas de clubes vêm da simulação.
 
-Camisas e escudos são **conceituais**, com cores de referência e alternativas de contraste; não são réplicas licenciadas dos uniformes oficiais de 2026. Os elencos são fictícios. O arquivo clássico preserva nomes históricos separados da base atual. Esta versão cobre as divisões listadas, não toda a pirâmide amadora de cada país.
+Camisas são **conceituais**, com cores de referência e alternativas de contraste; não são réplicas licenciadas dos uniformes oficiais de 2026. Escudos e marcas de competições são imagens locais de referência, com as fontes em [LOGOS.md](LOGOS.md). Os elencos são fictícios. O arquivo clássico preserva nomes históricos separados da base atual. Esta versão cobre as divisões listadas, não toda a pirâmide amadora de cada país.
 
 ## Validação e código
 
@@ -59,3 +59,9 @@ Para desenvolver, consulte [CODIGO-FONTE.md](CODIGO-FONTE.md). Para conferir os 
 Penalty Fever Plus original: **FlashFooty / Vladeta M.**, 2009. O SWF original e parte dos gráficos, animações e áudio continuam sendo obras de seus autores. Esta é uma adaptação pessoal; não atribui a Patras a autoria do clássico nem declara licença comercial de redistribuição do original.
 
 Emulação: **Ruffle 0.7.1**, licenças Apache 2.0/MIT em `app/LICENSE_APACHE` e `app/LICENSE_MIT`. Compressão: **lz-string 1.5.0**, de pieroxy, licença MIT em `app/LICENSE_LZ_STRING`. A disponibilidade pública do SWF não equivale a uma autorização de uso comercial. Fontes e procedência: [FONTES.md](FONTES.md).
+
+## Atualização do estádio e placar
+
+Arquibancada vetorial com torcedores e bandeiras, placas com cinco marcas fictícias e escudos locais nos menus, tabelas e cabeçalho da partida. O placar mantém seu formato e mostra cinco círculos por equipe: verde para gol, vermelho para cobrança perdida e vazio para tentativa pendente. A etiqueta usa RODADA; na morte súbita, os indicadores acompanham as cinco tentativas mais recentes.
+
+A correção dos uniformes é aplicada após a troca dos objetos de cada um dos 20 quadros do jogador, incluindo corrida e chute. VALIDACAO-CORES.json registra a leitura real de RGB dos dois lados sem divergências; VALIDACAO-VISUAL-ASSETS.json valida as imagens locais e os hooks do SWF.
