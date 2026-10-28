@@ -69,9 +69,9 @@ def dot(x,y,r,c):
   a+=call('_root.ppBrand.ppShots','moveTo' if j==0 else 'lineTo',point)
  return a+call('_root.ppBrand.ppShots','endFill',[])
 paint=call('_root.ppBrand.ppShots','clear',[])+assign('_root.ppShotStart',invoke('Math','max',[P(0),get('_root.serija_shuteva')+P(4)+b'\x0b']))
-for ar,y in [('ppHomeShots',13),('ppAwayShots',28)]:
+for ar,y in [('ppHomeShots',16),('ppAwayShots',38)]:
  for j in range(5):
-  x=151+j*10
+  x=164+j*13
   paint+=dot(x,y,3.4,0x68838A)+dot(x,y,2.3,0x102932)
   value=get('_root.'+ar)+get('_root.ppShotStart')+P(j)+b'\x47\x4e'
   paint+=guarded(value+P(1)+b'\x49',dot(x,y,3.4,0x62D49A))

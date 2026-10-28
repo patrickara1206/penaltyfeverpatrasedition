@@ -33,6 +33,34 @@ def build_stadium(call, put, P, get):
         out.extend(call(clip+'.'+name, 'setTextFormat', [('_root.ppFormat',)]))
         out.extend(call(clip+'.'+name, 'setNewTextFormat', [('_root.ppFormat',)]))
 
+    def centered(name):
+        out.extend(put('_root.ppFormat.align', 'center'))
+        out.extend(call(clip+'.'+name, 'setTextFormat', [('_root.ppFormat',)]))
+        out.extend(call(clip+'.'+name, 'setNewTextFormat', [('_root.ppFormat',)]))
+
+    # Perspective mowing bands and fine blades, drawn below the native actors.
+    rect(0, 103, 600, 297, 0x287B48)
+    bands = [103, 128, 158, 194, 237, 286, 341, 400]
+    for i, (top, bottom) in enumerate(zip(bands, bands[1:])):
+        rect(0, top, 600, bottom-top, 0x328A50 if i % 2 else 0x2D804A)
+        # Gentle vertical shading avoids a flat, fluorescent surface.
+        for y in range(top, bottom, 4):
+            rect(0, y, 600, 4, 0xB7D997, round((y-103)/297*5, 1))
+    grass = random.Random(761)
+    for _ in range(1700):
+        y = grass.uniform(104, 399)
+        x = grass.uniform(0, 600)
+        length = .3 + (y-103)/297*.9
+        rect(round(x, 1), round(y, 1), .45, round(length, 1),
+             0xB7D590 if grass.random() > .5 else 0x174C34, 14)
+    # Preserve the original field markings and their gameplay coordinates.
+    for y in [170, 230, 367]:
+        rect(0, y, 600, 2, 0xE8F2DA, 92)
+    out.extend(call(clip, 'lineStyle', [2, 0xE8F2DA, 92]))
+    out.extend(call(clip, 'moveTo', [60, 368]))
+    out.extend(call(clip, 'curveTo', [300, 603, 540, 368]))
+    out.extend(call(clip, 'lineStyle', []))
+
     # Concrete tiers, roof shadow, aisle openings, railings, and individual fans.
     rect(0, 0, 600, 62, 0x192D36)
     rect(0, 0, 600, 6, 0x0D1C25)
@@ -90,12 +118,22 @@ def build_stadium(call, put, P, get):
         text('ppAdSub'+str(i), line, x+8, 85, w-9, 11, 5.5, fg, 9101+i*2)
     rect(0, 99, 600, 4, 0x2F5941)
     # Compact readable scoreboard over the new crowd. Match data is untouched.
-    rect(8, 4, 224, 34, 0x07151F, 86)
-    rect(8, 4, 3, 34, 0xC9EAE0)
-    text('ppNameHome', '', 15, 5, 126, 16, 10, 0xF2F6F1, 9200)
-    text('ppNameAway', '', 15, 20, 126, 16, 10, 0xF2F6F1, 9201)
-    text('ppScoreHome', '0', 207, 4, 22, 17, 11, 0xDBF492, 9202)
-    text('ppScoreAway', '0', 207, 19, 22, 17, 11, 0xDBF492, 9203)
-    rect(514, 6, 78, 24, 0x0B202A, 90)
-    text('ppTurnLabel', 'PF 2026', 521, 10, 70, 19, 10, 0xECF4E8, 9204)
+    rect(8, 6, 258, 46, 0x050A16, 35)
+    rect(8, 4, 258, 46, 0x101B2C, 98)
+    rect(8, 4, 3, 46, 0xFF4DB1)
+    rect(11, 26, 255, 1, 0x36435A)
+    rect(232, 4, 34, 46, 0x213047)
+    rect(232, 4, 34, 2, 0xD8FF83)
+    text('ppNameHome', '', 17, 6, 133, 20, 11, 0xF4F6FC, 9200)
+    text('ppNameAway', '', 17, 28, 133, 20, 11, 0xF4F6FC, 9201)
+    text('ppScoreHome', '0', 232, 4, 34, 23, 15, 0xD8FF83, 9202)
+    centered('ppScoreHome')
+    text('ppScoreAway', '0', 232, 26, 34, 23, 15, 0xD8FF83, 9203)
+    centered('ppScoreAway')
+    # Equal inset from the top/right; centered text with ample internal space.
+    rect(492, 6, 100, 30, 0x050A16, 35)
+    rect(492, 4, 100, 30, 0x101B2C, 98)
+    rect(492, 4, 100, 2, 0xFF4DB1)
+    text('ppTurnLabel', 'RODADA 1', 496, 10, 92, 20, 11, 0xF4F6FC, 9204)
+    centered('ppTurnLabel')
     return bytes(out)

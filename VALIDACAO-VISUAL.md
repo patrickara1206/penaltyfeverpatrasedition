@@ -23,6 +23,8 @@ A abertura direta `file:` foi bloqueada pela política do navegador de testes. O
 
 ## Atualização visual e correção da corrida
 
+Placar e gramado modernizados: painel opaco com gols destacados, cinco indicadores por equipe com maior espaçamento, caixa de rodada de 100 × 30 com texto centralizado. Gramado vetorial com faixas em perspectiva e textura leve. Conferido no navegador em Santos × Atlético-MG: primeira cobrança perdida pelo Santos, conversão do Atlético-MG, placar 0 × 1 e RODADA 2, sem avisos ou erros no console. Prévia: `previas/placar-gramado.png`. Alteração restrita ao desenho; trajetória, controles e resolução das cobranças preservados.
+
 Arquibancada e placas fictícias conferidas no navegador, atrás da rede. Logos dos clubes conferidas na seleção e no cabeçalho. Marca RODADA e cinco indicadores por equipe adicionados ao placar. Leitura real de RGB percorreu os 20 quadros de ambos os times, sem divergências (VALIDACAO-CORES.json). Todos os arquivos dos 888 nomes e das 34 competições passaram na validação de formato e integridade (VALIDACAO-VISUAL-ASSETS.json).
 
 Placar de pênaltis validado em uma partida real encerrada em 0 × 2: quatro perdas do mandante e duas conversões/uma perda do visitante, encerramento antecipado normal. Os círculos e os gols acompanharam os eventos reais; RODADA atualizou junto com as cobranças. Dados em VALIDACAO-PENALTIS.json. O escudo da seleção de equipe também foi conferido em tela menor.
