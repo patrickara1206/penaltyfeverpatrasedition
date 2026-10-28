@@ -1,14 +1,14 @@
 {
   "status": "passed",
-  "teamsAndNations": 888,
-  "competitions": 34,
-  "artworkFiles": 910,
+  "teamsAndNations": 1801,
+  "competitions": 91,
+  "artworkFiles": 1880,
   "formats": {
+    "SVG": 971,
     "PNG": 898,
-    "WEBP": 11,
-    "SVG": 1
+    "WEBP": 11
   },
-  "artworkBytes": 14257164,
+  "artworkBytes": 14772046,
   "actorFramesWithPostPlacementRecolor": 20,
   "motionRootFramesWithRecolor": [
     75,

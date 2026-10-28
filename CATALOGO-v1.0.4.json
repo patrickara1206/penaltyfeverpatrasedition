@@ -1,0 +1,462 @@
+{
+  "date": "2026-10-28",
+  "added": 57,
+  "competitions": [
+    {
+      "id": "world-1930",
+      "name": "Copa do Mundo · 1930",
+      "teams": 13,
+      "source": "https://en.wikipedia.org/wiki/1930_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1934",
+      "name": "Copa do Mundo · 1934",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/1934_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1938",
+      "name": "Copa do Mundo · 1938",
+      "teams": 15,
+      "source": "https://en.wikipedia.org/wiki/1938_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1950",
+      "name": "Copa do Mundo · 1950",
+      "teams": 13,
+      "source": "https://en.wikipedia.org/wiki/1950_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1954",
+      "name": "Copa do Mundo · 1954",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/1954_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1958",
+      "name": "Copa do Mundo · 1958",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/1958_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1962",
+      "name": "Copa do Mundo · 1962",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/1962_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1966",
+      "name": "Copa do Mundo · 1966",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/1966_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1970",
+      "name": "Copa do Mundo · 1970",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/1970_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1974",
+      "name": "Copa do Mundo · 1974",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/1974_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1978",
+      "name": "Copa do Mundo · 1978",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/1978_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1982",
+      "name": "Copa do Mundo · 1982",
+      "teams": 24,
+      "source": "https://en.wikipedia.org/wiki/1982_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1986",
+      "name": "Copa do Mundo · 1986",
+      "teams": 24,
+      "source": "https://en.wikipedia.org/wiki/1986_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1990",
+      "name": "Copa do Mundo · 1990",
+      "teams": 24,
+      "source": "https://en.wikipedia.org/wiki/1990_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1994",
+      "name": "Copa do Mundo · 1994",
+      "teams": 24,
+      "source": "https://en.wikipedia.org/wiki/1994_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-1998",
+      "name": "Copa do Mundo · 1998",
+      "teams": 32,
+      "source": "https://en.wikipedia.org/wiki/1998_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-2002",
+      "name": "Copa do Mundo · 2002",
+      "teams": 32,
+      "source": "https://en.wikipedia.org/wiki/2002_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-2006",
+      "name": "Copa do Mundo · 2006",
+      "teams": 32,
+      "source": "https://en.wikipedia.org/wiki/2006_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-2010",
+      "name": "Copa do Mundo · 2010",
+      "teams": 32,
+      "source": "https://en.wikipedia.org/wiki/2010_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-2014",
+      "name": "Copa do Mundo · 2014",
+      "teams": 32,
+      "source": "https://en.wikipedia.org/wiki/2014_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-2018",
+      "name": "Copa do Mundo · 2018",
+      "teams": 32,
+      "source": "https://en.wikipedia.org/wiki/2018_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "world-2022",
+      "name": "Copa do Mundo · 2022",
+      "teams": 32,
+      "source": "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos históricos. Resultados são novas simulações a pênaltis; playoffs de desempate, chaveamentos e a regra especial de jogos por sementes em 1954 são simplificados."
+    },
+    {
+      "id": "euro",
+      "name": "Eurocopa · 2024",
+      "teams": 24,
+      "source": "https://en.wikipedia.org/wiki/UEFA_Euro_2024",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "copa-america",
+      "name": "Copa América · 2024",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/2024_Copa_América",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "pt1",
+      "name": "Liga Portugal · Primeira Liga",
+      "teams": 18,
+      "source": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "pt2",
+      "name": "Liga Portugal 2",
+      "teams": 18,
+      "source": "https://en.wikipedia.org/wiki/2026–27_Liga_Portugal_2",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "pt3",
+      "name": "Liga 3 · Portugal",
+      "teams": 20,
+      "source": "https://en.wikipedia.org/wiki/2026–27_Liga_3_(Portugal)",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "sa1",
+      "name": "Saudi Pro League",
+      "teams": 18,
+      "source": "https://en.wikipedia.org/wiki/2026–27_Saudi_Pro_League",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "sa2",
+      "name": "Saudi First Division",
+      "teams": 18,
+      "source": "https://www.saff.com.sa/en/teams.php?season=26&id=2",
+      "coverage": "documented",
+      "rulesStatus": "Participantes oficiais SAFF 2026/27. Grupos e playoffs da terceira divisão são simplificados em uma tabela nesta edição."
+    },
+    {
+      "id": "sa3",
+      "name": "Saudi Second Division",
+      "teams": 32,
+      "source": "https://www.saff.com.sa/en/teams.php?season=26&id=3",
+      "coverage": "documented",
+      "rulesStatus": "Participantes oficiais SAFF 2026/27. Grupos e playoffs da terceira divisão são simplificados em uma tabela nesta edição."
+    },
+    {
+      "id": "co1",
+      "name": "Colômbia · Primera A",
+      "teams": 20,
+      "source": "https://en.wikipedia.org/wiki/2026_Categoría_Primera_A_season",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "co2",
+      "name": "Colômbia · Primera B",
+      "teams": 16,
+      "source": "https://es.wikipedia.org/wiki/Primera_B_2026_(Colombia)",
+      "coverage": "documented",
+      "rulesStatus": "Lista publicada na página da divisão; torneos curtos, quadrangulares e finais anuais simplificados."
+    },
+    {
+      "id": "co3",
+      "name": "Colômbia · Primera C",
+      "teams": 221,
+      "source": "https://es.wikipedia.org/wiki/Primera_C_2026_(Colombia)",
+      "coverage": "documented",
+      "rulesStatus": "Torneio amador DIFUTBOL. Sem acesso automático à Primera B. Grupos documentados; fases finais adaptadas."
+    },
+    {
+      "id": "uy1",
+      "name": "Uruguai · Primera División",
+      "teams": 16,
+      "source": "https://es.wikipedia.org/wiki/Campeonato_Uruguayo_de_Primera_División_2026",
+      "coverage": "documented",
+      "rulesStatus": "16 participantes. Apertura, Intermedio, Clausura e médias de descenso simplificados em temporada de ida e volta."
+    },
+    {
+      "id": "uy2",
+      "name": "Uruguai · Segunda División",
+      "teams": 14,
+      "source": "https://en.wikipedia.org/wiki/2026_Uruguayan_Segunda_División_season",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "uy3",
+      "name": "Uruguai · Primera Divisional C",
+      "teams": 29,
+      "source": "https://es.wikipedia.org/wiki/Campeonato_Uruguayo_de_Primera_Divisional_C_2026",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "ec1",
+      "name": "Equador · Serie A",
+      "teams": 16,
+      "source": "https://es.wikipedia.org/wiki/Serie_A_de_Ecuador_2026",
+      "coverage": "documented",
+      "rulesStatus": "Participantes 2026. Fases finais de título e descenso simplificadas em liga de ida e volta."
+    },
+    {
+      "id": "ec2",
+      "name": "Equador · Serie B",
+      "teams": 12,
+      "source": "https://es.wikipedia.org/wiki/Serie_B_de_Ecuador_2026",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "ec3",
+      "name": "Equador · Segunda Categoría",
+      "teams": 47,
+      "source": "https://es.wikipedia.org/wiki/Segunda_Categoría_de_Ecuador_2026",
+      "coverage": "partial",
+      "rulesStatus": "Etapa nacional documentada de 2026; hexagonais, quadrangulares e final de acesso simplificados. Não inclui eliminatórias provinciais. Lista contém 47 identidades únicas; há uma entrada ambígua na fonte e a composição completa de 48 clubes aguarda confirmação."
+    },
+    {
+      "id": "jp1",
+      "name": "Japão · J1 League",
+      "teams": 20,
+      "source": "https://en.wikipedia.org/wiki/2026–27_J1_League",
+      "coverage": "documented",
+      "rulesStatus": "Temporada regular 2026/27, não o torneio especial de transição do primeiro semestre de 2026. Playoffs e licenças de acesso simplificados."
+    },
+    {
+      "id": "jp2",
+      "name": "Japão · J2 League",
+      "teams": 20,
+      "source": "https://en.wikipedia.org/wiki/2026–27_J2_League",
+      "coverage": "documented",
+      "rulesStatus": "Temporada regular 2026/27, não o torneio especial de transição do primeiro semestre de 2026. Playoffs e licenças de acesso simplificados."
+    },
+    {
+      "id": "jp3",
+      "name": "Japão · J3 League",
+      "teams": 20,
+      "source": "https://en.wikipedia.org/wiki/2026–27_J3_League",
+      "coverage": "documented",
+      "rulesStatus": "Temporada regular 2026/27, não o torneio especial de transição do primeiro semestre de 2026. Playoffs e licenças de acesso simplificados."
+    },
+    {
+      "id": "ru1",
+      "name": "Rússia · Premier League",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/2026–27_Russian_Premier_League",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "ru2",
+      "name": "Rússia · First League",
+      "teams": 18,
+      "source": "https://en.wikipedia.org/wiki/2026–27_Russian_First_League",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "ru3",
+      "name": "Rússia · Second League A",
+      "teams": 17,
+      "source": "https://en.wikipedia.org/wiki/2026–27_Russian_Second_League_Division_A",
+      "coverage": "documented",
+      "rulesStatus": "Grupos Ouro e Prata documentados. Transições semestrais, licenças e barragens simplificadas."
+    },
+    {
+      "id": "za1",
+      "name": "África do Sul · Premiership",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/2026–27_South_African_Premiership",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "za2",
+      "name": "África do Sul · Championship",
+      "teams": 16,
+      "source": "https://en.wikipedia.org/wiki/2026–27_National_First_Division",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "za3",
+      "name": "África do Sul · ABC Motsepe",
+      "teams": 48,
+      "source": "https://en.wikipedia.org/wiki/2026–27_SAFA_Second_Division",
+      "coverage": "partial",
+      "rulesStatus": "RECORTE DOCUMENTADO: streams de Mpumalanga e Western Cape (48 clubes); demais províncias pendentes de confirmação. Playoffs regionais adaptados."
+    },
+    {
+      "id": "eg1",
+      "name": "Egito · Premier League",
+      "teams": 20,
+      "source": "https://en.wikipedia.org/wiki/2026–27_Egyptian_Premier_League",
+      "coverage": "documented",
+      "rulesStatus": "20 participantes 2026/27. Grupos finais de título e descenso simplificados em liga de ida e volta."
+    },
+    {
+      "id": "eg2",
+      "name": "Egito · Second Division A",
+      "teams": 20,
+      "source": "https://www.cairo24.com/2466031",
+      "coverage": "documented",
+      "rulesStatus": "20 clubes e 38 rodadas. 3 acessos e 4 descensos conforme regulamento 2026/27 publicado."
+    },
+    {
+      "id": "eg3",
+      "name": "Egito · Second Division B",
+      "teams": 38,
+      "source": "https://www.national-football-teams.com/old/leagues/57/2026_1/Egypt.html",
+      "coverage": "partial",
+      "rulesStatus": "Recorte de clubes identificados na fonte 2026/27; composição integral dos grupos ainda pendente. Sem inventar participantes. Fases de acesso adaptadas."
+    },
+    {
+      "id": "uel",
+      "name": "Liga Europa",
+      "teams": 36,
+      "source": "https://en.wikipedia.org/wiki/2026–27_UEFA_Europa_League",
+      "coverage": "documented",
+      "rulesStatus": "Fase de liga com o número oficial de jogos; sem todos os potes, restrições de adversários e matriz oficial de playoffs."
+    },
+    {
+      "id": "uecl",
+      "name": "Liga Conferência da UEFA",
+      "teams": 36,
+      "source": "https://en.wikipedia.org/wiki/2026–27_UEFA_Conference_League",
+      "coverage": "documented",
+      "rulesStatus": "Fase de liga com o número oficial de jogos; sem todos os potes, restrições de adversários e matriz oficial de playoffs."
+    },
+    {
+      "id": "sud",
+      "name": "Copa Sul-Americana",
+      "teams": 32,
+      "source": "https://en.wikipedia.org/wiki/2026_Copa_Sudamericana",
+      "coverage": "documented",
+      "rulesStatus": "Participantes e grupos 2026. Playoffs contra terceiros da Libertadores ainda não interligados: os dois primeiros de cada grupo avançam nesta edição."
+    },
+    {
+      "id": "uefa-super",
+      "name": "Supercopa da UEFA",
+      "teams": 2,
+      "source": "https://www.uefa.com/uefasupercup/history/",
+      "coverage": "documented",
+      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+    },
+    {
+      "id": "ucl-qual",
+      "name": "Qualificações · Liga dos Campeões",
+      "teams": 52,
+      "source": "https://en.wikipedia.org/wiki/2026–27_UEFA_Champions_League",
+      "coverage": "documented",
+      "rulesStatus": "Clubes documentados nas eliminatórias; entradas escalonadas, caminhos de campeões/liga e transferências entre torneios simplificados em uma chave própria."
+    },
+    {
+      "id": "uel-qual",
+      "name": "Qualificações · Liga Europa",
+      "teams": 52,
+      "source": "https://en.wikipedia.org/wiki/2026–27_UEFA_Europa_League",
+      "coverage": "documented",
+      "rulesStatus": "Clubes documentados nas eliminatórias; entradas escalonadas, caminhos de campeões/liga e transferências entre torneios simplificados em uma chave própria."
+    }
+  ]
+}

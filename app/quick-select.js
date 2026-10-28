@@ -4,7 +4,7 @@
 'use strict';
 const normalize=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR');
 const country=c=>c.country||(c.id==='argc'?'Argentina':c.region==='Seleções'?'Seleções':'Internacionais');
-function leagues(data,selected){return data.competitions.filter(c=>selected==='all'||country(c)===selected);}
+function leagues(data,selected){return data.competitions.filter(c=>!c.historical&&(selected==='all'||country(c)===selected));}
 function list(data,catalog,selectedCountry='all',league='all',query=''){
  const pool=catalog==='archive'?data.archive:leagues(data,selectedCountry).filter(c=>league==='all'||c.id===league).flatMap(c=>c.teams);
  const q=normalize(query.trim());return [...new Set(pool)].filter(n=>normalize(n).includes(q)).sort((a,b)=>a.localeCompare(b,'pt-BR'));

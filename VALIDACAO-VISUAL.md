@@ -52,3 +52,9 @@ Restaurada a função de entrada da temporada (`launchSeason`). A ponte External
 Regressão: `node tools/test-match-bridge.cjs` verifica entrada da temporada, placar final, histórico, retorno à seleção e callback duplicado; executa as duas pontes com geração dinâmica de código desabilitada e recusa nomes/código arbitrários.
 
 Validação em navegador HTTP local: partida rápida Flamengo × Palmeiras completada em 0 × 3; resultado visível, botão de retorno funcionando. Temporada Série A iniciada como Santos, botão JOGAR PARTIDA abriu Santos × Botafogo com motor, identidade e callbacks ativos. Evidências: previas/resultado-corrigido-v103.png e previas/temporada-corrigida-v103.png.
+
+## v1.0.4 · prévia
+
+Testes de navegador em http://127.0.0.1:8774/: filtro de seleções e Copa 1930, Uruguai; Randomizar altera a distribuição e Restaurar devolve a lista original; cancelar exclusão preserva o registro e confirmar remove o registro de teste. Carreira Santos com calendário em fevereiro intercala Brasileirão e Sul-Americana; filtros de país/torneio/divisão; zonas brasileiras 4 azuis, 1 laranja, 6 verdes, 4 vermelhas. Sala de Troféus vazia; final da Supercopa exige jogar; entrada e saída de tela cheia confirmadas. Regras com zero details abertos. Console sem avisos ou erros.
+
+Motor: 91 competições, 455 temporadas, 126.510 partidas de competição e 77 anos de carreira. Finais dos testes são registradas explicitamente como disputadas, sem abrir exceção de simulação no jogo. Limites e cobertura: RELEASE-v1.0.4.md.

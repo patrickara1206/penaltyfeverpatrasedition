@@ -1,0 +1,27 @@
+name: Publicar releases versionadas
+on:
+  push:
+    branches: [v1.0.4]
+    paths:
+      - '.github/workflows/releases.yml'
+      - 'tools/publish-releases.py'
+      - 'distribuicao/**'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: releases-pf
+  cancel-in-progress: false
+jobs:
+  releases:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validar e publicar os pacotes de cada versão
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/publish-releases.py

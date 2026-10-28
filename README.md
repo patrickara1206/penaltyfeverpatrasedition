@@ -1,4 +1,6 @@
-# Penalty Fever 2026 Edition
+# Penalty Fever 2026 Edition · v1.0.4 (prévia)
+
+**Prévia de expansão:** esta versão contém recortes incompletos em três divisões regionais e formatos adaptados, detalhados em [RELEASE-v1.0.4.md](RELEASE-v1.0.4.md) e [CATALOGO-v1.0.4.json](CATALOGO-v1.0.4.json). Não é uma reprodução integral de todos os regulamentos oficiais. A versão estável anterior é a v1.0.3.
 
 **Assinatura Patras.** O motor de cobranças do clássico Penalty Fever Plus, com identidade PF própria, temporadas e um modo Carreira que conecta o mundo do jogo.
 
@@ -16,7 +18,7 @@ O jogo inclui seus recursos. Não requer Flash instalado, Node, Python, terminal
 
 ## Revisão v1.0.3
 
-Seleção de clubes em carrossel na Partida rápida: escudo central ampliado, vizinhos laterais, globo vetorial e animações. Filtros independentes de país/liga, busca sem acentos, setas e navegação por teclado. Os 872 times atuais e o arquivo clássico permanecem disponíveis.
+Seleção de clubes em carrossel na Partida rápida: escudo central ampliado, vizinhos laterais, globo vetorial e animações. Filtros independentes de país/liga, busca sem acentos, setas e navegação por teclado. A seleção mantém o arquivo clássico separado das equipes atuais.
 
 ## Revisão v1.0.2
 
@@ -29,7 +31,7 @@ Nova identidade em verde e dourado, marca com retorno ao início, logos das comp
 ## O que esta versão traz
 
 - **PF**, com escudo PF, verde de campo, dourado e painéis próprios.
-- **34 competições**, com **872 equipes únicas** na base inicial e **789 clubes** em nove sistemas nacionais. Europa: 2026/27; Brasil e Américas: 2026. Consulta: 27/10/2026.
+- **91 competições**, **1.752 equipes no catálogo atual** e **1.573 clubes em 18 países** no universo da carreira, incluindo os recortes parciais documentados. Há ainda as seleções históricas das Copas. Consulta: 28/10/2026.
 - Divisões inferiores, grupos regionais e playoffs de acesso. Brasil A–D; Inglaterra até League Two; Espanha, Itália, Alemanha e França até a terceira divisão; Argentina com ramos paralelos; EUA e México com os recortes descritos em [FONTES.md](FONTES.md).
 - **Carreira**: perfil do técnico, clube de qualquer divisão incluída, ligas e copas simultâneas, classificação internacional, propostas, transferências, histórico e relatório anual de campeões.
 - Mundiais em ciclos de quatro anos e proposta da seleção de origem após conquistar um título intercontinental. A participação depende de classificação.

@@ -1,8 +1,8 @@
 {
   "status": "passed",
-  "presetTeams": 888,
-  "presetChoices": 1776,
-  "clubRecords": 824,
+  "presetTeams": 1801,
+  "presetChoices": 3602,
+  "clubRecords": 1737,
   "historyCoverage": {
     "clubs": 824,
     "documented": 405,
@@ -10,6 +10,7 @@
     "honors": 394,
     "players": 49,
     "homeAwayKits": 492,
-    "unverified": 214
+    "unverified": 214,
+    "v104AdditionalRecords": 976
   }
 }

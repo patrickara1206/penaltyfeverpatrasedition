@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "competitions": 91,
+  "finalsProtected": 4,
+  "domesticCountries": 18,
+  "domesticClubs": 1573,
+  "simulatedGoalDifferenceByLevel": [
+    1.6478,
+    0.6106,
+    -0.4104,
+    -1.4245
+  ],
+  "careerYear": "completed"
+}
