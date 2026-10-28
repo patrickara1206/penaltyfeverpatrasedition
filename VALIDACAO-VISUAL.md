@@ -40,3 +40,7 @@ Partida real Santos × Botafogo na v1.0.1: Santos com o preset Fora listrado, du
 ## Revisão v1.0.2
 
 Halo e animação dos escudos na seleção de clube e na Partida rápida. Interface e Ruffle iniciados com a CSP restrita em prévia HTTP local, sem erros de console. Guardas de entrada e descompressão verificados em VALIDACAO-SEGURANCA.json. Limites e ameaças cobertas em SECURITY.md.
+
+## Revisão v1.0.3
+
+Carrosséis conferidos com mouse, teclado e busca sem acentos. Busca vazia desabilita a entrada. Filtros de Inglaterra/Premier League e Itália/Serie A levaram a Manchester United × Inter de Milão, iniciados corretamente no Ruffle, sem avisos no console. Layouts de 714, 840 e 1280 px conferidos; sem rolagem horizontal nas larguras medidas. Redução de movimento respeitada pelo CSS. O modelo testa todas as 34 competições e listas de zero, uma, duas e muitas equipes.

@@ -14,6 +14,10 @@ O jogo inclui seus recursos. Não requer Flash instalado, Node, Python, terminal
 
 **Verificação da distribuição:** o carregador offline e os dois módulos WebAssembly foram validados sem acesso à rede. A interface e partidas foram testadas em navegador por uma prévia HTTP local. A política do navegador de testes bloqueou a abertura direta `file:`; o duplo clique no arquivo em cada sistema operacional não foi validado. Nenhuma proteção do navegador foi desativada.
 
+## Revisão v1.0.3
+
+Seleção de clubes em carrossel na Partida rápida: escudo central ampliado, vizinhos laterais, globo vetorial e animações. Filtros independentes de país/liga, busca sem acentos, setas e navegação por teclado. Os 872 times atuais e o arquivo clássico permanecem disponíveis.
+
 ## Revisão v1.0.2
 
 Halo e movimento dos escudos no seletor de clube e na Partida rápida. Primeiras proteções de importação, descompressão e carregamento documentadas em [SECURITY.md](SECURITY.md). Hospedagem e migração dos saves em [PUBLICACAO.md](PUBLICACAO.md).

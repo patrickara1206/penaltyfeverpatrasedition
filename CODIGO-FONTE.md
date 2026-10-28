@@ -32,3 +32,5 @@ Ruffle0.7.1 self-hosted e lz-string1.5.0 são distribuições oficiais com licen
 Assets visuais: app/logos-manifest.json e app/logos.js associam as imagens em app/assets/logos. tools/stadium_art.py desenha arquibancada e placas nativas do SWF; tools/build_match.py aplica cores após cada quadro e mantém os indicadores de cobranças. A validação estrutural e das imagens é reproduzível com `python tools/test-visual-assets.py`, usando apenas Python3, sem bibliotecas extras.
 
 Históricos: app/club-history.js mantém os dados de consulta offline; app/club-history.json é a versão legível. Fontes, critérios e cobertura em CLUB-HISTORY.md.
+
+app/quick-select.js contém o modelo e a interface do carrossel; `node tools/test-quick-select.cjs` valida filtros, busca, circulação e cobertura das competições. app/selection-globe.svg é arte vetorial própria.

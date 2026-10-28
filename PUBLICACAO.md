@@ -2,7 +2,7 @@
 
 Provedor: GitHub Pages, site estático público do repositório patrickara1206/penaltyfeverpatrasedition.
 
-Fonte prevista: branch `v1.0.2`, raiz `/`, com `.nojekyll`. A página inicial redireciona para `app/index.html`, sem caminhos absolutos que quebrem o subdiretório do projeto.
+Fonte prevista: branch `v1.0.3`, raiz `/`, com `.nojekyll`. A página inicial redireciona para `app/index.html`, sem caminhos absolutos que quebrem o subdiretório do projeto.
 
 URL do projeto: https://patrickara1206.github.io/penaltyfeverpatrasedition/
 
