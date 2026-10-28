@@ -32,3 +32,8 @@ input:not([type=color]):not([type=file]){width:100%;border:1px solid #465f55;bor
 .hero p{max-width:min(530px,70%)}@media(max-width:800px){.hero .ball{right:-100px;opacity:.35}.hero p{max-width:85%}}
 
 .layout>*,.form-grid>*,.rules-cards>*{min-width:0}.scroll-table{max-width:100%}.club-history{overflow-wrap:anywhere}.wordmark.brand-home>span{min-width:0}@media(max-width:520px){header{flex-wrap:wrap;gap:14px}.wordmark.brand-home{font-size:18px}.wordmark.brand-home img{width:38px;height:44px}.wordmark.brand-home small{font-size:8px;letter-spacing:2px}.wordmark.brand-home>span{white-space:nowrap}.match-top .wordmark{font-size:14px}.layout>.panel{padding:18px}.match-card{padding:18px}.versus{grid-template-columns:minmax(0,1fr) 35px minmax(0,1fr);gap:7px}.kit-options{gap:10px}}
+
+/* v1.0.2: contrast halo for every club crest in the season selector. */
+.team-card .team-crest.has-logo,.quick-logo .team-crest.has-logo{width:110px;height:110px;padding:12px;border-radius:50%;background:radial-gradient(ellipse,#dfdfbd 15%,#aab79b 47%,#4d6b5438 70%,transparent 75%);filter:drop-shadow(0 3px 10px #0004)}
+
+.team-card .team-crest.has-logo .crest-image,.quick-logo .team-crest.has-logo .crest-image{animation:league-float 3.5s ease-in-out infinite}@media(prefers-reduced-motion:reduce){.team-card .team-crest.has-logo .crest-image,.quick-logo .team-crest.has-logo .crest-image{animation:none}}

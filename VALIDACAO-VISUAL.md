@@ -36,3 +36,7 @@ Identidade refeita com escudo PF, verde de campo e dourado; marca do cabeçalho 
 Histórico consultado offline no painel do clube, com títulos de escopo definido, anos e fontes. Pesquisa parcial: ver CLUB-HISTORY.md. Teste de integração em VALIDACAO-EDICAO.json verifica 1.776 escolhas de uniforme para 888 nomes e a estrutura/fonte das 824 fichas. Esse teste não comprova sozinho a exatidão editorial de cada fato.
 
 Partida real Santos × Botafogo na v1.0.1: Santos com o preset Fora listrado, duas conversões na primeira rodada, placar 1 × 1 e RODADA 2. Tela inicial, fonte histórica do Santos, modal Casa/Fora, retorno pela marca e guia de regras conferidos no navegador. Prévia preservada para revisão do usuário.
+
+## Revisão v1.0.2
+
+Halo e animação dos escudos na seleção de clube e na Partida rápida. Interface e Ruffle iniciados com a CSP restrita em prévia HTTP local, sem erros de console. Guardas de entrada e descompressão verificados em VALIDACAO-SEGURANCA.json. Limites e ameaças cobertas em SECURITY.md.

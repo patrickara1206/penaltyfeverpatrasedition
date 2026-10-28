@@ -14,6 +14,10 @@ O jogo inclui seus recursos. Não requer Flash instalado, Node, Python, terminal
 
 **Verificação da distribuição:** o carregador offline e os dois módulos WebAssembly foram validados sem acesso à rede. A interface e partidas foram testadas em navegador por uma prévia HTTP local. A política do navegador de testes bloqueou a abertura direta `file:`; o duplo clique no arquivo em cada sistema operacional não foi validado. Nenhuma proteção do navegador foi desativada.
 
+## Revisão v1.0.2
+
+Halo e movimento dos escudos no seletor de clube e na Partida rápida. Primeiras proteções de importação, descompressão e carregamento documentadas em [SECURITY.md](SECURITY.md). Hospedagem e migração dos saves em [PUBLICACAO.md](PUBLICACAO.md).
+
 ## Revisão v1.0.1
 
 Nova identidade em verde e dourado, marca com retorno ao início, logos das competições ampliadas ao passar o mouse, seletor Casa/Fora e guia de regras reorganizado. Fichas históricas com fontes offline: cobertura parcial, detalhada em [CLUB-HISTORY.md](CLUB-HISTORY.md). O levantamento completo dos 824 clubes ainda não foi concluído.

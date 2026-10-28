@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checks": 23,
+  "scope": [
+    "prototype keys",
+    "depth and text limits",
+    "bounded LZ expansion",
+    "valid compressed save roundtrip",
+    "external URL schemes",
+    "CSP and inline handlers"
+  ],
+  "limits": [
+    "client-side controls are not anti-cheat or a guarantee of invulnerability",
+    "no backend or shared leaderboard exists"
+  ]
+}
