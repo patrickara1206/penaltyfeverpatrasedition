@@ -24,15 +24,18 @@ def main():
   with zipfile.ZipFile(io.BytesIO(blob))as z:
    if z.testzip()is not None:raise RuntimeError('Corrupt release archive: '+tag)
    if not any(n.endswith('/JOGAR.html')for n in z.namelist()):raise RuntimeError('Missing portable launcher')
-  digest=hashlib.sha256(blob).hexdigest();filename='Penalty-Fever-2026-Edition-'+tag+'.zip'
+  digest=hashlib.sha256(blob).hexdigest();filename='Penalty-Fever-2026-Edition-'+tag+('-logos-'+sha[:7] if tag=='v1.0.4' else '')+'.zip'
   body=notes+'\n\nExtraia o ZIP inteiro e abra JOGAR.html em navegador moderno. Não requer instalação ou administrador. Consulte as limitações e créditos no pacote.\n\nSHA-256: `'+digest+'`\n'
   # Preserve any existing immutable release, and make a partial publication resumable.
   ref=request('GET','/git/ref/tags/'+tag)
-  if ref and ref['object']['sha']!=sha:raise RuntimeError('Existing tag targets a different commit: '+tag)
+  if ref and ref['object']['sha']!=sha and tag!='v1.0.4':raise RuntimeError('Existing tag targets a different commit: '+tag)
   release=request('GET','/releases/tags/'+tag)
   if release is None:release=request('POST','/releases',{'tag_name':tag,'target_commitish':sha,'name':'Penalty Fever 2026 Edition · '+tag,'body':body,'draft':False,'prerelease':tag=='v1.0.4','make_latest':'true'if tag=='v1.0.3'else'false'})
+  if tag=='v1.0.4' and ref and ref['object']['sha']!=sha:
+   body='**Correção das logos no pacote portátil:** [baixar o ZIP corrigido](https://github.com/'+REPO+'/releases/download/'+tag+'/'+filename+'). As imagens agora estão incorporadas. Os arquivos antigos foram preservados. Código desta correção: ['+sha[:7]+'](https://github.com/'+REPO+'/commit/'+sha+'). A tag original não foi alterada.\n\n'+body
+   release=request('PATCH','/releases/'+str(release['id']),{'body':body})
   assets={a['name']:a for a in release.get('assets',[])}
-  for name,data,mime in [(filename,blob,'application/zip'),('SHA256-'+tag+'.txt',(digest+'  '+filename+'\n').encode(),'text/plain')]:
+  for name,data,mime in [(filename,blob,'application/zip'),('SHA256-'+tag+('-logos-'+sha[:7] if tag=='v1.0.4' else '')+'.txt',(digest+'  '+filename+'\n').encode(),'text/plain')]:
    if name in assets:
     if assets[name]['size']!=len(data):raise RuntimeError('Existing asset differs; refusing overwrite: '+name)
     continue

@@ -41,3 +41,7 @@ Testes de motor: 91 competições concluídas, sorteio/restauração, bloqueio d
 ## Fontes
 
 Cada competição tem fonte e ressalvas em CATALOGO-v1.0.4.json e em Regras e identidade. Referências de estrutura: FIFA (história das Copas), UEFA (formatos europeus), CONMEBOL (manual Sudamericana 2026), J.League, SAFF, AUF, DIFUTBOL e FEF. As listas foram cotejadas com páginas de temporada; as lacunas acima permanecem abertas.
+
+## Correção do pacote portátil: logos
+
+As 1.881 imagens do catálogo e da taça genérica agora também são incorporadas em logos-embedded.js, evitando pedidos separados de arquivos de imagem ao executar a versão baixada. Os bytes das artes originais são preservados. A seleção de logos foi corrigida para os torneios continentais e de seleções gerados na carreira; competições próprias usam a ilustração PF de taça. O cache dos scripts alterados recebe revisão 104.2. O ZIP original desta release e sua tag são preservados; use o novo asset com logos no nome.

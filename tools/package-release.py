@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,shutil,zipfile,hashlib
 repo=Path(__file__).resolve().parents[1]
-name='Penalty-Fever-2026-Edition-v1.0.4'
+name='Penalty-Fever-2026-Edition-v1.0.4-logos'
 output=repo.parents[1]/'outputs';output.mkdir(exist_ok=True)
 folder=output/name;folder.mkdir(exist_ok=True)
 files=[]

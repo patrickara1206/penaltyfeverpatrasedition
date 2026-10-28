@@ -31,10 +31,12 @@ function historyCard(n){
 }
 function kitCss(n){return F.css(kit(n))}
 function initials(n){return n.split(/[\s-]+/).filter(Boolean).slice(0,2).map(s=>s[0]).join('').toUpperCase()}
-function logoPath(n){return window.PF_LOGOS?.teams?.[n]||null}
-function teamLogo(n,small=false){const src=logoPath(n);return src?`<img class="${small?'inline-crest':'crest-image'}" src="${esc(src)}" alt="Escudo de ${esc(n)}" loading="lazy" decoding="async">`:small?'<span class="crest-gap" aria-hidden="true"></span>':esc(initials(n))}
+function embeddedLogo(path){return window.PF_EMBEDDED_LOGOS?.[path]||path}
+function logoPath(n){const path=window.PF_LOGOS?.teams?.[n];return path?embeddedLogo(path):null}
+function teamLogo(n,small=false){const src=logoPath(n);return src?`<img class="${small?'inline-crest':'crest-image'}" src="${esc(src)}" alt="Escudo de ${esc(n)}" decoding="async">`:small?'<span class="crest-gap" aria-hidden="true"></span>':esc(initials(n))}
 function crest(n){if(logoPath(n))return `<div class="team-crest has-logo">${teamLogo(n)}</div>`;const k=kit(n);return `<div class="team-crest" aria-label="Escudo indisponível: ${esc(n)}" style="background:linear-gradient(135deg,${k.a},${k.b})">${esc(initials(n))}</div>`}
-function competitionLogo(c){const alias={'cont-europe':'ucl','cont-south':'lib','national-world':'world','club-world':'club-world'},id=alias[c.id]||c.id,src=window.PF_LOGOS?.competitions?.[id];return src?`<img class="competition-logo" src="${esc(src)}" alt="Logo de ${esc(c.name)}" loading="lazy" decoding="async">`:'<span class="competition-fallback" aria-label="Logo indisponível">◇</span>'}
+function competitionLogo(c){const alias={'cont-europe':'ucl','cont-south':'lib','cont-uel':'uel','cont-uecl':'uecl','cont-sud':'sud','national-world':'world','national-euro':'euro','national-copa-america':'copa-america'},id=alias[c.id]||c.id,path=window.PF_LOGOS?.competitions?.[id]||'trophy.svg',src=embeddedLogo(path);return `<img class="competition-logo" src="${esc(src)}" alt="Logo de ${esc(c.name)}" decoding="async">`}
+
 function updateMatchIdentity(info){const cpu=info.home===info.user?info.away:info.home;$('matchTitle').innerHTML=`<span class="match-team">${teamLogo(info.user,true)}<span title="${esc(info.user)}">${esc(info.user)}</span></span><span class="match-times">×</span><span class="match-team">${teamLogo(cpu,true)}<span title="${esc(cpu)}">${esc(cpu)}</span></span>`;$('matchCompetition').innerHTML=info.season?competitionLogo(info.season.comp)+`<span>${esc(info.season.comp.name)}</span>`:'<span>PARTIDA RÁPIDA</span>'}
 function options(a,selected){return a.map(v=>`<option value="${esc(v)}" ${v===selected?'selected':''}>${esc(v)}</option>`).join('')}
 function nav(p){page=p;viewStage=null;document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===p));render();window.scrollTo(0,0)}
