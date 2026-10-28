@@ -44,3 +44,11 @@ Halo e animação dos escudos na seleção de clube e na Partida rápida. Interf
 ## Revisão v1.0.3
 
 Carrosséis conferidos com mouse, teclado e busca sem acentos. Busca vazia desabilita a entrada. Filtros de Inglaterra/Premier League e Itália/Serie A levaram a Manchester United × Inter de Milão, iniciados corretamente no Ruffle, sem avisos no console. Layouts de 714, 840 e 1280 px conferidos; sem rolagem horizontal nas larguras medidas. Redução de movimento respeitada pelo CSS. O modelo testa todas as 34 competições e listas de zero, uma, duas e muitas equipes.
+
+## Correção de partidas na v1.0.3
+
+Restaurada a função de entrada da temporada (`launchSeason`). A ponte ExternalInterface dos dois módulos locais do Ruffle passou a despachar exclusivamente patrasReady, patrasTurn, patrasShot, patrasProgress e patrasResult, sem compilar strings JavaScript. A CSP continua sem unsafe-eval. Os módulos receberam nomes derivados do conteúdo e as entradas alteradas usam revisão de cache 103.1.
+
+Regressão: `node tools/test-match-bridge.cjs` verifica entrada da temporada, placar final, histórico, retorno à seleção e callback duplicado; executa as duas pontes com geração dinâmica de código desabilitada e recusa nomes/código arbitrários.
+
+Validação em navegador HTTP local: partida rápida Flamengo × Palmeiras completada em 0 × 3; resultado visível, botão de retorno funcionando. Temporada Série A iniciada como Santos, botão JOGAR PARTIDA abriu Santos × Botafogo com motor, identidade e callbacks ativos. Evidências: previas/resultado-corrigido-v103.png e previas/temporada-corrigida-v103.png.
