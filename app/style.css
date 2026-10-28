@@ -14,3 +14,5 @@ input:not([type=color]):not([type=file]){width:100%;border:1px solid #574164;bor
 .competition-logo[src$=".svg"]{background:#203f45;border-radius:5px;padding:4px}
 
 .team-card .team-crest.has-logo{display:block;margin:0 auto 12px}
+
+.career-fixture .fixture-team{display:flex;align-items:center;justify-content:center;gap:10px;overflow-wrap:anywhere}.career-fixture .fixture-team .inline-crest{width:36px;height:36px;padding:3px;border-radius:6px}@media(max-width:650px){.career-fixture .fixture-team{gap:6px;font-size:16px}.career-fixture .fixture-team .inline-crest{width:28px;height:28px}}
