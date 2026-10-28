@@ -16,3 +16,5 @@ input:not([type=color]):not([type=file]){width:100%;border:1px solid #574164;bor
 .team-card .team-crest.has-logo{display:block;margin:0 auto 12px}
 
 .career-fixture .fixture-team{display:flex;align-items:center;justify-content:center;gap:10px;overflow-wrap:anywhere}.career-fixture .fixture-team .inline-crest{width:36px;height:36px;padding:3px;border-radius:6px}@media(max-width:650px){.career-fixture .fixture-team{gap:6px;font-size:16px}.career-fixture .fixture-team .inline-crest{width:28px;height:28px}}
+
+.competition-country{margin:0 0 32px}.country-label{display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:800}.country-label::after{content:"";height:1px;background:var(--edge);flex:1}
