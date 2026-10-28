@@ -19,4 +19,3 @@ function finishCareerMatch(info,decider){try{const c=store.careers[info.careerId
 $('worldButton').onclick=()=>{const c=store.careers[pending?.careerId];if(!c)return;try{player?.ruffle().pause()}catch{}$('worldDrawerBody').innerHTML=worldHtml(c);bindWorld(c);$('worldDialog').showModal()};
 $('closeWorld').onclick=()=>{$('worldDialog').close();try{player?.ruffle().play()}catch{}};
 for(const id of ['abandonDialog','worldDialog'])$(id).addEventListener('cancel',()=>{try{player?.ruffle().play()}catch{}});
-for(const id of ['kit1','kit2','kitPattern'])$(id).oninput=()=>{$('kitPreview').style.background=F.css({a:$('kit1').value,b:$('kit2').value,pattern:Number($('kitPattern').value)})};

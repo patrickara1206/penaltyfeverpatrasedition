@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "presetTeams": 888,
+  "presetChoices": 1776,
+  "clubRecords": 824,
+  "historyCoverage": {
+    "clubs": 824,
+    "documented": 405,
+    "foundation": 568,
+    "honors": 394,
+    "players": 49,
+    "homeAwayKits": 492,
+    "unverified": 214
+  }
+}

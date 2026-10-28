@@ -120,7 +120,7 @@ def build_stadium(call, put, P, get):
     # Compact readable scoreboard over the new crowd. Match data is untouched.
     rect(8, 6, 258, 46, 0x050A16, 35)
     rect(8, 4, 258, 46, 0x101B2C, 98)
-    rect(8, 4, 3, 46, 0xFF4DB1)
+    rect(8, 4, 3, 46, 0xE8CB79)
     rect(11, 26, 255, 1, 0x36435A)
     rect(232, 4, 34, 46, 0x213047)
     rect(232, 4, 34, 2, 0xD8FF83)
@@ -133,7 +133,7 @@ def build_stadium(call, put, P, get):
     # Equal inset from the top/right; centered text with ample internal space.
     rect(492, 6, 100, 30, 0x050A16, 35)
     rect(492, 4, 100, 30, 0x101B2C, 98)
-    rect(492, 4, 100, 2, 0xFF4DB1)
+    rect(492, 4, 100, 2, 0xE8CB79)
     text('ppTurnLabel', 'RODADA 1', 496, 10, 92, 20, 11, 0xF4F6FC, 9204)
     centered('ppTurnLabel')
     return bytes(out)

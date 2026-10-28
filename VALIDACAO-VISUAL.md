@@ -28,3 +28,11 @@ Placar e gramado modernizados: painel opaco com gols destacados, cinco indicador
 Arquibancada e placas fictícias conferidas no navegador, atrás da rede. Logos dos clubes conferidas na seleção e no cabeçalho. Marca RODADA e cinco indicadores por equipe adicionados ao placar. Leitura real de RGB percorreu os 20 quadros de ambos os times, sem divergências (VALIDACAO-CORES.json). Todos os arquivos dos 888 nomes e das 34 competições passaram na validação de formato e integridade (VALIDACAO-VISUAL-ASSETS.json).
 
 Placar de pênaltis validado em uma partida real encerrada em 0 × 2: quatro perdas do mandante e duas conversões/uma perda do visitante, encerramento antecipado normal. Os círculos e os gols acompanharam os eventos reais; RODADA atualizou junto com as cobranças. Dados em VALIDACAO-PENALTIS.json. O escudo da seleção de equipe também foi conferido em tela menor.
+
+## Revisão v1.0.1
+
+Identidade refeita com escudo PF, verde de campo e dourado; marca do cabeçalho retorna ao início. Cartões de competições revelam a logo ampliada no hover e no foco por teclado, com halo de contraste e respeito à redução de movimento. Regras reorganizadas por assunto. Personalização livre substituída por Casa/Fora, com seleção persistida e representações estilizadas.
+
+Histórico consultado offline no painel do clube, com títulos de escopo definido, anos e fontes. Pesquisa parcial: ver CLUB-HISTORY.md. Teste de integração em VALIDACAO-EDICAO.json verifica 1.776 escolhas de uniforme para 888 nomes e a estrutura/fonte das 824 fichas. Esse teste não comprova sozinho a exatidão editorial de cada fato.
+
+Partida real Santos × Botafogo na v1.0.1: Santos com o preset Fora listrado, duas conversões na primeira rodada, placar 1 × 1 e RODADA 2. Tela inicial, fonte histórica do Santos, modal Casa/Fora, retorno pela marca e guia de regras conferidos no navegador. Prévia preservada para revisão do usuário.

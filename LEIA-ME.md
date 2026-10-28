@@ -2,7 +2,7 @@
 
 **Assinatura Patras.** O motor de cobranças do clássico Penalty Fever Plus, com identidade PF própria, temporadas e um modo Carreira que conecta o mundo do jogo.
 
-![Partida da edição](previas/partida.png)
+![Identidade da edição](previas/identidade-campo.png)
 
 ## Jogar sem instalação
 
@@ -14,15 +14,19 @@ O jogo inclui seus recursos. Não requer Flash instalado, Node, Python, terminal
 
 **Verificação da distribuição:** o carregador offline e os dois módulos WebAssembly foram validados sem acesso à rede. A interface e partidas foram testadas em navegador por uma prévia HTTP local. A política do navegador de testes bloqueou a abertura direta `file:`; o duplo clique no arquivo em cada sistema operacional não foi validado. Nenhuma proteção do navegador foi desativada.
 
+## Revisão v1.0.1
+
+Nova identidade em verde e dourado, marca com retorno ao início, logos das competições ampliadas ao passar o mouse, seletor Casa/Fora e guia de regras reorganizado. Fichas históricas com fontes offline: cobertura parcial, detalhada em [CLUB-HISTORY.md](CLUB-HISTORY.md). O levantamento completo dos 824 clubes ainda não foi concluído.
+
 ## O que esta versão traz
 
-- **PF**, com monograma, painéis, placas de campo e paleta próprios.
+- **PF**, com escudo PF, verde de campo, dourado e painéis próprios.
 - **34 competições**, com **872 equipes únicas** na base inicial e **789 clubes** em nove sistemas nacionais. Europa: 2026/27; Brasil e Américas: 2026. Consulta: 27/10/2026.
 - Divisões inferiores, grupos regionais e playoffs de acesso. Brasil A–D; Inglaterra até League Two; Espanha, Itália, Alemanha e França até a terceira divisão; Argentina com ramos paralelos; EUA e México com os recortes descritos em [FONTES.md](FONTES.md).
 - **Carreira**: perfil do técnico, clube de qualquer divisão incluída, ligas e copas simultâneas, classificação internacional, propostas, transferências, histórico e relatório anual de campeões.
 - Mundiais em ciclos de quatro anos e proposta da seleção de origem após conquistar um título intercontinental. A participação depende de classificação.
 - Quatro dificuldades: **Fácil, Médio, Intermediário e Difícil**. A posição dos clubes atualiza o desafio nas ligas; a velocidade e o tempo de reação aumentam no mata-mata.
-- Cobradores fictícios próprios de cada clube, alternados durante a disputa. Camisas editáveis e cores persistentes durante a corrida.
+- Cobradores fictícios próprios de cada clube, alternados durante a disputa. Escolha entre Casa e Fora, com cores persistentes durante a corrida.
 - Som durante a partida, consulta às outras ligas com o confronto pausado, exportação/importação de saves e armazenamento local comprimido.
 - Abandono confirmado registra **0 × 1 a 0 × 5**. Fechar ou recarregar também gera a derrota na abertura seguinte. Saves não são protegidos contra edição manual ou restauração de backups antigos.
 
@@ -46,7 +50,7 @@ Nos acessos, playoffs de Inglaterra, Espanha e Itália são adaptados aos pênal
 
 Nos Mundiais: seleções em 2026/2030/2034…; clubes em 2029/2033/2037… Para 2030 em diante, as eliminatórias do jogo usam 64 seleções em 16 grupos, com as três primeiras de cada grupo classificadas. O título intercontinental abre a possibilidade de comandar a seleção e garante uma vaga de clube no próximo ciclo dentro da janela de quatro anos. As demais vagas de clubes vêm da simulação.
 
-Camisas são **conceituais**, com cores de referência e alternativas de contraste; não são réplicas licenciadas dos uniformes oficiais de 2026. Escudos e marcas de competições são imagens locais de referência, com as fontes em [LOGOS.md](LOGOS.md). Os elencos são fictícios. O arquivo clássico preserva nomes históricos separados da base atual. Esta versão cobre as divisões listadas, não toda a pirâmide amadora de cada país.
+Camisas são **estilizadas**, com presets de casa e de fora e alternativas de contraste; não são réplicas licenciadas dos uniformes oficiais de 2026. Escudos e marcas de competições são imagens locais de referência, com as fontes em [LOGOS.md](LOGOS.md). Os elencos são fictícios. O arquivo clássico preserva nomes históricos separados da base atual. Esta versão cobre as divisões listadas, não toda a pirâmide amadora de cada país.
 
 ## Validação e código
 

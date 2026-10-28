@@ -1,7 +1,7 @@
-# Identidade PF
+# Identidade PF 2026
 
-Penalty Fever 2026 Edition, assinatura Patras. Monograma PF: P de Penalty, F de Fever. Nenhum elemento novo usa FP ou PP como sigla da marca.
+Penalty Fever 2026 Edition, assinatura Patras. Escudo PF com bola, contorno dourado e campo verde. A marca no cabeçalho é um botão para a tela inicial.
 
-Roxo profundo #100D1B, roxo de estádio #6139BB, magenta #FF4DB1 e verde #D8FF83. Tipografia de sistema forte, placas próprias e painéis com contraste. O campo, jogadores e animações preservam a origem no clássico, com correções de uniforme.
+Verde noturno #081714, painel #112521, verde de campo #5EE39A, dourado #E8CB79. Tipografia de sistema forte, linhas de campo e painéis de estádio. Logos de ligas têm halo de contraste e revelação ampliada ao passar o ponteiro ou focar com teclado; movimentos respeitam prefers-reduced-motion.
 
-Camisas conceituais com seis padrões e calção editável, cores de referência e alternativo de contraste. Escudos dos clubes e marcas das competições são imagens locais de referência com as fontes em LOGOS.md. As placas do estádio usam somente marcas fictícias próprias desta edição.
+Uniformes são representações estilizadas, com dois presets (Casa/Fora) por clube, sem edição livre de cores. Não são réplicas licenciadas de 2026. Históricos reais ficam separados dos cobradores fictícios. Fontes e cobertura em CLUB-HISTORY.md e LOGOS.md.
