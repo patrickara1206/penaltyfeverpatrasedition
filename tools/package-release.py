@@ -9,6 +9,7 @@ files=[]
 for p in sorted(repo.rglob('*')):
  rel=p.relative_to(repo)
  if not p.is_file()or any(x in ['.git','distribuicao','__pycache__','node_modules','dist-cloudflare','.wrangler']for x in rel.parts)or p.name.startswith('.env')or p.suffix in ['.pyc','.log']:continue
+ if p.name.startswith('Cloudflare-Penalty-Fever-')and p.suffix=='.zip':continue
  if p.name.startswith('qa-'):raise RuntimeError('Temporary QA file in package')
  files.append((p,rel));dest=folder/rel;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dest)
 manifest=json.loads((repo/'app/logos-manifest.json').read_text(encoding='utf8'))

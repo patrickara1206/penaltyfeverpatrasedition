@@ -24,3 +24,6 @@ Prévia: mantém os recortes de catálogo e adaptações de formato documentados
 Os 30 rótulos de cobrança/defesa/rodada dos dez idiomas são compostos com Noto e HarfBuzz e incorporados como bitmaps pequenos no SWF. Isso evita caracteres ausentes nas fontes padrão do Ruffle, inclusive chinês, árabe e hindi. Não há download de fontes durante a partida. Licenças SIL OFL em licenses/noto. O tamanho desses avisos acompanha a preferência de letras.
 
 Teste adicional no navegador: caracteres chineses e árabes, além de uma partida rápida completa com tela de resultado e retorno à seleção.
+## Carregamento online
+
+No Cloudflare, escudos são servidos como arquivos locais apenas quando aparecem na tela; o WASM é baixado ao iniciar o Ruffle. O pacote online usa connect-src 'self' para buscar seu próprio módulo. O ZIP portátil mantém recursos incorporados e connect-src 'none'. Testado no navegador com o mesmo bundle estático enviado ao Cloudflare.
