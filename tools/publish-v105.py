@@ -17,11 +17,13 @@ def main():
   assert z.testzip()is None
   assert any(n.endswith('/app/settings.js')for n in z.namelist())
  ref=request('GET','/git/ref/tags/'+TAG)
- if ref and ref['object']['sha']!=sha:raise RuntimeError('Preserving existing immutable tag')
+ updated=bool(ref and ref['object']['sha']!=sha)
+ if updated:name='Penalty-Fever-2026-Edition-'+TAG+'-'+sha[:7]+'.zip'
  release=request('GET','/releases/tags/'+TAG)
  if release is None:release=request('POST','/releases',{'tag_name':TAG,'target_commitish':sha,'name':'Penalty Fever 2026 Edition · '+TAG,'body':open('RELEASE-v1.0.5.md',encoding='utf-8-sig').read()+'\n\nSHA256: `'+digest+'`','draft':False,'prerelease':True,'make_latest':'false'})
+ if updated:release=request('PATCH','/releases/'+str(release['id']),{'body':'**Pacote atualizado:** [baixar ZIP](https://github.com/'+REPO+'/releases/download/'+TAG+'/'+name+'). Código: '+sha+'. A tag e o arquivo originais foram preservados.\n\n'+open('RELEASE-v1.0.5.md',encoding='utf-8-sig').read()+'\n\nSHA256: `'+digest+'`'})
  existing={a['name']:a for a in release['assets']}
- for filename,data,mime in [(name,blob,'application/zip'),('SHA256-v1.0.5.txt',(digest+'  '+name+'\n').encode(),'text/plain')]:
+ for filename,data,mime in [(name,blob,'application/zip'),('SHA256-v1.0.5'+('-'+sha[:7] if updated else '')+'.txt',(digest+'  '+name+'\n').encode(),'text/plain')]:
   if filename in existing:
    assert existing[filename]['size']==len(data)
    continue
