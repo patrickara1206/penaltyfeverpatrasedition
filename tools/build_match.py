@@ -102,10 +102,11 @@ def shot(side):
 shot_away=shot('away');patches[78]=shot('home')
 score=copy('_root.ppBrand.ppNameHome.text','_root.pp_home')+copy('_root.ppBrand.ppNameAway.text','_root.pp_away')
 score+=copy('_root.ppBrand.ppScoreHome.text','_root.igr_golovi')+copy('_root.ppBrand.ppScoreAway.text','_root.komp_golovi')
-score+=assign('_root.ppBrand.ppTurnLabel.text',get('_root.pp_round_label')+P(' ')+b'\x47'+get('_root.serija_shuteva')+P(1)+b'\x47\x47')
+score+=assign('_root.ppBrand.ppTurnLabel.text',get('_root.serija_shuteva')+P(1)+b'\x47')
 score+=member('_root.your_shot_klip','_visible',0)+member('_root.opponents_shot_klip','_visible',0)
-score+=guarded(get('_root.sutIgraca'),copy('_root.ppBrand.ppPrompt.text','_root.pp_attack_label'))
-score+=guarded(get('_root.sutIgraca')+b'\x12',copy('_root.ppBrand.ppPrompt.text','_root.pp_defend_label'))
+score+=put('_root.ppBrand.ppPrompt.text','')
+score+=copy('_root.ppBrand.ppAttackLabel._visible','_root.sutIgraca')
+score+=assign('_root.ppBrand.ppDefendLabel._visible',get('_root.sutIgraca')+b'\x12')
 body=repaint+score+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
@@ -114,6 +115,24 @@ skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
 for field,value in [('pp_speed',12),('pp_level',1),('pp_keeper',30),('pp_pace',75),('pp_round_label','RODADA'),('pp_attack_label','SUA VEZ'),('pp_defend_label','ADVERSARIO'),('pp_home_number',16777215),('pp_away_number',16777215)]:
  skin+=guarded(get('_root.'+field)+b'\x12',put('_root.'+field,value))
 skin+=copy('_root.runda','_root.pp_level')
+skin+=guarded(get('_root.pp_lang')+b'\x12',put('_root.pp_lang','pt'))
+skin+=guarded(get('_root.pp_text_scale')+b'\x12',put('_root.pp_text_scale',1))
+for key,clip in [('attack','ppAttackLabel'),('defend','ppDefendLabel'),('round','ppRoundLabel')]:
+ name=P('pf_')+get('_root.pp_lang')+b'\x47'+P('_'+key)+b'\x47'
+ path='_root.ppBrand.'+clip
+ skin+=call('_root.ppBrand','createEmptyMovieClip',[clip,9250+['attack','defend','round'].index(key)])
+ skin+=assign('_root.ppLabelBitmap',invoke('flash.display.BitmapData','loadBitmap',[name]))
+ skin+=call(path,'attachBitmap',[('_root.ppLabelBitmap',),1])
+ scale=get('_root.pp_text_scale')+P(50)+b'\x0c'
+ skin+=assign(path+'._xscale',scale)+assign(path+'._yscale',scale)
+ width=get('_root.ppLabelBitmap.width')+get('_root.pp_text_scale')+b'\x0c'+P(0.5)+b'\x0c'
+ if key=='round':
+  x=P(542)+width+P(20)+b'\x47'+P(2)+b'\x0d\x0b'
+  skin+=assign(path+'._x',x)+put(path+'._y',14)
+  skin+=assign('_root.ppBrand.ppTurnLabel._x',x+width+b'\x47')+put('_root.ppBrand.ppTurnLabel._width',20)
+ else:
+  x=P(330)+P(255)+width+b'\x0b'+P(2)+b'\x0d\x47'
+  skin+=assign(path+'._x',x)+put(path+'._y',292)
 skin+=call('flash.external.ExternalInterface','call',['patrasReady'])
 patches[75]=skin
 # A shooter's setup is frame101 (zero-based). Change the CPU speed both at
@@ -157,7 +176,7 @@ def actor_postframes(payload,expected=20):
  assert frames==expected,frames
  return out
 
-out=D[8:start];pos=start;frame=0;seen=set()
+out=D[8:start]+(BASE/'tools/actionscript/text-labels.bin').read_bytes();pos=start;frame=0;seen=set()
 while pos<len(D):
  s=pos;v=struct.unpack_from('<H',D,pos)[0];pos+=2;t=v>>6;n=v&63
  if n==63:n=struct.unpack_from('<I',D,pos)[0];pos+=4

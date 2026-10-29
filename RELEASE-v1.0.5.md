@@ -19,3 +19,8 @@ Oito cenários de decisão de gol; validação WebAssembly dos dois módulos rec
 ## Estado da edição
 
 Prévia: mantém os recortes de catálogo e adaptações de formato documentados na v1.0.4. Motor e gráficos originais derivados de Penalty Fever Plus / FlashFooty, emulados por Ruffle; marcas pertencem aos respectivos titulares. Não há alegação de licenciamento oficial.
+## Fontes e idiomas no Flash
+
+Os 30 rótulos de cobrança/defesa/rodada dos dez idiomas são compostos com Noto e HarfBuzz e incorporados como bitmaps pequenos no SWF. Isso evita caracteres ausentes nas fontes padrão do Ruffle, inclusive chinês, árabe e hindi. Não há download de fontes durante a partida. Licenças SIL OFL em licenses/noto. O tamanho desses avisos acompanha a preferência de letras.
+
+Teste adicional no navegador: caracteres chineses e árabes, além de uma partida rápida completa com tela de resultado e retorno à seleção.

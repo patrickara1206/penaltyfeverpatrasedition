@@ -1,0 +1,242 @@
+[
+  {
+    "language": "pt",
+    "key": "round",
+    "text": "Rodada",
+    "width": 86,
+    "height": 24,
+    "font": "notosans"
+  },
+  {
+    "language": "en",
+    "key": "round",
+    "text": "Round",
+    "width": 74,
+    "height": 24,
+    "font": "notosans"
+  },
+  {
+    "language": "es",
+    "key": "round",
+    "text": "Ronda",
+    "width": 73,
+    "height": 24,
+    "font": "notosans"
+  },
+  {
+    "language": "fr",
+    "key": "round",
+    "text": "Tour",
+    "width": 55,
+    "height": 23,
+    "font": "notosans"
+  },
+  {
+    "language": "de",
+    "key": "round",
+    "text": "Runde",
+    "width": 74,
+    "height": 24,
+    "font": "notosans"
+  },
+  {
+    "language": "it",
+    "key": "round",
+    "text": "Turno",
+    "width": 70,
+    "height": 23,
+    "font": "notosans"
+  },
+  {
+    "language": "zh",
+    "key": "round",
+    "text": "轮次",
+    "width": 50,
+    "height": 26,
+    "font": "notosanssc"
+  },
+  {
+    "language": "ar",
+    "key": "round",
+    "text": "الجولة",
+    "width": 56,
+    "height": 26,
+    "font": "notonaskharabic"
+  },
+  {
+    "language": "hi",
+    "key": "round",
+    "text": "दौर",
+    "width": 34,
+    "height": 28,
+    "font": "notosansdevanagari"
+  },
+  {
+    "language": "ru",
+    "key": "round",
+    "text": "Раунд",
+    "width": 71,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "pt",
+    "key": "attack",
+    "text": "Sua vez de cobrar",
+    "width": 251,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "en",
+    "key": "attack",
+    "text": "Your turn to shoot",
+    "width": 261,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "es",
+    "key": "attack",
+    "text": "Tu turno de tirar",
+    "width": 234,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "fr",
+    "key": "attack",
+    "text": "À vous de tirer",
+    "width": 208,
+    "height": 33,
+    "font": "notosans"
+  },
+  {
+    "language": "de",
+    "key": "attack",
+    "text": "Du schießt",
+    "width": 152,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "it",
+    "key": "attack",
+    "text": "Tocca a te tirare",
+    "width": 225,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "zh",
+    "key": "attack",
+    "text": "轮到你射门",
+    "width": 150,
+    "height": 32,
+    "font": "notosanssc"
+  },
+  {
+    "language": "ar",
+    "key": "attack",
+    "text": "دورك للتسديد",
+    "width": 147,
+    "height": 32,
+    "font": "notonaskharabic"
+  },
+  {
+    "language": "hi",
+    "key": "attack",
+    "text": "आपकी किक",
+    "width": 145,
+    "height": 31,
+    "font": "notosansdevanagari"
+  },
+  {
+    "language": "ru",
+    "key": "attack",
+    "text": "Ваш удар",
+    "width": 138,
+    "height": 34,
+    "font": "notosans"
+  },
+  {
+    "language": "pt",
+    "key": "defend",
+    "text": "Adversário cobrando",
+    "width": 297,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "en",
+    "key": "defend",
+    "text": "Opponent’s turn",
+    "width": 232,
+    "height": 34,
+    "font": "notosans"
+  },
+  {
+    "language": "es",
+    "key": "defend",
+    "text": "Turno del rival",
+    "width": 204,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "fr",
+    "key": "defend",
+    "text": "Tir adverse",
+    "width": 159,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "de",
+    "key": "defend",
+    "text": "Gegner schießt",
+    "width": 218,
+    "height": 35,
+    "font": "notosans"
+  },
+  {
+    "language": "it",
+    "key": "defend",
+    "text": "Tira l’avversario",
+    "width": 222,
+    "height": 28,
+    "font": "notosans"
+  },
+  {
+    "language": "zh",
+    "key": "defend",
+    "text": "对手射门",
+    "width": 120,
+    "height": 32,
+    "font": "notosanssc"
+  },
+  {
+    "language": "ar",
+    "key": "defend",
+    "text": "دور الخصم",
+    "width": 119,
+    "height": 35,
+    "font": "notonaskharabic"
+  },
+  {
+    "language": "hi",
+    "key": "defend",
+    "text": "विरोधी की किक",
+    "width": 176,
+    "height": 32,
+    "font": "notosansdevanagari"
+  },
+  {
+    "language": "ru",
+    "key": "defend",
+    "text": "Удар соперника",
+    "width": 233,
+    "height": 34,
+    "font": "notosans"
+  }
+]
