@@ -5,11 +5,18 @@ repo=Path(__file__).resolve().parents[1]
 name='Penalty-Fever-2026-Edition-v1.0.5'
 output=repo.parents[1]/'outputs';output.mkdir(exist_ok=True)
 folder=output/name;folder.mkdir(exist_ok=True)
+artwork_manifest=json.loads((repo/'app/logos-manifest.json').read_text(encoding='utf8'))
+referenced_artwork={'app/'+row['path']for rows in artwork_manifest.values()for row in rows.values()}
 files=[]
 for p in sorted(repo.rglob('*')):
  rel=p.relative_to(repo)
  if not p.is_file()or any(x in ['.git','distribuicao','__pycache__','node_modules','dist-cloudflare','.wrangler']for x in rel.parts)or p.name.startswith('.env')or p.suffix in ['.pyc','.log']:continue
  if p.name.startswith('Cloudflare-Penalty-Fever-')and p.suffix=='.zip':continue
+ # Replaced catalogue files remain in Git history, but the portable game only
+ # needs the images referenced by its current manifest (including fallbacks).
+ is_catalog_image=rel.as_posix().startswith('app/assets/logos/')or(rel.as_posix().startswith('app/assets/edition/')and p.name.startswith(('team-','competition-')))
+ if is_catalog_image:
+  if rel.as_posix()not in referenced_artwork:continue
  if p.name.startswith('qa-'):raise RuntimeError('Temporary QA file in package')
  files.append((p,rel));dest=folder/rel;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,dest)
 manifest=json.loads((repo/'app/logos-manifest.json').read_text(encoding='utf8'))
