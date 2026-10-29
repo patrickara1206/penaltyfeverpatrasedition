@@ -2,13 +2,13 @@
   "status": "passed",
   "teamsAndNations": 1801,
   "competitions": 91,
-  "artworkFiles": 1880,
+  "artworkFiles": 1878,
   "formats": {
-    "SVG": 971,
-    "PNG": 898,
+    "SVG": 799,
+    "PNG": 1068,
     "WEBP": 11
   },
-  "artworkBytes": 14772046,
+  "artworkBytes": 17245370,
   "actorFramesWithPostPlacementRecolor": 20,
   "motionRootFramesWithRecolor": [
     75,
@@ -18,5 +18,5 @@
     105,
     106
   ],
-  "matchSha256": "351b81aef5fe8bba9f491daa124332114af22a77b4c28b5d6ee58ea9f57b59cd"
+  "matchSha256": "74c488724600228fc90ca902aa725bb0930fb8b5a70ca274f1f6cc00b54c52eb"
 }

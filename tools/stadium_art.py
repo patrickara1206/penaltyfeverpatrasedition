@@ -136,4 +136,6 @@ def build_stadium(call, put, P, get):
     rect(492, 4, 100, 2, 0xE8CB79)
     text('ppTurnLabel', 'RODADA 1', 496, 10, 92, 20, 11, 0xF4F6FC, 9204)
     centered('ppTurnLabel')
+    text('ppPrompt', '', 330, 292, 255, 28, 15, 0xFFFFFF, 9205)
+    centered('ppPrompt')
     return bytes(out)

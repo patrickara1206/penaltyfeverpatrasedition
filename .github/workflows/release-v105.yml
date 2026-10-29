@@ -1,0 +1,21 @@
+name: Publicar v1.0.5
+on:
+  push:
+    branches: [v1.0.5]
+    paths: ['distribuicao/**', 'tools/publish-v105.py', '.github/workflows/release-v105.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validar e publicar v1.0.5
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/publish-v105.py

@@ -48,12 +48,21 @@ def color(var,path):return P(var)+get(path)+P(1)+P('Color')+b'\x40\x1d'
 # onEnterFrame-only hook ran before gotoAndStop replaced the shirt instances.
 def recolor_side(side):
  b=copy('_root.tip_dresa','_root.pp_'+side+'_pattern')
+ # Restore head selection before rebinding face/body colors on replaced clips.
+ head=get('_root.glave')+get('_root.brojac_glava_'+('mi' if side=='home' else 'oni'))+b'\x4e'
+ b+=invoke('_root.igr.glava','gotoAndStop',[head])+b'\x17'
+ tone=get('_root.tenovi')+get('_root.brojac_glava_'+('mi' if side=='home' else 'oni'))+b'\x4e'
+ b+=put('_root.ppSkin',6894849)+guarded(tone+P(1)+b'\x49',put('_root.ppSkin',16764057))
+ for name,path in [('ppFace','glava.lice'),('ppBody','ten')]:
+  b+=color('_root.'+name,'_root.igr.'+path)+call('_root.'+name,'setRGB',[('_root.ppSkin',)])
  frame=get('_root.igr._currentframe')+get('_root.pp_'+side+'_pattern')+P(1)+b'\x0b'+P(20)+b'\x0c\x47'
  b+=invoke('_root.igr.unipruge','gotoAndStop',[frame])+b'\x17'
  for var,path,param in [('BojaDresa1','dres1','c1'),('BojaUniPruga','unipruge','c2'),('BojaBroja','brojka','number'),('BojaShortsaICarapa','shorts','shorts')]:
   b+=color('_root.'+var,'_root.igr.'+path)+call('_root.'+var,'setRGB',[('_root.pp_'+side+'_'+param,)])
  return b
 refresh=guarded(get('_root.sutIgraca'),recolor_side('home'))+guarded(get('_root.sutIgraca')+b'\x12',recolor_side('away'))
+for var,path,value in [('ppKeeperShirt','dres_i',0xE6A632),('ppKeeperHair','glava_i.kosa_i',0x49301F)]:
+ refresh+=color('_root.'+var,'_root.golmance.golman_i.'+path)+call('_root.'+var,'setRGB',[value])
 body=guarded(get('_root.igr'),refresh)+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppRecolor')+b'\x9b\x05\x00'+fn+b'\x1d'
@@ -68,14 +77,21 @@ def dot(x,y,r,c):
   point=[round(x+math.cos(j*math.pi/4)*r,2),round(y+math.sin(j*math.pi/4)*r,2)]
   a+=call('_root.ppBrand.ppShots','moveTo' if j==0 else 'lineTo',point)
  return a+call('_root.ppBrand.ppShots','endFill',[])
+def mark(x,y,made):
+ c='_root.ppBrand.ppShots';a=call(c,'lineStyle',[1,0xFFFFFF,100])
+ points=[(x-2,y),(x-0.5,y+1.5),(x+2,y-1.5)]if made else[(x-1.5,y-1.5),(x+1.5,y+1.5)]
+ a+=call(c,'moveTo',list(points[0]))
+ for p in points[1:]:a+=call(c,'lineTo',list(p))
+ if not made:a+=call(c,'moveTo',[x-1.5,y+1.5])+call(c,'lineTo',[x+1.5,y-1.5])
+ return a+call(c,'lineStyle',[])
 paint=call('_root.ppBrand.ppShots','clear',[])+assign('_root.ppShotStart',invoke('Math','max',[P(0),get('_root.serija_shuteva')+P(4)+b'\x0b']))
 for ar,y in [('ppHomeShots',16),('ppAwayShots',38)]:
  for j in range(5):
   x=164+j*13
   paint+=dot(x,y,3.4,0x68838A)+dot(x,y,2.3,0x102932)
   value=get('_root.'+ar)+get('_root.ppShotStart')+P(j)+b'\x47\x4e'
-  paint+=guarded(value+P(1)+b'\x49',dot(x,y,3.4,0x62D49A))
-  paint+=guarded(value+P(0)+b'\x49',dot(x,y,3.4,0xF16D7A))
+  paint+=guarded(value+P(1)+b'\x49',dot(x,y,3.4,0x287CB0)+mark(x,y,True))
+  paint+=guarded(value+P(0)+b'\x49',dot(x,y,3.4,0xB76526)+mark(x,y,False))
 body=paint+b'\0';fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppPaintShots')+b'\x9b\x05\x00'+fn+b'\x1d'+call('_root','ppPaintShots',[])
 def shot(side):
@@ -86,13 +102,16 @@ def shot(side):
 shot_away=shot('away');patches[78]=shot('home')
 score=copy('_root.ppBrand.ppNameHome.text','_root.pp_home')+copy('_root.ppBrand.ppNameAway.text','_root.pp_away')
 score+=copy('_root.ppBrand.ppScoreHome.text','_root.igr_golovi')+copy('_root.ppBrand.ppScoreAway.text','_root.komp_golovi')
-score+=assign('_root.ppBrand.ppTurnLabel.text',P('RODADA ')+get('_root.serija_shuteva')+P(1)+b'\x47\x47')
+score+=assign('_root.ppBrand.ppTurnLabel.text',get('_root.pp_round_label')+P(' ')+b'\x47'+get('_root.serija_shuteva')+P(1)+b'\x47\x47')
+score+=member('_root.your_shot_klip','_visible',0)+member('_root.opponents_shot_klip','_visible',0)
+score+=guarded(get('_root.sutIgraca'),copy('_root.ppBrand.ppPrompt.text','_root.pp_attack_label'))
+score+=guarded(get('_root.sutIgraca')+b'\x12',copy('_root.ppBrand.ppPrompt.text','_root.pp_defend_label'))
 body=repaint+score+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
 # Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
 # level 0..3.9 (marker timing), keeper 0..100 (following probability).
-for field,value in [('pp_speed',12),('pp_level',1),('pp_keeper',30),('pp_home_number',16777215),('pp_away_number',16777215)]:
+for field,value in [('pp_speed',12),('pp_level',1),('pp_keeper',30),('pp_pace',75),('pp_round_label','RODADA'),('pp_attack_label','SUA VEZ'),('pp_defend_label','ADVERSARIO'),('pp_home_number',16777215),('pp_away_number',16777215)]:
  skin+=guarded(get('_root.'+field)+b'\x12',put('_root.'+field,value))
 skin+=copy('_root.runda','_root.pp_level')
 skin+=call('flash.external.ExternalInterface','call',['patrasReady'])
@@ -114,6 +133,7 @@ speedhook=guarded(get('_root.sutIgraca')+b'\x12',change)
 keepercondition=invoke('Math','random',[])+P(100)+b'\x0c'+get('_root.pp_keeper')+b'\x48'
 keeper=guarded(get('_root.sutIgraca'),guarded(keepercondition,put('_root.odlukaOdbrana',-1)))
 patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),('_root.pp_speed',)])
+patches[101]+=copy('_root.trajanjeSuta','_root.pp_pace')+put('_root.timerSuta',350)
 patches[104]=speedhook+repaint
 for f in [102,103,105,106]:patches[f]=repaint
 
@@ -125,7 +145,7 @@ check=get('_root.pp_allow_draw')+P(1)+b'\x49'+get('_root.serija_shuteva')+P(5)+b
 stopdraw=result+b'\x00'; check+=b'\x12\x9d\x02\x00'+struct.pack('<h',len(stopdraw))+stopdraw
 progress=call('flash.external.ExternalInterface','call',['patrasProgress',('_root.serija_shuteva',),('_root.igr_golovi',),('_root.komp_golovi',)])
 patches[80]=progress
-def actor_postframes(payload):
+def actor_postframes(payload,expected=20):
  out=payload[:4];p=4;frames=0
  while p<len(payload):
   begin=p;v=struct.unpack_from('<H',payload,p)[0];p+=2;t=v>>6;n=v&63
@@ -134,7 +154,7 @@ def actor_postframes(payload):
   if t==1:out+=tag(12,repaint+b'\0');frames+=1
   out+=payload[begin:p]
   if not t:break
- assert frames==20,frames
+ assert frames==expected,frames
  return out
 
 out=D[8:start];pos=start;frame=0;seen=set()
@@ -142,8 +162,15 @@ while pos<len(D):
  s=pos;v=struct.unpack_from('<H',D,pos)[0];pos+=2;t=v>>6;n=v&63
  if n==63:n=struct.unpack_from('<I',D,pos)[0];pos+=4
  pos+=n
+ if t==12 and frame==105:
+  # The original tests lateral distance against the integrated shadow coordinate.
+  # Use the rendered ball coordinate, including catches/rebounds, at the goal plane.
+  payload=(BASE/'tools/actionscript/physics-actions.bin').read_bytes()
+  out+=tag(12,payload)+tag(12,repaint+b'\0');seen.add(105);continue
  if t==39 and struct.unpack_from('<H',D,pos-n)[0]==661:
   out+=tag(39,actor_postframes(D[pos-n:pos]));continue
+ if t==39 and struct.unpack_from('<H',D,pos-n)[0]==219:
+  payload=D[pos-n:pos];out+=tag(39,actor_postframes(payload,struct.unpack_from('<H',payload,2)[0]));continue
  if t==12 and frame==80:
   # The original phase increments the CPU attempt counter. Check the complete pair afterwards.
   out+=D[s:pos]

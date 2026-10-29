@@ -1,4 +1,7 @@
 node_modules/
+dist-cloudflare/
+Cloudflare-Penalty-Fever-*.zip
+.wrangler/
 __pycache__/
 *.pyc
 .DS_Store
