@@ -41,6 +41,7 @@ function paintQuickSide(side,direction=0){
  wheel.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{s.name=list[Number(b.dataset.pick)];paintQuickSide(side);wheel.focus({preventScroll:true});});
  const comp=quickSelection.catalog==='current'?data.competitions.find(c=>(s.league==='all'||c.id===s.league)&&c.teams.includes(s.name)):null,history=window.PP_CLUB_HISTORY?.teams?.[s.name];
  $(side+'Identity').innerHTML=s.name?`<h2>${esc(s.name)}</h2><p class="picker-league">${esc(comp?.name||'Arquivo clássico')} ${comp?'· '+esc(comp.season):''}</p><div class="picker-facts"><span><small>FUNDAÇÃO</small><b>${esc(history?.founded||'—')}</b></span><span><small>NO FILTRO</small><b>${list.length} ${list.length===1?'EQUIPE':'EQUIPES'}</b></span><span><small>SELEÇÃO</small><b>${String(index+1).padStart(2,'0')} / ${list.length}</b></span></div>`:'<h2>Nenhum clube encontrado</h2><p class="picker-league">Tente outro nome ou limpe a busca.</p>';
+ if(s.name)$(side+'Identity').insertAdjacentHTML('beforeend',rosterCard(s.name));
  $(side+'Ticks').innerHTML=Array.from({length:Math.min(list.length,20)},(_,i)=>`<i class="${i===(index%20)?'active':''}"></i>`).join('');
  document.querySelectorAll(`[data-step][data-side="${side}"]`).forEach(b=>b.disabled=list.length<2);
  if($('quickMatchSummary'))$('quickMatchSummary').textContent=(quickSelection.home.name||'Escolha seu time')+' × '+(quickSelection.away.name||'Escolha o adversário');

@@ -54,3 +54,5 @@ body{font-size:calc(15px * var(--font-scale,1))}.settings-panel{max-width:760px;
 
 /* Keep the legacy loading artwork behind the edition loading screen. */
 #game.match-loading{position:relative;background:#102d24}#game.match-loading ruffle-player{opacity:0}#game.match-loading:after{content:"Preparando o estádio…";position:absolute;inset:0;display:grid;place-items:center;color:#edcf79;font-weight:700;pointer-events:none}
+
+.verified-roster{margin-top:14px;padding:12px;border:1px solid #446356;border-radius:10px;text-align:left}.verified-roster summary{cursor:pointer;color:#e8cb79;font-size:12px;font-weight:800}.verified-roster ul{max-height:240px;overflow:auto;padding:0;list-style:none}.verified-roster li{display:flex;flex-direction:column;gap:3px;padding:9px 0;border-bottom:1px solid #325144}.verified-roster li span{font-size:12px;color:#bad2c3}.roster-status{margin-top:14px}

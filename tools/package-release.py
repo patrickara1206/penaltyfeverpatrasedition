@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,shutil,zipfile,hashlib
 repo=Path(__file__).resolve().parents[1]
-name='Penalty-Fever-2026-Edition-v1.0.6'
+name='Penalty-Fever-2026-Edition-v1.0.7-beta.1'
 output=repo.parents[1]/'outputs';output.mkdir(exist_ok=True)
 folder=output/name;folder.mkdir(exist_ok=True)
 artwork_manifest=json.loads((repo/'app/logos-manifest.json').read_text(encoding='utf8'))
@@ -29,7 +29,7 @@ with zipfile.ZipFile(archive)as z:
  assert z.testzip()is None
  expected={name+'/'+rel.as_posix()for p,rel in files};assert set(z.namelist())==expected
  assert name+'/JOGAR.html'in expected
- assert 'v1.0.6'in z.read(name+'/app/index.html').decode('utf8')
+ assert 'v1.0.7-beta.1'in z.read(name+'/app/index.html').decode('utf8')
  for p,rel in files:assert hashlib.sha256(z.read(name+'/'+rel.as_posix())).digest()==hashlib.sha256(p.read_bytes()).digest()
 digest=hashlib.sha256(archive.read_bytes()).hexdigest();dist=repo/'distribuicao';dist.mkdir(exist_ok=True);shutil.copy2(archive,dist/'Penalty-Fever-2026-Edition.zip');(dist/'SHA256.txt').write_text(digest+'  Penalty-Fever-2026-Edition.zip\n',encoding='utf8');(output/(name+'.sha256')).write_text(digest+'  '+archive.name+'\n',encoding='utf8')
 print(json.dumps({'zip':str(archive),'bytes':archive.stat().st_size,'files':len(files),'sha256':digest},indent=2))

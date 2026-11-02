@@ -1,6 +1,7 @@
 """Create a public static bundle, without source tools, saves or duplicate crests."""
 from pathlib import Path
-import shutil,json,zipfile,sys,re,base64
+import shutil,json,zipfile,sys,re,base64,os
+if os.environ.get("CF_PAGES") or os.environ.get("WORKERS_CI"):raise SystemExit("Beta v1.0.7: deploy público desativado; use apenas o pacote de teste do GitHub.")
 repo=Path(__file__).resolve().parents[1];app=repo/'app';out=(repo/sys.argv[1]).resolve()if len(sys.argv)>1 else repo.parents[1]/'outputs'/'cloudflare-v105';out.mkdir(parents=True,exist_ok=True)
 files=[]
 for p in app.iterdir():
@@ -26,7 +27,7 @@ for name,value in modules.items():
  binary=base64.b64decode(value);assert binary.startswith(b'\0asm')and len(binary)<25*1024*1024
  (out/name).write_bytes(binary)
 (out/'_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  X-Frame-Options: DENY\n',encoding='utf8')
-archive=out.parent/'Cloudflare-Penalty-Fever-v1.0.6.zip'
+archive=out.parent/'Cloudflare-Penalty-Fever-v1.0.7-beta.1.zip'
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=7)as z:
  allowed={rel for _,rel in files}|set(modules)|{'_headers'}
  for rel in sorted(allowed):z.write(out/rel,rel)

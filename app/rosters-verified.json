@@ -1,0 +1,576 @@
+{
+  "version": 1,
+  "season": "2026",
+  "clubs": {
+    "Palmeiras": {
+      "source": "https://www.palmeiras.com.br/elenco/",
+      "consultedAt": "2026-11-02",
+      "scope": "Jogadores listados na página pública do clube; não é lista de inscritos de todas as competições.",
+      "sourceSha256": "727bb800edfdb9f1041a0a2a9ff7b658ffc045f941759d20fa70dd2349a61a02",
+      "players": [
+        {
+          "name": "Bruno Bertinato",
+          "role": "Goleiro",
+          "number": 21,
+          "confirmed": true
+        },
+        {
+          "name": "Carlos Miguel",
+          "role": "Goleiro",
+          "number": 1,
+          "confirmed": true
+        },
+        {
+          "name": "Marcelo Lomba",
+          "role": "Goleiro",
+          "number": 14,
+          "confirmed": true
+        },
+        {
+          "name": "Alexander Barboza",
+          "role": "Zagueiro",
+          "number": 2,
+          "confirmed": true
+        },
+        {
+          "name": "Benedetti",
+          "role": "Zagueiro",
+          "number": 43,
+          "confirmed": true
+        },
+        {
+          "name": "Bruno Fuchs",
+          "role": "Zagueiro",
+          "number": 3,
+          "confirmed": true
+        },
+        {
+          "name": "Gustavo Gómez",
+          "role": "Zagueiro",
+          "number": 15,
+          "confirmed": true
+        },
+        {
+          "name": "Murilo",
+          "role": "Zagueiro",
+          "number": 26,
+          "confirmed": true
+        },
+        {
+          "name": "Agustín Giay",
+          "role": "Lateral-direito",
+          "number": 4,
+          "confirmed": true
+        },
+        {
+          "name": "Khellven",
+          "role": "Lateral-direito",
+          "number": 12,
+          "confirmed": true
+        },
+        {
+          "name": "Arthur",
+          "role": "Lateral-esquerdo",
+          "number": 56,
+          "confirmed": true
+        },
+        {
+          "name": "Jefté",
+          "role": "Lateral-esquerdo",
+          "number": 6,
+          "confirmed": true
+        },
+        {
+          "name": "Joaquín Piquerez",
+          "role": "Lateral-esquerdo",
+          "number": 22,
+          "confirmed": true
+        },
+        {
+          "name": "Andreas Pereira",
+          "role": "Meio-campista",
+          "number": 8,
+          "confirmed": true
+        },
+        {
+          "name": "Emiliano Martínez",
+          "role": "Meio-campista",
+          "number": 32,
+          "confirmed": true
+        },
+        {
+          "name": "Felipe Anderson",
+          "role": "Meio-campista",
+          "number": 7,
+          "confirmed": true
+        },
+        {
+          "name": "Larson",
+          "role": "Meio-campista",
+          "number": 48,
+          "confirmed": true
+        },
+        {
+          "name": "Lucas Evangelista",
+          "role": "Meio-campista",
+          "number": 30,
+          "confirmed": true
+        },
+        {
+          "name": "Marlon Freitas",
+          "role": "Meio-campista",
+          "number": 17,
+          "confirmed": true
+        },
+        {
+          "name": "Mauricio",
+          "role": "Meio-campista",
+          "number": 18,
+          "confirmed": true
+        },
+        {
+          "name": "Jhon Arias",
+          "role": "Atacante",
+          "number": 11,
+          "confirmed": true
+        },
+        {
+          "name": "López",
+          "role": "Atacante",
+          "number": 42,
+          "confirmed": true
+        },
+        {
+          "name": "Paulinho",
+          "role": "Atacante",
+          "number": 10,
+          "confirmed": true
+        },
+        {
+          "name": "Ramón Sosa",
+          "role": "Atacante",
+          "number": 19,
+          "confirmed": true
+        },
+        {
+          "name": "Vitor Roque",
+          "role": "Atacante",
+          "number": 9,
+          "confirmed": true
+        }
+      ]
+    },
+    "Santos": {
+      "source": "https://www.santosfc.com.br/masculino/",
+      "consultedAt": "2026-11-02",
+      "scope": "Jogadores listados na página pública do clube; não é lista de inscritos de todas as competições.",
+      "sourceSha256": "74c232c4938570de8c4ca14bda781b37cd24ade857a7bd34c9d3268a7e28e265",
+      "players": [
+        {
+          "name": "Diógenes",
+          "role": "Goleiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Gabriel Brazão",
+          "role": "Goleiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "João Paulo",
+          "role": "Goleiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "João Pedro",
+          "role": "Goleiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Rodrigo Falcão",
+          "role": "Goleiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "João Alencar",
+          "role": "Zagueiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "João Ananias",
+          "role": "Zagueiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Luan Peres",
+          "role": "Zagueiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Lucas Veríssimo",
+          "role": "Zagueiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Escobar",
+          "role": "Lateral Esquerdo",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Rafael Gonzaga",
+          "role": "Lateral Esquerdo",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Vinícius Lira",
+          "role": "Lateral Esquerdo",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Davizinho",
+          "role": "Lateral Direito",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Igor Vinícius",
+          "role": "Lateral Direito",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Rodinei",
+          "role": "Lateral Direito",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Coutinho",
+          "role": "Meio Campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Gabriel Bontempo",
+          "role": "Meio Campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Gabriel Menino",
+          "role": "Meio Campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Lima",
+          "role": "Meio Campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Miguelito",
+          "role": "Meio Campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Neymar Jr",
+          "role": "Meio Campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Arthur",
+          "role": "Volante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Gustavo Henrique",
+          "role": "Volante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "João Schmidt",
+          "role": "Volante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Oliva",
+          "role": "Volante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Samuel Pierri",
+          "role": "Volante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Willian Arão",
+          "role": "Volante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Barreal",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Caballero",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Everton",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Gabriel Barbosa",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Moisés",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Rony",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Thaciano",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        }
+      ]
+    },
+    "Botafogo": {
+      "source": "https://www.botafogo.com.br/elenco/futebol",
+      "consultedAt": "2026-11-02",
+      "scope": "Jogadores listados na página pública do clube; não é lista de inscritos de todas as competições.",
+      "sourceSha256": "0b410ac58183f13207e371ae6018a7ef625aaecb2131a938844b20bf614da73e",
+      "players": [
+        {
+          "name": "Gabriel Batista de Souza",
+          "role": "Goleiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Warleson Steillon Lisboa Oliveira",
+          "role": "Goleiro",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": " Alex Nicolao Telles",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Anthony Wesley Ciriano Oliveira",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Arthur Largura Chaves",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Nahuel Adolfo Ferraresi Hernández",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Gabriel Pereira Justino",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Carlos Eduardo da Silva Santos",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Kaio Fernando da Silva Pantaleão",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Lucas Gabriel Monzón Lemos",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Fernando Marçal Oliveira",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Mateo Ponte Costa",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Paulo Victor da Silva",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": " Victor Alexander da Silva",
+          "role": "Defensor",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Allan Marques Loureiro",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Álvaro Montoro",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Cristian Nicolás Medina",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Danilo dos Santos de Oliveira",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Domingos Paulo Andrade",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Edenilson Andrade dos Santos",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Victor Hugo Custódio de Melo Moura",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Jordan Andrés Barrera Herrera",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Hakim Ziyech",
+          "role": "Meio-campista",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Danilo Pereira da Silva",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Kauan Almeida Toledo",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Lucas Emanuel Jales do Nascimento",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Matheus Martins Silva dos Santos",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Arthur Mendonça Cabral",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Jose Antonio dos Santos Junior",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "José Kadir Barría Rose",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Lucas Villalba Jaume",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        },
+        {
+          "name": "Francisco das Chagas Soares dos Santos",
+          "role": "Atacante",
+          "number": null,
+          "confirmed": true
+        }
+      ]
+    }
+  }
+}
