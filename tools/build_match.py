@@ -61,6 +61,29 @@ def uniform_details(owner,shirt,keeper=False):
  for key in ['_x','_y','_rotation','_xscale','_yscale']:
   out+=copy(path+'.'+key,owner+'.'+shirt+'.'+key)
  return out
+def jersey_number(side):
+ path='_root.igr.ppJerseyNumber'
+ b=guarded(get(path)+b'\x12',call('_root.igr','createEmptyMovieClip',['ppJerseyNumber',9900]))
+ b+=call(path,'clear',[])
+ # Vector digits avoid device-font clipping and timeline-dependent glyphs.
+ segments=[(-3,-7,3,-7),(3,-7,3,-2),(3,-2,3,3),(-3,3,3,3),(-3,-2,-3,3),(-3,-7,-3,-2),(-3,-2,3,-2)]
+ digits=['abcdef','bc','abdeg','abcdg','bcfg','acdfg','acdefg','abc','abcdefg','abcdfg']
+ value=get('_root.serija_shuteva')+P(9)+b'\x3f'+P(1)+b'\x47'
+ b+=assign('_root.ppJerseyDigit',value)
+ for k,(x,y,x2,y2) in enumerate(segments):
+  choices=[n for n,letters in enumerate(digits) if chr(97+k) in letters]
+  condition=b''
+  for i,n in enumerate(choices):
+   condition+=get('_root.ppJerseyDigit')+P(n)+b'\x49'
+   if i:condition+=b'\x11'
+  drawing=call(path,'lineStyle',[2.8,0x08191F,100])+call(path,'moveTo',[x,y])+call(path,'lineTo',[x2,y2])
+  drawing+=call(path,'lineStyle',[1.65,('_root.pp_'+side+'_number',),100])+call(path,'moveTo',[x,y])+call(path,'lineTo',[x2,y2])
+  b+=guarded(condition,drawing)
+ for key in ['_x','_y','_rotation','_xscale','_yscale']:
+  b+=copy(path+'.'+key,'_root.igr.brojka.'+key)
+ b+=put('_root.igr.brojka._visible',0)
+ return b
+
 # Recolor after each actor timeline change, rather than before it. The old
 # onEnterFrame-only hook ran before gotoAndStop replaced the shirt instances.
 def recolor_side(side):
@@ -74,6 +97,8 @@ def recolor_side(side):
   b+=color('_root.'+name,'_root.igr.'+path)+call('_root.'+name,'setRGB',[('_root.ppSkin',)])
  frame=get('_root.igr._currentframe')+get('_root.pp_'+side+'_pattern')+P(1)+b'\x0b'+P(20)+b'\x0c\x47'
  b+=invoke('_root.igr.unipruge','gotoAndStop',[frame])+b'\x17'
+ number=get('_root.serija_shuteva')+P(10)+b'\x3f'+P(2)+b'\x47'
+ b+=jersey_number(side)
  for var,path,param in [('BojaDresa1','dres1','c1'),('BojaUniPruga','unipruge','c2'),('BojaBroja','brojka','number'),('BojaShortsaICarapa','shorts','shorts')]:
   b+=color('_root.'+var,'_root.igr.'+path)+call('_root.'+var,'setRGB',[('_root.pp_'+side+'_'+param,)])
  return b
@@ -83,7 +108,7 @@ refresh+=guarded(get('_root.sutIgraca'),put('_root.ppKeeperColor',0xF29A28))
 for var,path,value in [('ppKeeperShirt','dres_i',('_root.ppKeeperColor',)),('ppKeeperHair','glava_i.kosa_i',0x49301F)]:
  refresh+=color('_root.'+var,'_root.golmance.golman_i.'+path)+call('_root.'+var,'setRGB',[value])
 refresh+=uniform_details('_root.golmance.golman_i','dres_i',True)
-refresh+=uniform_details('_root.igr','dres1')
+# Player detail overlays removed: they could detach as the original shirt changed frames.
 body=guarded(get('_root.igr'),refresh)+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppRecolor')+b'\x9b\x05\x00'+fn+b'\x1d'
@@ -128,7 +153,11 @@ score+=member('_root.your_shot_klip','_visible',0)+member('_root.opponents_shot_
 score+=put('_root.ppBrand.ppPrompt.text','')
 score+=copy('_root.ppBrand.ppAttackLabel._visible','_root.sutIgraca')
 score+=assign('_root.ppBrand.ppDefendLabel._visible',get('_root.sutIgraca')+b'\x12')
-body=repaint+score+b'\0'
+cheer=put('_root.ppGoalCelebrated',1)
+cheer+=guarded(get('_root.sutIgraca'),assign('_root.ppHomeCheerUntil',b'\x34'+P(3200)+b'\x47'))
+cheer+=guarded(get('_root.sutIgraca')+b'\x12',assign('_root.ppAwayCheerUntil',b'\x34'+P(3200)+b'\x47'))
+cheer=guarded(get('_root.gol'),guarded(get('_root.ppGoalCelebrated')+b'\x12',cheer))
+body=repaint+score+cheer+call('_root','ppAnimateStadium',[])+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
 # Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
@@ -185,7 +214,7 @@ patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flas
 patches[101]+=copy('_root.trajanjeSuta','_root.pp_pace')+put('_root.timerSuta',350)
 hide_target=member('_root.meta2','_visible',0)+call('_root.meta2','stop',[])
 hide_target+=member('_root.meta','_visible',0)+call('Mouse','show',[])
-patches[104]=speedhook+repaint+hide_target
+patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)
 for f in [102,103,105,106]:patches[f]=repaint
 
 # Callback reports user score, CPU score; original turn resolution reaches frame 82.
@@ -208,15 +237,14 @@ def actor_postframes(payload,expected=20):
  assert frames==expected,frames
  return out
 
-out=D[8:start]+(BASE/'tools/actionscript/text-labels.bin').read_bytes();pos=start;frame=0;seen=set()
+out=D[8:start]+(BASE/'tools/actionscript/text-labels.bin').read_bytes()+(BASE/'tools/actionscript/turf.bin').read_bytes();pos=start;frame=0;seen=set()
 while pos<len(D):
  s=pos;v=struct.unpack_from('<H',D,pos)[0];pos+=2;t=v>>6;n=v&63
  if n==63:n=struct.unpack_from('<I',D,pos)[0];pos+=4
  pos+=n
  if t==12 and frame==105:
-  # The original tests lateral distance against the integrated shadow coordinate.
-  # Use the rendered ball coordinate, including catches/rebounds, at the goal plane.
-  payload=(BASE/'tools/actionscript/physics-actions.bin').read_bytes()
+  # Preserve the classic flight, rebound and keeper collision program byte-for-byte.
+  payload=D[pos-n:pos]
   out+=tag(12,payload)+tag(12,repaint+b'\0');seen.add(105);continue
  if t==39 and struct.unpack_from('<H',D,pos-n)[0]==661:
   out+=tag(39,actor_postframes(D[pos-n:pos]));continue

@@ -1,8 +1,14 @@
 # Penalty Fever 2026 Edition · v1.0.6
 
-Correções de jogo e atualização da apresentação da partida.
+Atualização da apresentação da partida, preservando os personagens e a física clássicos.
 
-- Gol decidido pela passagem completa da bola, com interpolação entre quadros; inclui entradas após rebote e rejeita saída, defesa e entrada pela lateral da rede.
+- Publicidade deslizando continuamente para a esquerda com 12 marcas fictícias.
+- Torcida detalhada, bandeiras dos clubes e comemoração no setor do time que marcou.
+- Gramado com textura de lâminas de grama e faixas de corte.
+- Carregamento personalizado com os dois escudos e tela cheia preenchendo o player.
+- Número da camisa redesenhado em vetores para evitar falhas de fonte.
+
+- Física clássica original restaurada: voo, rebotes e colisões preservam o programa original, conforme solicitado.
 - Alvos de defesa ocultados no início do voo; cursor restaurado.
 - Goleiro do usuário em vermelho e adversário em laranja, com reaplicação da cor durante as animações.
 - Detalhes adicionais de gola, costura e camisa nos personagens, preservando as animações existentes. Não é uma substituição integral dos desenhos originais.
@@ -21,7 +27,7 @@ Correções de jogo e atualização da apresentação da partida.
 
 ## Validação e limites
 
-Testes da geometria varrida de gol, ponte do Ruffle, lançamento e resultado, catálogo, segurança, arquivos visuais e barragens da carreira. Prévia HTTP local exercitada em navegador real; não representa reprodução manual de todas as possíveis trajetórias.
+Comparação byte a byte da física original, testes de animação do estádio, ponte do Ruffle, lançamento e resultado, catálogo, segurança, arquivos visuais e barragens da carreira. Prévia HTTP local exercitada em navegador real; não representa reprodução manual de todas as possíveis trajetórias.
 
 Esta versão não certifica que os 91 formatos sejam integralmente oficiais. Permanecem calendários e critérios adaptados, especialmente em ligas regionais e competições com médias históricas, licenciamento ou vagas administrativas. Campanhas isoladas não disputam barragens contra outra divisão.
 

@@ -1,11 +1,16 @@
 """Native Flash vector artwork: fictional boards and a layered grandstand."""
 import math
 import random
+import struct
 
 
 def build_stadium(call, put, P, get):
     out = bytearray(call('_root', 'createEmptyMovieClip', ['ppBrand', 2]))
     clip = '_root.ppBrand'
+    animated=[]
+    def expr(path,value):return P(path)+value+b'\x1d'
+    def sine(speed,phase):
+        return get('_root.ppStadiumTime')+P(speed)+b'\x0c'+P(phase)+b'\x47'+P(1)+get('Math')+P('sin')+b'\x52'
 
     def poly(points, color, alpha=100):
         out.extend(call(clip, 'beginFill', [color, alpha]))
@@ -61,6 +66,16 @@ def build_stadium(call, put, P, get):
     out.extend(call(clip, 'curveTo', [300, 603, 540, 368]))
     out.extend(call(clip, 'lineStyle', []))
 
+    out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppTurf',100]))
+    out.extend(P('_root.ppTurfBitmap')+P('pf_turf')+P(1)+get('flash.display.BitmapData')+P('loadBitmap')+b'\x52\x1d')
+    out.extend(call('_root.ppBrand.ppTurf','attachBitmap',[('_root.ppTurfBitmap',),1]))
+    out.extend(put('_root.ppBrand.ppTurf._xscale',50)+put('_root.ppBrand.ppTurf._yscale',50)+put('_root.ppBrand.ppTurf._y',103))
+    out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppFieldLines',101]))
+    clip='_root.ppBrand.ppFieldLines'
+    for y in [170,230,367]:rect(0,y,600,2,0xE8F2DA,92)
+    out.extend(call(clip,'lineStyle',[2,0xE8F2DA,92])+call(clip,'moveTo',[60,368])+call(clip,'curveTo',[300,603,540,368])+call(clip,'lineStyle',[]))
+    disk(305,290,.85,0xE8F2DA)
+    clip='_root.ppBrand'
     # Concrete tiers, roof shadow, aisle openings, railings, and individual fans.
     rect(0, 0, 600, 62, 0x192D36)
     rect(0, 0, 600, 6, 0x0D1C25)
@@ -83,40 +98,84 @@ def build_stadium(call, put, P, get):
             if any(abs(x-a) < 7 for a in [94, 244, 393, 543]):
                 continue
             r = 1.65 if row < 2 else 2.0
-            c = rng.choice(shirts)
+            base_clip=clip
+            moving=row>0
+            if moving:
+                name='ppFan'+str(len(animated));clip='_root.ppBrand.'+name
+                out.extend(call('_root.ppBrand','createEmptyMovieClip',[name,5000+len(animated)]))
+                side='Home' if x<300 else 'Away'
+                idle=sine(1.5+row*.15,x*.17)+P(.5)+b'\x0c'
+                jump=sine(12,x*.17)+P(1)+get('Math')+P('abs')+b'\x52'+get('_root.ppCheer'+side)+P(2.2)+b'\x0c\x0c'
+                animated.append(expr(clip+'._y',idle+jump+b'\x0b'))
+            team='home' if x<300 else 'away'
+            c=rng.choice([('_root.pp_'+team+'_c1',),('_root.pp_'+team+'_c2',),('_root.pp_'+team+'_c1',),0xDFE6D9,0x263D43])
             poly([(x-3, y+4), (x-2, y+1), (x+2, y+1), (x+3, y+4),
                   (x+2, y+8), (x-2, y+8)], c)
+            rect(x-.6,y+2,1.2,4,0xFFFFFF,25)
+            poly([(x+1,y+2),(x+3,y+4),(x+2,y+8),(x,y+8)],0x000000,15)
+            rect(x-1.8,y+7,1.3,2.8,0x12212B)
+            rect(x+.5,y+7,1.3,2.8,0x12212B)
             disk(x, y, r, rng.choice(skin))
+            poly([(x-r,y-.3),(x-r*.8,y-r),(x+r*.7,y-r),(x+r,y-.3)],rng.choice([0x2B201A,0x121A20,0x70533B]))
+            if row>1:
+                rect(x-.9,y-.15,.35,.4,0x1C2324)
+                rect(x+.6,y-.15,.35,.4,0x1C2324)
             if rng.random() < .22:
                 rect(x-5, y-2, 1, 6, 0xCBD3D0)
                 rect(x+4, y-2, 1, 6, 0xCBD3D0)
                 rect(x-5, y-3, 10, 2, rng.choice(shirts))
+                rect(x-3,y-3,1,2,0xE9E9D8,70)
+                rect(x+2,y-3,1,2,0xE9E9D8,70)
+            clip=base_clip
         rect(0, y+8, 600, 1, 0xAAB5B3, 65)
-    # A few cloth flags and the front safety barrier, without covering the goal.
-    for x, y, c in [(65, 26, 0xC33143), (215, 18, 0xD9E4DD), (483, 25, 0x25646A)]:
-        rect(x, y, 1, 24, 0xCED8D7)
-        poly([(x+1, y), (x+17, y+2), (x+15, y+12), (x+1, y+10)], c)
-        rect(x+2, y+5, 13, 2, 0xF5F1E5)
+    # Team flags: the cloth, crest and shading all move as one object.
+    for i,(x,y,side) in enumerate([(228,25,'home'),(268,18,'home'),(432,22,'away'),(470,33,'away')]):
+        rect(x,y,1,28,0xB2BFC1)
+        name='ppFlag'+str(i);path='_root.ppBrand.'+name
+        out.extend(call('_root.ppBrand','createEmptyMovieClip',[name,6000+i]))
+        clip=path
+        poly([(1,0),(32,3),(30,21),(1,18)],('_root.pp_'+side+'_c1',))
+        poly([(1,8),(31,10),(31,14),(1,12)],('_root.pp_'+side+'_c2',))
+        poly([(1,0),(10,2),(7,19),(1,18)],0x000000,18)
+        poly([(19,2),(24,2.5),(22,20),(17,20)],0xFFFFFF,14)
+        out.extend(P('_root.ppFlagBitmap')+P('pf_'+side+'_crest')+P(1)+get('flash.display.BitmapData')+P('loadBitmap')+b'\x52\x1d')
+        logo=call(path,'createEmptyMovieClip',['crest',2])+call(path+'.crest','attachBitmap',[('_root.ppFlagBitmap',),1])
+        logo+=put(path+'.crest._x',10)+put(path+'.crest._y',4)+put(path+'.crest._xscale',19)+put(path+'.crest._yscale',19)
+        out.extend(get('_root.ppFlagBitmap')+b'\x12\x9d\x02\x00'+struct.pack('<h',len(logo))+logo)
+        out.extend(put(path+'._x',x)+put(path+'._y',y))
+        cheer=get('_root.ppCheer'+('Home' if side=='home' else 'Away'))
+        animated.append(expr(path+'._xscale',P(94)+sine(1.6,i*1.8)+P(6)+b'\x0c\x47')+expr(path+'._rotation',sine(1.4,i*1.4)+P(2)+cheer+P(1.5)+b'\x0c\x47\x0c'))
+        clip='_root.ppBrand'
     rect(0, 55, 600, 5, 0x18272D)
     rect(0, 56, 600, 1, 0xA9BBBB)
     for x in range(0, 601, 55):
         rect(x, 50, 1, 11, 0x99ABAB)
-    # Continuous advertising line behind the net; all brands are fictional.
-    rect(0, 60, 600, 43, 0x14272C)
-    boards = [
-        (0, 120, 0xEDF0E8, 0x183F43, 'CALMA+', 'ENERGIA PARA O JOGO'),
-        (121, 119, 0x17676A, 0xF1F6E8, 'ONDA', 'CONECTE SUA TORCIDA'),
-        (241, 119, 0xE6AC42, 0x152A31, 'ARENA 12', 'VISTA A PAIXAO'),
-        (361, 119, 0xEBF1E9, 0x1A3139, 'RESENHA FM', 'O SOM DA ARQUIBANCADA'),
-        (481, 119, 0x162D3C, 0xDBE8DC, 'PATRAS', 'SPORTS & CO.')]
-    for i, (x, w, bg, fg, brand, line) in enumerate(boards):
-        rect(x, 62, w, 36, bg)
-        rect(x, 62, w, 2, 0xFFFFFF, 35)
-        rect(x, 96, w, 2, 0x07161C, 35)
-        text('ppAd'+str(i), brand, x+8, 64, w-10, 22,
-             15 if len(brand)<9 else 12, fg, 9100+i*2)
-        text('ppAdSub'+str(i), line, x+8, 85, w-9, 11, 5.5, fg, 9101+i*2)
+    # Continuous LED ribbon: two copies make the leftward loop seamless.
+    sponsors=[('CALMA+','ENERGIA PARA O JOGO'),('ONDA','CONECTE SUA TORCIDA'),('ARENA 12','VISTA A PAIXAO'),('RESENHA FM','O SOM DA ARQUIBANCADA'),('PATRAS','SPORTS & CO.'),('GOLEIA','SEU PROXIMO GOL'),('MARE 90','NA ONDA DA TORCIDA'),('TRIVELA LAB','IDEIAS EM CAMPO'),('LUME PLAY','O JOGO NA SUA TELA'),('QUADRA 9','MOVIMENTO SEM PAUSA'),('VIBRA 11','VIVA CADA COBRANCA'),('GRAMA & GO','PAIXAO PELO GRAMADO')]
+    out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppAdRibbon',7100]))
+    clip='_root.ppBrand.ppAdRibbon'
+    for i in range(len(sponsors)*2):
+        x=i*128;brand,line=sponsors[i%len(sponsors)]
+        bg=[0x102C2E,0x0D2532,0x21271F][i%3];fg=[0xB7F7D5,0x91DBF2,0xF1CD72][i%3]
+        rect(x,62,128,36,bg)
+        rect(x+127,62,1,36,0x040C12)
+        text('ppAd'+str(i),brand,x+8,64,112,22,15 if len(brand)<9 else 12,fg,100+i*2)
+        text('ppAdSub'+str(i),line,x+8,85,112,11,5.5,fg,101+i*2)
+    clip='_root.ppBrand'
+    out.extend(call(clip,'createEmptyMovieClip',['ppAdMask',8000]))
+    clip='_root.ppBrand.ppAdMask';rect(0,62,600,36,0xFFFFFF);clip='_root.ppBrand'
+    out.extend(call('_root.ppBrand.ppAdRibbon','setMask',[('_root.ppBrand.ppAdMask',)]))
+    out.extend(call(clip,'createEmptyMovieClip',['ppAdGlass',7200]))
+    clip='_root.ppBrand.ppAdGlass'
+    for yy in range(64,97,2):rect(0,yy,600,.35,0xFFFFFF,8)
+    for xx in range(0,601,4):rect(xx,63,.35,33,0x000000,13)
+    rect(0,60,600,2,0x587078);rect(0,98,600,3,0x061216)
+    clip='_root.ppBrand'
+    scroll=get('_root.ppStadiumTime')+P(25)+b'\x0c'+P(len(sponsors)*128)+b'\x3f'+P(-1)+b'\x0c'
+    animated.append(expr('_root.ppBrand.ppAdRibbon._x',scroll))
     rect(0, 99, 600, 4, 0x2F5941)
+    out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppHudBackdrop',9000]))
+    clip='_root.ppBrand.ppHudBackdrop'
     # Compact broadcast scorebug; 214 x 40 native pixels.
     rect(8, 6, 214, 40, 0x030C0A, 30)
     rect(8, 4, 214, 40, 0x10281F, 98)
@@ -124,18 +183,38 @@ def build_stadium(call, put, P, get):
     rect(11, 24, 211, 1, 0x36574A)
     rect(193, 4, 29, 40, 0x1C3C2E)
     rect(193, 4, 29, 2, 0xE8CB79)
+    clip='_root.ppBrand'
     text('ppNameHome', '', 17, 5, 109, 18, 10, 0xF4F6FC, 9200)
     text('ppNameAway', '', 17, 25, 109, 18, 10, 0xF4F6FC, 9201)
     text('ppScoreHome', '0', 193, 4, 29, 20, 13, 0xE8CB79, 9202)
     centered('ppScoreHome')
     text('ppScoreAway', '0', 193, 24, 29, 20, 13, 0xE8CB79, 9203)
     centered('ppScoreAway')
+    clip='_root.ppBrand.ppHudBackdrop'
     # Equal inset from the top/right; centered text with ample internal space.
     rect(492, 6, 100, 30, 0x050A16, 35)
     rect(492, 4, 100, 30, 0x101B2C, 98)
     rect(492, 4, 100, 2, 0xE8CB79)
+    clip='_root.ppBrand'
     text('ppTurnLabel', 'RODADA 1', 496, 10, 92, 20, 11, 0xF4F6FC, 9204)
     centered('ppTurnLabel')
     text('ppPrompt', '', 330, 292, 255, 28, 15, 0xFFFFFF, 9205)
     centered('ppPrompt')
+    sponsors=['CALMA+','ONDA','ARENA 12','RESENHA FM','PATRAS','GOLEIA','MARE 90','TRIVELA LAB','LUME PLAY','QUADRA 9','VIBRA 11','GRAMA & GO']
+    slogans=['ENERGIA PARA O JOGO','CONECTE SUA TORCIDA','VISTA A PAIXAO','O SOM DA ARQUIBANCADA','SPORTS & CO.','SEU PROXIMO GOL','NA ONDA DA TORCIDA','IDEIAS EM CAMPO','O JOGO NA SUA TELA','MOVIMENTO SEM PAUSA','VIVA CADA COBRANCA','PAIXAO PELO GRAMADO']
+    for name,values in [('ppSponsors',sponsors),('ppSlogans',slogans)]:
+        out.extend(P('_root.'+name)+b''.join(P(v)for v in reversed(values))+P(len(values))+b'\x42\x1d')
+    out.extend(put('_root.ppHomeCheerUntil',0)+put('_root.ppAwayCheerUntil',0))
+    animation=expr('_root.ppStadiumTime',b'\x34'+P(.001)+b'\x0c')
+    freeze=put('_root.ppStadiumTime',0)
+    animation+=get('_root.pp_reduce_motion')+P(1)+b'\x49\x12\x9d\x02\x00'+struct.pack('<h',len(freeze))+freeze
+    for side in ['Home','Away']:
+        value=get('_root.pp'+side+'CheerUntil')+b'\x34\x0b'+P(.001)+b'\x0c'
+        value=value+P(0)+P(2)+get('Math')+P('max')+b'\x52'
+        animation+=expr('_root.ppCheer'+side,value)
+    freeze_cheer=put('_root.ppCheerHome',0)+put('_root.ppCheerAway',0)
+    animation+=get('_root.pp_reduce_motion')+P(1)+b'\x49\x12\x9d\x02\x00'+struct.pack('<h',len(freeze_cheer))+freeze_cheer
+    animation+=b''.join(animated)+b'\0'
+    fn=b'\0'+struct.pack('<HH',0,len(animation))+animation
+    out.extend(P('_root.ppAnimateStadium')+b'\x9b\x05\x00'+fn+b'\x1d')
     return bytes(out)

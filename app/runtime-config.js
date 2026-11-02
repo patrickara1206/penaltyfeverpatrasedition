@@ -1,1 +1,1 @@
-window.RufflePlayer={config:{autoplay:'on',unmuteOverlay:'hidden',allowNetworking:'all',openUrlMode:'deny',allowScriptAccess:true,warnOnUnsupportedContent:true,contextMenu:'off'}};
+window.RufflePlayer={config:{autoplay:'on',scale:'exactFit',forceScale:true,letterbox:'off',allowFullscreen:true,unmuteOverlay:'hidden',allowNetworking:'all',openUrlMode:'deny',allowScriptAccess:true,warnOnUnsupportedContent:true,contextMenu:'off'}};
