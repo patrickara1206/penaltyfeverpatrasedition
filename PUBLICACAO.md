@@ -1,17 +1,19 @@
-# Hospedagem gratuita
+# Hospedagem
 
-Provedor: GitHub Pages, site estático público do repositório patrickara1206/penaltyfeverpatrasedition.
+Site atual: https://penaltyfeverpatras.pages.dev/
 
-Fonte prevista: branch `v1.0.3`, raiz `/`, com `.nojekyll`. A página inicial redireciona para `app/index.html`, sem caminhos absolutos que quebrem o subdiretório do projeto.
+Cloudflare Pages, projeto `penaltyfeverpatras`, repositório `patrickara1206/penaltyfeverpatrasedition`.
 
-URL do projeto: https://patrickara1206.github.io/penaltyfeverpatrasedition/
+- Produção: branch `v1.0.6`, deploy automático habilitado.
+- Preview: `None` (deploys automáticos de outras branches desativados).
+- Build: `python3 tools/build-cloudflare.py dist-cloudflare`.
+- Diretório publicado: `dist-cloudflare`.
+- Beta `v1.0.7`: somente GitHub. Não alterar a branch de produção para a beta. Usar também o prefixo `[CF-Pages-Skip]` nos commits da beta como proteção adicional contra publicação acidental por integração Git.
 
-Não há domínio pago nem serviço de backend. A disponibilidade e os limites gratuitos pertencem ao GitHub: https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
+A alteração do controle de branches não muda a versão já servida: um novo commit na branch de produção inicia o deploy seguinte. Conferir o commit e o estado de produção no painel e verificar `index.html` e `match.swf` no endereço público.
 
-Mudanças enviadas à branch publicada podem atualizar o site. Branches anteriores ficam preservadas. Para voltar a uma versão anterior, selecione a branch correspondente em Settings > Pages; não reescreva o histórico Git.
+O Worker antigo e o endereço anterior do GitHub Pages têm configuração independente. Não reescrever tags, não forçar push e não trocar o subdomínio geral da conta Cloudflare.
 
-O armazenamento do site público é separado do endereço localhost e dos arquivos locais. Exporte o save no jogo antigo e importe no site para continuar. Nenhum save local é enviado automaticamente ao GitHub.
+Os saves pertencem ao navegador e à origem. Exporte e importe o save ao mudar de endereço. O código não envia saves ao provedor.
 
-## Releases da v1.0.4
-
-A branch v1.0.4 publica cinco releases pelo workflow releases.yml. As versões v1.0.0–v1.0.3 usam os ZIPs de seus commits originais; v1.0.4 usa o pacote atual e fica marcada como prévia por causa das lacunas documentadas do catálogo. O workflow usa apenas o token temporário do GitHub Actions com contents:write; não lê credenciais do computador e não substitui tags nem assets publicados. A hospedagem existente permanece na v1.0.3; esta tarefa não faz merge das branches.
+As releases usam o token temporário do GitHub Actions, com `contents:write`. Nenhum token do Cloudflare integra o código ou o pacote. Os arquivos portáteis são validados por CRC, relação de arquivos e SHA256 antes de publicação.
