@@ -62,27 +62,11 @@ def uniform_details(owner,shirt,keeper=False):
   out+=copy(path+'.'+key,owner+'.'+shirt+'.'+key)
  return out
 def jersey_number(side):
- path='_root.igr.ppJerseyNumber'
- b=guarded(get(path)+b'\x12',call('_root.igr','createEmptyMovieClip',['ppJerseyNumber',9900]))
- b+=call(path,'clear',[])
- # Vector digits avoid device-font clipping and timeline-dependent glyphs.
- segments=[(-3,-7,3,-7),(3,-7,3,-2),(3,-2,3,3),(-3,3,3,3),(-3,-2,-3,3),(-3,-7,-3,-2),(-3,-2,3,-2)]
- digits=['abcdef','bc','abdeg','abcdg','bcfg','acdfg','acdefg','abc','abcdefg','abcdfg']
- value=get('_root.serija_shuteva')+P(9)+b'\x3f'+P(1)+b'\x47'
- b+=assign('_root.ppJerseyDigit',value)
- for k,(x,y,x2,y2) in enumerate(segments):
-  choices=[n for n,letters in enumerate(digits) if chr(97+k) in letters]
-  condition=b''
-  for i,n in enumerate(choices):
-   condition+=get('_root.ppJerseyDigit')+P(n)+b'\x49'
-   if i:condition+=b'\x11'
-  drawing=call(path,'lineStyle',[2.8,0x08191F,100])+call(path,'moveTo',[x,y])+call(path,'lineTo',[x2,y2])
-  drawing+=call(path,'lineStyle',[1.65,('_root.pp_'+side+'_number',),100])+call(path,'moveTo',[x,y])+call(path,'lineTo',[x2,y2])
-  b+=guarded(condition,drawing)
- for key in ['_x','_y','_rotation','_xscale','_yscale']:
-  b+=copy(path+'.'+key,'_root.igr.brojka.'+key)
- b+=put('_root.igr.brojka._visible',0)
- return b
+ # Keep the original vector glyph and its authored per-frame transforms.
+ # Replaced actor instances must be stopped again on the chosen glyph frame.
+ series=get('_root.serija_shuteva')+P(13)+b'\x3f'
+ frame=(P(1)+series+b'\x47') if side=='home' else (P(13)+series+b'\x0b')
+ return invoke('_root.igr.brojka','gotoAndStop',[frame])+b'\x17'+put('_root.igr.brojka._visible',1)
 
 # Recolor after each actor timeline change, rather than before it. The old
 # onEnterFrame-only hook ran before gotoAndStop replaced the shirt instances.

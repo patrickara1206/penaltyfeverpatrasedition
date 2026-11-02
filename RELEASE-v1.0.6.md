@@ -6,7 +6,7 @@ Atualização da apresentação da partida, preservando os personagens e a físi
 - Torcida detalhada, bandeiras dos clubes e comemoração no setor do time que marcou.
 - Gramado com textura de lâminas de grama e faixas de corte.
 - Carregamento personalizado com os dois escudos e tela cheia preenchendo o player.
-- Número da camisa redesenhado em vetores para evitar falhas de fonte.
+- Números originais preservados, com seleção reaplicada após cada troca de quadro do jogador.
 
 - Física clássica original restaurada: voo, rebotes e colisões preservam o programa original, conforme solicitado.
 - Alvos de defesa ocultados no início do voo; cursor restaurado.

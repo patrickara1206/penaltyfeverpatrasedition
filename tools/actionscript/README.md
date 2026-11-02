@@ -1,6 +1,6 @@
 # Rótulos incorporados
 
-physics.as é o código AS2 da física corrigida. physics-actions.bin foi compilado por JPEXS FFDec 26.3.0 (importScript no frame_106 do SWF original).
+physics.as e physics-actions.bin permanecem como fontes historicas. O build atual copia diretamente o programa de fisica do original.swf; esses arquivos nao sao injetados.
 
 text-labels.bin contém 30 bitmaps com os textos dos dez idiomas; text-labels.json registra os textos/fontes/dimensões. O builder injeta esses recursos no SWF, sem requisições de fonte em execução.
 
