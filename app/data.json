@@ -220,13 +220,14 @@
       ],
       "source": "https://www.bundesliga.com/de/bundesliga/clubs?firsttab=kader",
       "legs": 2,
-      "format": "18 clubes · 34 rodadas · pontos corridos",
+      "format": "18 clubes · 34 rodadas · 2 descensos diretos + barragem do 16º na carreira",
       "country": "Alemanha",
       "tier": 1,
       "promoteCount": 0,
-      "relegateCount": 3,
+      "relegateCount": 2,
       "careerDomestic": true,
-      "closedSystem": false
+      "closedSystem": false,
+      "rulesStatus": "Barragens entre divisões implementadas no modo Carreira. Campanha isolada conserva a liga; demais critérios especiais seguem as adaptações descritas nas regras."
     },
     {
       "id": "fra",
@@ -1340,15 +1341,15 @@
       ],
       "legs": 2,
       "source": "https://www.bundesliga.com/en/2bundesliga/table",
-      "format": "18 clubes · liga nacional · fases adaptadas no jogo",
+      "format": "18 clubes · 34 rodadas · 2 acessos e 2 descensos diretos + barragens na carreira",
       "verified": true,
-      "promoteCount": 3,
-      "relegateCount": 3,
+      "promoteCount": 2,
+      "relegateCount": 2,
       "closedSystem": false,
       "notes": "34 rodadas. Dois acessos diretos; o 3º disputa barrage com o 16º da Bundesliga. Dois rebaixamentos diretos; o 16º disputa barrage com o 3º da 3. Liga. As contagens de três incluem as vagas sujeitas a barrage, não três trocas garantidas.",
       "promoteCountIncludesPlayoff": true,
       "careerDomestic": true,
-      "rulesStatus": "Carreira: 34 rodadas. Dois acessos diretos; o 3º disputa barrage com o 16º da Bundesliga. Dois rebaixamentos diretos; o 16º disputa barrage com o 3º da 3. Liga. As contagens de três incluem as vagas sujeitas a barrage, não três trocas garantidas."
+      "rulesStatus": "Barragens entre divisões implementadas no modo Carreira. Campanha isolada conserva a liga; demais critérios especiais seguem as adaptações descritas nas regras."
     },
     {
       "id": "ger3",
@@ -1382,15 +1383,15 @@
       ],
       "legs": 2,
       "source": "https://www.dfb.de/news/teilnehmerfeld-der-3-liga-steht-fest-havelse-rueckt-fuer-1860-nach",
-      "format": "20 clubes · liga nacional · fases adaptadas no jogo",
+      "format": "20 clubes · 38 rodadas · 2 acessos diretos + barragem do 3º elegível na carreira",
       "verified": true,
-      "promoteCount": 3,
+      "promoteCount": 2,
       "relegateCount": 4,
       "closedSystem": false,
       "notes": "38 rodadas. Dois acessos diretos e terceiro colocado em barrage. Filiais não podem subir à 2. Bundesliga. Quatro rebaixados para Regionalliga, fora do recorte. O 1860 München não recebeu licença em 2026/27 e foi substituído pelo Havelse, conforme DFB.",
       "promoteCountIncludesPlayoff": true,
       "careerDomestic": true,
-      "rulesStatus": "Carreira: 38 rodadas. Dois acessos diretos e terceiro colocado em barrage. Filiais não podem subir à 2. Bundesliga. Quatro rebaixados para Regionalliga, fora do recorte. O 1860 München não recebeu licença em 2026/27 e foi substituído pelo Havelse, conforme DFB."
+      "rulesStatus": "Barragens entre divisões implementadas no modo Carreira. Campanha isolada conserva a liga; demais critérios especiais seguem as adaptações descritas nas regras."
     },
     {
       "id": "fra2",
@@ -4258,9 +4259,9 @@
         "Sporting CP",
         "Vitória de Guimarães"
       ],
-      "format": "18 clubes · 34 rodadas · 2 descensos diretos; barragem simplificada",
+      "format": "18 clubes · 34 rodadas · 2 descensos diretos + barragem do 16º na carreira",
       "source": "https://en.wikipedia.org/wiki/2026–27_Primeira_Liga",
-      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+      "rulesStatus": "Barragens entre divisões implementadas no modo Carreira. Campanha isolada conserva a liga; demais critérios especiais seguem as adaptações descritas nas regras."
     },
     {
       "id": "pt2",
@@ -4294,9 +4295,9 @@
         "União de Leiria",
         "Vizela"
       ],
-      "format": "18 clubes · pontos corridos · estrutura adaptada",
+      "format": "18 clubes · 34 rodadas · 2 acessos diretos + barragem do 3º elegível na carreira",
       "source": "https://en.wikipedia.org/wiki/2026–27_Liga_Portugal_2",
-      "rulesStatus": "Estrutura principal adaptada a pênaltis; datas e desempates simplificados."
+      "rulesStatus": "Barragens entre divisões implementadas no modo Carreira. Campanha isolada conserva a liga; demais critérios especiais seguem as adaptações descritas nas regras."
     },
     {
       "id": "pt3",

@@ -12,6 +12,7 @@ def tag(t,b):return struct.pack('<HI',(t<<6)|63,len(b))+b
 for key in ['round','attack','defend']:
  labels=ast.literal_eval('['+re.search(r'\b'+key+r':\[(.*?)\],',source,re.S).group(1)+']')
  for index,(lang,text)in enumerate(zip(locales,labels)):
+  text=text.upper()
   family={'zh':'notosanssc','ar':'notonaskharabic','hi':'notosansdevanagari'}.get(lang,'notosans');fontfile=fonts/(family+'.ttf');size=24 if key=='round'else 30
   face=freetype.Face(str(fontfile));face.set_pixel_sizes(0,size);font=hb.Font(hb.Face(fontfile.read_bytes()));font.scale=(size*64,size*64);hb.ot_font_set_funcs(font);buf=hb.Buffer();buf.add_str(text);buf.guess_segment_properties();hb.shape(font,buf)
   assert all(g.codepoint for g in buf.glyph_infos),(lang,text,'missing glyph')

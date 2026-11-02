@@ -44,6 +44,23 @@ def guarded(condition,body):return condition+b'\x12\x9d\x02\x00'+struct.pack('<h
 def invoke(obj,method,args):
  return b''.join(a if isinstance(a,bytes) else (get(a[0]) if isinstance(a,tuple) else P(a)) for a in reversed(args))+P(len(args))+get(obj)+P(method)+b'\x52'
 def color(var,path):return P(var)+get(path)+P(1)+P('Color')+b'\x40\x1d'
+
+def uniform_details(owner,shirt,keeper=False):
+ # Separate sibling artwork retains contrast after the base jersey is tinted.
+ path=owner+'.ppKitDetails'
+ art=call(owner,'createEmptyMovieClip',['ppKitDetails',9800])
+ art+=call(path,'lineStyle',[0.6,0xFFFFFF,40])
+ for x in [-4,4]:
+  art+=call(path,'moveTo',[x,-3])+call(path,'lineTo',[x,5])
+ art+=call(path,'lineStyle',[0.8,0x081E17,75])
+ art+=call(path,'moveTo',[-3,-6])+call(path,'lineTo',[0,-4])+call(path,'lineTo',[3,-6])
+ if keeper:
+  art+=call(path,'lineStyle',[0.65,0xFFFFFF,85])+call(path,'moveTo',[-1,-1])+call(path,'lineTo',[0,-2])+call(path,'lineTo',[0,3])
+  art+=call(path,'lineStyle',[0.5,0xE8CB79,90])+call(path,'moveTo',[4,-2])+call(path,'lineTo',[6,-2])
+ out=guarded(get(path)+b'\x12',art)
+ for key in ['_x','_y','_rotation','_xscale','_yscale']:
+  out+=copy(path+'.'+key,owner+'.'+shirt+'.'+key)
+ return out
 # Recolor after each actor timeline change, rather than before it. The old
 # onEnterFrame-only hook ran before gotoAndStop replaced the shirt instances.
 def recolor_side(side):
@@ -61,8 +78,12 @@ def recolor_side(side):
   b+=color('_root.'+var,'_root.igr.'+path)+call('_root.'+var,'setRGB',[('_root.pp_'+side+'_'+param,)])
  return b
 refresh=guarded(get('_root.sutIgraca'),recolor_side('home'))+guarded(get('_root.sutIgraca')+b'\x12',recolor_side('away'))
-for var,path,value in [('ppKeeperShirt','dres_i',0xE6A632),('ppKeeperHair','glava_i.kosa_i',0x49301F)]:
+refresh+=put('_root.ppKeeperColor',0xE74636)
+refresh+=guarded(get('_root.sutIgraca'),put('_root.ppKeeperColor',0xF29A28))
+for var,path,value in [('ppKeeperShirt','dres_i',('_root.ppKeeperColor',)),('ppKeeperHair','glava_i.kosa_i',0x49301F)]:
  refresh+=color('_root.'+var,'_root.golmance.golman_i.'+path)+call('_root.'+var,'setRGB',[value])
+refresh+=uniform_details('_root.golmance.golman_i','dres_i',True)
+refresh+=uniform_details('_root.igr','dres1')
 body=guarded(get('_root.igr'),refresh)+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppRecolor')+b'\x9b\x05\x00'+fn+b'\x1d'
@@ -85,13 +106,13 @@ def mark(x,y,made):
  if not made:a+=call(c,'moveTo',[x-1.5,y+1.5])+call(c,'lineTo',[x+1.5,y-1.5])
  return a+call(c,'lineStyle',[])
 paint=call('_root.ppBrand.ppShots','clear',[])+assign('_root.ppShotStart',invoke('Math','max',[P(0),get('_root.serija_shuteva')+P(4)+b'\x0b']))
-for ar,y in [('ppHomeShots',16),('ppAwayShots',38)]:
+for ar,y in [('ppHomeShots',14),('ppAwayShots',34)]:
  for j in range(5):
-  x=164+j*13
+  x=133+j*11
   paint+=dot(x,y,3.4,0x68838A)+dot(x,y,2.3,0x102932)
   value=get('_root.'+ar)+get('_root.ppShotStart')+P(j)+b'\x47\x4e'
-  paint+=guarded(value+P(1)+b'\x49',dot(x,y,3.4,0x287CB0)+mark(x,y,True))
-  paint+=guarded(value+P(0)+b'\x49',dot(x,y,3.4,0xB76526)+mark(x,y,False))
+  paint+=guarded(value+P(1)+b'\x49',dot(x,y,3.4,0x20B969)+mark(x,y,True))
+  paint+=guarded(value+P(0)+b'\x49',dot(x,y,3.4,0xE74B4B)+mark(x,y,False))
 body=paint+b'\0';fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppPaintShots')+b'\x9b\x05\x00'+fn+b'\x1d'+call('_root','ppPaintShots',[])
 def shot(side):
@@ -122,7 +143,16 @@ for key,clip in [('attack','ppAttackLabel'),('defend','ppDefendLabel'),('round',
  path='_root.ppBrand.'+clip
  skin+=call('_root.ppBrand','createEmptyMovieClip',[clip,9250+['attack','defend','round'].index(key)])
  skin+=assign('_root.ppLabelBitmap',invoke('flash.display.BitmapData','loadBitmap',[name]))
- skin+=call(path,'attachBitmap',[('_root.ppLabelBitmap',),1])
+ if key!='round':
+  skin+=assign('_root.ppLabelW',get('_root.ppLabelBitmap.width')+P(24)+b'\x47')
+  skin+=assign('_root.ppLabelH',get('_root.ppLabelBitmap.height')+P(20)+b'\x47')
+  skin+=call(path,'beginFill',[0x081E17,94])+call(path,'moveTo',[0,0])
+  skin+=call(path,'lineTo',[('_root.ppLabelW',),0])+call(path,'lineTo',[('_root.ppLabelW',),('_root.ppLabelH',)])
+  skin+=call(path,'lineTo',[0,('_root.ppLabelH',)])+call(path,'lineTo',[0,0])+call(path,'endFill',[])
+  skin+=call(path,'lineStyle',[3,0xE8CB79,100])+call(path,'moveTo',[1,0])+call(path,'lineTo',[1,('_root.ppLabelH',)])
+  skin+=call(path,'createEmptyMovieClip',['text',1])+call(path+'.text','attachBitmap',[('_root.ppLabelBitmap',),1])
+  skin+=put(path+'.text._x',12)+put(path+'.text._y',10)
+ else:skin+=call(path,'attachBitmap',[('_root.ppLabelBitmap',),1])
  scale=get('_root.pp_text_scale')+P(50)+b'\x0c'
  skin+=assign(path+'._xscale',scale)+assign(path+'._yscale',scale)
  width=get('_root.ppLabelBitmap.width')+get('_root.pp_text_scale')+b'\x0c'+P(0.5)+b'\x0c'
@@ -131,8 +161,8 @@ for key,clip in [('attack','ppAttackLabel'),('defend','ppDefendLabel'),('round',
   skin+=assign(path+'._x',x)+put(path+'._y',14)
   skin+=assign('_root.ppBrand.ppTurnLabel._x',x+width+b'\x47')+put('_root.ppBrand.ppTurnLabel._width',20)
  else:
-  x=P(330)+P(255)+width+b'\x0b'+P(2)+b'\x0d\x47'
-  skin+=assign(path+'._x',x)+put(path+'._y',292)
+  x=P(580)+width+b'\x0b'
+  skin+=assign(path+'._x',x)+put(path+'._y',346)
 skin+=call('flash.external.ExternalInterface','call',['patrasReady'])
 patches[75]=skin
 # A shooter's setup is frame101 (zero-based). Change the CPU speed both at
@@ -153,7 +183,9 @@ keepercondition=invoke('Math','random',[])+P(100)+b'\x0c'+get('_root.pp_keeper')
 keeper=guarded(get('_root.sutIgraca'),guarded(keepercondition,put('_root.odlukaOdbrana',-1)))
 patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),('_root.pp_speed',)])
 patches[101]+=copy('_root.trajanjeSuta','_root.pp_pace')+put('_root.timerSuta',350)
-patches[104]=speedhook+repaint
+hide_target=member('_root.meta2','_visible',0)+call('_root.meta2','stop',[])
+hide_target+=member('_root.meta','_visible',0)+call('Mouse','show',[])
+patches[104]=speedhook+repaint+hide_target
 for f in [102,103,105,106]:patches[f]=repaint
 
 # Callback reports user score, CPU score; original turn resolution reaches frame 82.

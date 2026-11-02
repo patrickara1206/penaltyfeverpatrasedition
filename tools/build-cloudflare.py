@@ -26,7 +26,7 @@ for name,value in modules.items():
  binary=base64.b64decode(value);assert binary.startswith(b'\0asm')and len(binary)<25*1024*1024
  (out/name).write_bytes(binary)
 (out/'_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  X-Frame-Options: DENY\n',encoding='utf8')
-archive=out.parent/'Cloudflare-Penalty-Fever-v1.0.5.zip'
+archive=out.parent/'Cloudflare-Penalty-Fever-v1.0.6.zip'
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=7)as z:
  allowed={rel for _,rel in files}|set(modules)|{'_headers'}
  for rel in sorted(allowed):z.write(out/rel,rel)

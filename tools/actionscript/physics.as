@@ -1,3 +1,7 @@
+// Keep the previous rendered position for a swept full-ball crossing test.
+ppPrevShadowY = senka._y;
+ppPrevBallX = lopta._x;
+ppPrevBallY = lopta._y;
 if(dey >= 0)
 {
    lopta.gotoAndStop(14 - lopta._y % 13);
@@ -138,14 +142,14 @@ if(senka._y == golLinija and !gol and !uRuci and dey < 0)
    {
       if(dLoptaOsaGola < sirinaGola / 2 - lopta._width / 2)
       {
-         gol = true;
-         uGolu = true;
+         ppFrameContact = true;
+         ppFrameContact = true;
          golmance.swapDepths(lopta);
          gol_senka.swapDepths(lopta);
          okvirGola.swapDepths(lopta);
          mrezaGornja.swapDepths(lopta);
          zvukGol.setVolume(100);
-         zvukGol.start();
+
       }
       else if(dLoptaOsaGola < sirinaGola / 2 + fiGola + lopta._width / 2)
       {
@@ -163,9 +167,9 @@ if(senka._y == golLinija and !gol and !uRuci and dey < 0)
          dey = pocbrzina * Math.cos(ugaokretanjarad);
          if(dey < 0 and !uRuci and Math.abs(osaGola - lopta._x) + lopta._width / 2 < sirinaGola / 2 and lopta._y - lopta._height / 2 >= golLinija - visinaGola and lopta._y <= golLinija)
          {
-            zvukGol.start();
-            gol = true;
-            uGolu = true;
+
+            ppFrameContact = true;
+            ppFrameContact = true;
             golmance.swapDepths(lopta);
             gol_senka.swapDepths(lopta);
             okvirGola.swapDepths(lopta);
@@ -216,9 +220,9 @@ if(senka._y == golLinija and !gol and !uRuci and dey < 0)
          mrezaGornja.swapDepths(lopta);
          if(brojac * omega > 1.5707963267948966)
          {
-            zvukGol.start();
-            gol = true;
-            uGolu = true;
+
+            ppFrameContact = true;
+            ppFrameContact = true;
          }
          else
          {
@@ -240,6 +244,25 @@ if(senka._y == golLinija and !gol and !uRuci and dey < 0)
       zvukPromasaj.start();
    }
 }
+ppPlane = golLinija - lopta._width / 2;
+if(!gol and !uRuci and ppPrevShadowY >= ppPlane and senka._y < ppPlane)
+{
+   ppCrossT = (ppPrevShadowY - ppPlane) / (ppPrevShadowY - senka._y);
+   ppCrossX = ppPrevBallX + (lopta._x - ppPrevBallX) * ppCrossT;
+   ppCrossY = ppPrevBallY + (lopta._y - ppPrevBallY) * ppCrossT;
+   if(Math.abs(osaGola - ppCrossX) + lopta._width / 2 < sirinaGola / 2 and ppCrossY - lopta._height / 2 >= golLinija - visinaGola and ppCrossY <= golLinija)
+   {
+      gol = true;
+      uGolu = true;
+      golmance.swapDepths(lopta);
+      gol_senka.swapDepths(lopta);
+      okvirGola.swapDepths(lopta);
+      mrezaGornja.swapDepths(lopta);
+      zvukGol.setVolume(100);
+      zvukGol.start();
+   }
+}
+
 if(gol)
 {
    if(Math.abs(sabirak) > visinaGola)
