@@ -20,7 +20,7 @@ function run(now,{reduce='0',home=0,away=0}={}){const vars={'Math':Math,'_root.p
  }assert(steps<100000);return vars;}
 const idle=run(10000),later=run(10500),home=run(10000,{home:13000}),away=run(10000,{away:13000});
 assert(Math.abs(home['_root.ppCheerHome']-3)<1e-5);assert.equal(home['_root.ppCheerAway'],0);assert.equal(away['_root.ppCheerHome'],0);assert(Math.abs(away['_root.ppCheerAway']-3)<1e-5);
-const fans=Object.keys(idle).filter(k=>k.includes('.ppFan')&&k.endsWith('._y'));assert(fans.length>100);assert(fans.some(k=>Math.abs(idle[k]-later[k])>.1),'crowd moves with string 0');assert(fans.some(k=>Math.abs(idle[k]-home[k])>2),'home celebration');assert(fans.some(k=>Math.abs(idle[k]-away[k])>2),'away celebration');
+const fans=Object.keys(idle).filter(k=>k.includes('.ppFan')&&k.endsWith('._y'));assert(fans.length>=20&&fans.length<60);assert(fans.some(k=>Math.abs(idle[k]-later[k])>.1),'crowd moves with string 0');assert(fans.some(k=>Math.abs(idle[k]-home[k])>2),'home celebration');assert(fans.some(k=>Math.abs(idle[k]-away[k])>2),'away celebration');
 const still=run(10000,{reduce:'1',home:13000}),stillLater=run(10500,{reduce:'1',home:13000});for(const k of fans)assert.equal(still[k],stillLater[k]);
 assert(run(5000)['_root.ppBrand.ppAdRibbon._x']<0);assert.notEqual(run(5000)['_root.ppBrand.ppAdRibbon._x'],run(25000)['_root.ppBrand.ppAdRibbon._x']);assert(swf.includes(Buffer.from('TRIVELA LAB'))&&swf.includes(Buffer.from('GRAMA & GO')));
-console.log('PASS: actual AS2 animation executes; moving crowd; selective home/away celebrations; string motion preference; 12-sponsor leftward seamless ribbon');
+console.log('Animated central fans:',fans.length);console.log('PASS: actual AS2 animation executes; moving crowd; selective home/away celebrations; string motion preference; 12-sponsor leftward seamless ribbon');

@@ -111,10 +111,11 @@ def build_stadium(call, put, P, get):
                 continue
             r = 1.65 if row < 2 else 2.0
             base_clip=clip
-            moving=row>0
+            moving=row>0 and i%5==0
             if moving:
                 name='ppFan'+str(len(animated));clip='_root.ppBrand.'+name
                 out.extend(call('_root.ppBrand','createEmptyMovieClip',[name,5000+len(animated)]))
+                out.extend(put(clip+'.cacheAsBitmap',1))
                 side='Home' if x<300 else 'Away'
                 idle=sine(1.5+row*.15,x*.17)+P(.5)+b'\x0c'
                 jump=sine(12,x*.17)+P(1)+get('Math')+P('abs')+b'\x52'+get('_root.ppCheer'+side)+P(2.2)+b'\x0c\x0c'
@@ -151,6 +152,7 @@ def build_stadium(call, put, P, get):
         for block in range(6):
             name='ppWingFans'+str(wing*6+block);clip='_root.ppBrand.'+name
             out.extend(call('_root.ppBrand','createEmptyMovieClip',[name,5500+wing*6+block]))
+            out.extend(put(clip+'.cacheAsBitmap',1))
             for row in range(4):
                 yy=10+row*12
                 for n in range(11):
@@ -201,7 +203,10 @@ def build_stadium(call, put, P, get):
         bg=[0x102C2E,0x0D2532,0x21271F][i%3];fg=[0xB7F7D5,0x91DBF2,0xF1CD72][i%3]
         rect(x,62,128,36,bg)
         rect(x+127,62,1,36,0x040C12)
-        text('ppAd'+str(i),brand,x+8,64,112,22,15 if len(brand)<9 else 12,fg,100+(i+len(sponsors))*2)
+        rect(x+5,68,3,19,fg)
+        poly([(x+12,72),(x+18,66),(x+24,72),(x+18,78)],fg)
+        rect(x+16,70,4,4,bg)
+        text('ppAd'+str(i),brand,x+29,64,95,22,13 if len(brand)<9 else 10,fg,100+(i+len(sponsors))*2)
         text('ppAdSub'+str(i),line,x+8,85,112,11,5.5,fg,101+(i+len(sponsors))*2)
     clip='_root.ppBrand'
     out.extend(call(clip,'createEmptyMovieClip',['ppAdMask',8000]))
@@ -209,8 +214,8 @@ def build_stadium(call, put, P, get):
     out.extend(call('_root.ppBrand.ppAdRibbon','setMask',[('_root.ppBrand.ppAdMask',)]))
     out.extend(call(clip,'createEmptyMovieClip',['ppAdGlass',7200]))
     clip='_root.ppBrand.ppAdGlass'
-    for yy in range(64,97,2):rect(-600,yy,1800,.35,0xFFFFFF,8)
-    for xx in range(-600,1201,4):rect(xx,63,.35,33,0x000000,13)
+    for yy in range(65,97,6):rect(-600,yy,1800,.35,0xFFFFFF,8)
+    for xx in range(-600,1201,16):rect(xx,63,.35,33,0x000000,13)
     rect(-600,60,1800,2,0x587078);rect(-600,98,1800,3,0x061216)
     clip='_root.ppBrand'
     scroll=get('_root.ppStadiumTime')+P(25)+b'\x0c'+P(len(sponsors)*128)+b'\x3f'+P(-1)+b'\x0c'
@@ -257,6 +262,9 @@ def build_stadium(call, put, P, get):
     freeze_cheer=put('_root.ppCheerHome',0)+put('_root.ppCheerAway',0)
     animation+=get('_root.pp_reduce_motion')+P(1)+b'\x49\x12\x9d\x02\x00'+struct.pack('<h',len(freeze_cheer))+freeze_cheer
     animation+=b''.join(animated)+b'\0'
+    out.extend(put('_root.ppBrand.cacheAsBitmap',0))
+    for cached in ['ppAdRibbon','ppAdGlass','ppHudBackdrop','ppFieldLines']:
+        out.extend(put('_root.ppBrand.'+cached+'.cacheAsBitmap',1))
     fn=b'\0'+struct.pack('<HH',0,len(animation))+animation
     out.extend(P('_root.ppAnimateStadium')+b'\x9b\x05\x00'+fn+b'\x1d')
     return bytes(out)

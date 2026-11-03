@@ -141,7 +141,12 @@ cheer=put('_root.ppGoalCelebrated',1)
 cheer+=guarded(get('_root.sutIgraca'),assign('_root.ppHomeCheerUntil',b'\x34'+P(3200)+b'\x47'))
 cheer+=guarded(get('_root.sutIgraca')+b'\x12',assign('_root.ppAwayCheerUntil',b'\x34'+P(3200)+b'\x47'))
 cheer=guarded(get('_root.gol'),guarded(get('_root.ppGoalCelebrated')+b'\x12',cheer))
-body=repaint+score+cheer+call('_root','ppAnimateStadium',[])+b'\0'
+save_cheer=put('_root.ppSaveCelebrated',1)
+save_cheer+=guarded(get('_root.sutIgraca'),assign('_root.ppAwayCheerUntil',b'\x34'+P(2800)+b'\x47'))
+save_cheer+=guarded(get('_root.sutIgraca')+b'\x12',assign('_root.ppHomeCheerUntil',b'\x34'+P(2800)+b'\x47'))
+save_condition=get('_root.hitLopta')+get('_root.uRuci')+b'\x11'
+save_cheer=guarded(save_condition,guarded(get('_root.ppSaveCelebrated')+b'\x12',save_cheer))
+body=repaint+score+cheer+save_cheer+call('_root','ppAnimateStadium',[])+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
 # Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
@@ -198,7 +203,7 @@ patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flas
 patches[101]+=copy('_root.trajanjeSuta','_root.pp_pace')+put('_root.timerSuta',350)
 hide_target=member('_root.meta2','_visible',0)+call('_root.meta2','stop',[])
 hide_target+=member('_root.meta','_visible',0)+call('Mouse','show',[])
-patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)
+patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)+put('_root.ppSaveCelebrated',0)
 for f in [102,103,105,106]:patches[f]=repaint
 
 # Callback reports user score, CPU score; original turn resolution reaches frame 82.
