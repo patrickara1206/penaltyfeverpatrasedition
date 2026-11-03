@@ -43,6 +43,9 @@ def build_stadium(call, put, P, get):
         out.extend(call(clip+'.'+name, 'setTextFormat', [('_root.ppFormat',)]))
         out.extend(call(clip+'.'+name, 'setNewTextFormat', [('_root.ppFormat',)]))
 
+    # Overscan scenery fills widescreen viewports at the original uniform scale.
+    rect(-600, -1200, 1800, 2600, 0x287B48)
+    rect(-600, -1200, 1800, 1200, 0x101F28)
     # Perspective mowing bands and fine blades, drawn below the native actors.
     rect(0, 103, 600, 297, 0x287B48)
     bands = [103, 128, 158, 194, 237, 286, 341, 400]
@@ -70,9 +73,18 @@ def build_stadium(call, put, P, get):
     out.extend(P('_root.ppTurfBitmap')+P('pf_turf')+P(1)+get('flash.display.BitmapData')+P('loadBitmap')+b'\x52\x1d')
     out.extend(call('_root.ppBrand.ppTurf','attachBitmap',[('_root.ppTurfBitmap',),1]))
     out.extend(put('_root.ppBrand.ppTurf._xscale',50)+put('_root.ppBrand.ppTurf._yscale',50)+put('_root.ppBrand.ppTurf._y',103))
+    # Tile the same grass material beyond the original stage, never stretch it.
+    for tile,(tx,ty) in enumerate([(x,y) for y in [103,400,697,994] for x in [-600,0,600] if (x,y)!=(0,103)]):
+        path='_root.ppBrand.ppTurfWing'+str(tile)
+        out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppTurfWing'+str(tile),80+tile]))
+        out.extend(call(path,'attachBitmap',[('_root.ppTurfBitmap',),1]))
+        # Mirrored neighbours share the exact edge pixels with the central tile.
+        sx=-50 if tx else 50;sy=-50 if ((ty-103)//297)%2 else 50
+        px=tx+600 if sx<0 else tx;py=ty+297 if sy<0 else ty
+        out.extend(put(path+'._xscale',sx)+put(path+'._yscale',sy)+put(path+'._x',px)+put(path+'._y',py))
     out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppFieldLines',101]))
     clip='_root.ppBrand.ppFieldLines'
-    for y in [170,230,367]:rect(0,y,600,2,0xE8F2DA,92)
+    for y in [170,230,367]:rect(-600,y,1800,2,0xE8F2DA,92)
     out.extend(call(clip,'lineStyle',[2,0xE8F2DA,92])+call(clip,'moveTo',[60,368])+call(clip,'curveTo',[300,603,540,368])+call(clip,'lineStyle',[]))
     disk(305,290,.85,0xE8F2DA)
     clip='_root.ppBrand'
@@ -128,8 +140,38 @@ def build_stadium(call, put, P, get):
                 rect(x+2,y-3,1,2,0xE9E9D8,70)
             clip=base_clip
         rect(0, y+8, 600, 1, 0xAAB5B3, 65)
+    # Side sectors extend the stand rather than scaling the central artwork.
+    wing_rng=random.Random(1063)
+    for wing,x0 in enumerate([-600,600]):
+        rect(x0,0,600,62,0x192D36)
+        rect(x0,0,600,6,0x0D1C25)
+        for yy in [9,21,34,48]:
+            rect(x0,yy,600,8,0x42545B);rect(x0,yy+7,600,2,0x182A33)
+        team='home' if wing==0 else 'away';side='Home' if wing==0 else 'Away'
+        for block in range(6):
+            name='ppWingFans'+str(wing*6+block);clip='_root.ppBrand.'+name
+            out.extend(call('_root.ppBrand','createEmptyMovieClip',[name,5500+wing*6+block]))
+            for row in range(4):
+                yy=10+row*12
+                for n in range(11):
+                    xx=x0+block*100+n*9+wing_rng.uniform(-1,1)
+                    c=wing_rng.choice([('_root.pp_'+team+'_c1',),('_root.pp_'+team+'_c2',),0xDFE6D9,0x263D43])
+                    poly([(xx-3,yy+3),(xx-2,yy+1),(xx+2,yy+1),(xx+3,yy+3),(xx+2,yy+8),(xx-2,yy+8)],c)
+                    rect(xx-.6,yy+2,1.2,4,0xFFFFFF,25)
+                    rect(xx-1.8,yy+7,1.3,2.8,0x12212B);rect(xx+.5,yy+7,1.3,2.8,0x12212B)
+                    disk(xx,yy,1.8,wing_rng.choice(skin))
+                    rect(xx-1.5,yy-1.5,3,.8,0x241F1A)
+                    if wing_rng.random()<.18:rect(xx-4,yy-3,8,2,('_root.pp_'+team+'_c2',))
+            idle=sine(1.65,block*1.3)+P(.4)+b'\x0c'
+            jump=sine(12,block)+P(1)+get('Math')+P('abs')+b'\x52'+get('_root.ppCheer'+side)+P(2.2)+b'\x0c\x0c'
+            animated.append(expr(clip+'._y',idle+jump+b'\x0b'))
+            clip='_root.ppBrand'
+        for yy in [18,30,42,54]:rect(x0,yy,600,1,0xAAB5B3,65)
+        for xx in range(x0+90,x0+600,150):
+            poly([(xx,6),(xx+8,6),(xx+15,59),(xx-7,59)],0x829094)
+            for yy in range(13,59,7):rect(xx-5,yy,18,1,0xCFD5D4)
     # Team flags: the cloth, crest and shading all move as one object.
-    for i,(x,y,side) in enumerate([(228,25,'home'),(268,18,'home'),(432,22,'away'),(470,33,'away')]):
+    for i,(x,y,side) in enumerate([(228,25,'home'),(268,18,'home'),(432,22,'away'),(470,33,'away'),(-350,25,'home'),(-100,18,'home'),(720,22,'away'),(1000,33,'away')]):
         rect(x,y,1,28,0xB2BFC1)
         name='ppFlag'+str(i);path='_root.ppBrand.'+name
         out.extend(call('_root.ppBrand','createEmptyMovieClip',[name,6000+i]))
@@ -146,34 +188,34 @@ def build_stadium(call, put, P, get):
         cheer=get('_root.ppCheer'+('Home' if side=='home' else 'Away'))
         animated.append(expr(path+'._xscale',P(94)+sine(1.6,i*1.8)+P(6)+b'\x0c\x47')+expr(path+'._rotation',sine(1.4,i*1.4)+P(2)+cheer+P(1.5)+b'\x0c\x47\x0c'))
         clip='_root.ppBrand'
-    rect(0, 55, 600, 5, 0x18272D)
-    rect(0, 56, 600, 1, 0xA9BBBB)
-    for x in range(0, 601, 55):
+    rect(-600, 55, 1800, 5, 0x18272D)
+    rect(-600, 56, 1800, 1, 0xA9BBBB)
+    for x in range(-600, 1201, 55):
         rect(x, 50, 1, 11, 0x99ABAB)
-    # Continuous LED ribbon: two copies make the leftward loop seamless.
+    # Continuous LED ribbon: three copies make the leftward loop seamless.
     sponsors=[('CALMA+','ENERGIA PARA O JOGO'),('ONDA','CONECTE SUA TORCIDA'),('ARENA 12','VISTA A PAIXAO'),('RESENHA FM','O SOM DA ARQUIBANCADA'),('PATRAS','SPORTS & CO.'),('GOLEIA','SEU PROXIMO GOL'),('MARE 90','NA ONDA DA TORCIDA'),('TRIVELA LAB','IDEIAS EM CAMPO'),('LUME PLAY','O JOGO NA SUA TELA'),('QUADRA 9','MOVIMENTO SEM PAUSA'),('VIBRA 11','VIVA CADA COBRANCA'),('GRAMA & GO','PAIXAO PELO GRAMADO')]
     out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppAdRibbon',7100]))
     clip='_root.ppBrand.ppAdRibbon'
-    for i in range(len(sponsors)*2):
+    for i in range(-len(sponsors),len(sponsors)*2):
         x=i*128;brand,line=sponsors[i%len(sponsors)]
         bg=[0x102C2E,0x0D2532,0x21271F][i%3];fg=[0xB7F7D5,0x91DBF2,0xF1CD72][i%3]
         rect(x,62,128,36,bg)
         rect(x+127,62,1,36,0x040C12)
-        text('ppAd'+str(i),brand,x+8,64,112,22,15 if len(brand)<9 else 12,fg,100+i*2)
-        text('ppAdSub'+str(i),line,x+8,85,112,11,5.5,fg,101+i*2)
+        text('ppAd'+str(i),brand,x+8,64,112,22,15 if len(brand)<9 else 12,fg,100+(i+len(sponsors))*2)
+        text('ppAdSub'+str(i),line,x+8,85,112,11,5.5,fg,101+(i+len(sponsors))*2)
     clip='_root.ppBrand'
     out.extend(call(clip,'createEmptyMovieClip',['ppAdMask',8000]))
-    clip='_root.ppBrand.ppAdMask';rect(0,62,600,36,0xFFFFFF);clip='_root.ppBrand'
+    clip='_root.ppBrand.ppAdMask';rect(-600,62,1800,36,0xFFFFFF);clip='_root.ppBrand'
     out.extend(call('_root.ppBrand.ppAdRibbon','setMask',[('_root.ppBrand.ppAdMask',)]))
     out.extend(call(clip,'createEmptyMovieClip',['ppAdGlass',7200]))
     clip='_root.ppBrand.ppAdGlass'
-    for yy in range(64,97,2):rect(0,yy,600,.35,0xFFFFFF,8)
-    for xx in range(0,601,4):rect(xx,63,.35,33,0x000000,13)
-    rect(0,60,600,2,0x587078);rect(0,98,600,3,0x061216)
+    for yy in range(64,97,2):rect(-600,yy,1800,.35,0xFFFFFF,8)
+    for xx in range(-600,1201,4):rect(xx,63,.35,33,0x000000,13)
+    rect(-600,60,1800,2,0x587078);rect(-600,98,1800,3,0x061216)
     clip='_root.ppBrand'
     scroll=get('_root.ppStadiumTime')+P(25)+b'\x0c'+P(len(sponsors)*128)+b'\x3f'+P(-1)+b'\x0c'
     animated.append(expr('_root.ppBrand.ppAdRibbon._x',scroll))
-    rect(0, 99, 600, 4, 0x2F5941)
+    rect(-600, 99, 1800, 4, 0x2F5941)
     out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppHudBackdrop',9000]))
     clip='_root.ppBrand.ppHudBackdrop'
     # Compact broadcast scorebug; 214 x 40 native pixels.

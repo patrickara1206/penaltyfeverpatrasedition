@@ -5,7 +5,7 @@ Atualização da apresentação da partida, preservando os personagens e a físi
 - Publicidade deslizando continuamente para a esquerda com 12 marcas fictícias.
 - Torcida detalhada, bandeiras dos clubes e comemoração no setor do time que marcou.
 - Gramado com textura de lâminas de grama e faixas de corte.
-- Carregamento personalizado com os dois escudos e tela cheia preenchendo o player.
+- Carregamento personalizado com os dois escudos e tela cheia proporcional, centralizada, sem esticar nem cortar o jogo, com arquibancada e gramado ampliados nas laterais.
 - Números originais preservados, com seleção reaplicada após cada troca de quadro do jogador.
 
 - Física clássica original restaurada: voo, rebotes e colisões preservam o programa original, conforme solicitado.
