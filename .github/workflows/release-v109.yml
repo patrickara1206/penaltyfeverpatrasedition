@@ -1,0 +1,32 @@
+name: Publicar Na Marca v1.0.9
+on:
+  push:
+    branches: [v1.0.9]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validar versão
+        run: |
+          node tools/test-v109.cjs
+          node tools/test-v106.cjs
+          node tools/test-stadium-animation.cjs
+          node tools/test-v106-motion.cjs
+          node tools/test-match-bridge.cjs
+          node tools/test-border-playoffs.cjs
+          node tools/test-security.cjs
+          node tools/test-embedded-logos.cjs
+      - name: Criar pacote portátil e verificar conteúdo
+        run: python3 tools/package-release.py
+      - name: Publicar release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/publish-v109.py

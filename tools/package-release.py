@@ -14,7 +14,7 @@ for top in ['app','licenses']:
   if rel.startswith('app/assets/logos/')and rel not in artwork:continue
   if p.name=='marca-eterna.png':continue
   files.append((p,rel))
-for rel in ['JOGAR.html','redirect.js','README.md','RELEASE-v1.0.9.md','DADOS-v1.0.9.md','LOGOS.md','CLUB-HISTORY.md']:
+for rel in ['JOGAR.html','redirect.js','README.md','RELEASE-v1.0.9.md','DADOS-v1.0.9.md','VALIDACAO-v1.0.9.json','LOGOS.md','CLUB-HISTORY.md']:
  p=repo/rel
  if p.exists():files.append((p,rel))
 archive=output/(name+'.zip')

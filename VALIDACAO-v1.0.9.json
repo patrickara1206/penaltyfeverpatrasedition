@@ -23,12 +23,15 @@
     "Ruffle match start",
     "documented kicker and shootout date",
     "natural 0-3 match result and return button",
-    "dated 22-fixture snapshot with Brasilia times"
+    "dated 22-fixture snapshot with Brasilia times",
+    "live fixture query: 22 results, no console errors",
+    "web Ruffle with on-demand WASM and documented crests in Easy mode"
   ],
   "limits": [
     "No certification of all regulations, crests or rosters",
     "Seven documented trophy photographs; other awards illustrative",
     "No benchmark across all computers",
     "Direct file URL testing blocked by browser policy; HTTP match and portable loader logic tested"
-  ]
+  ],
+  "productionBranch": "v1.0.9"
 }
