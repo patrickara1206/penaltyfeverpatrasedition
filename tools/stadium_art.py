@@ -193,7 +193,7 @@ def build_stadium(call, put, P, get):
     for x in range(-600, 1201, 55):
         rect(x, 50, 1, 11, 0x99ABAB)
     # Continuous LED ribbon: three copies make the leftward loop seamless.
-    sponsors=[('CALMA+','ENERGIA PARA O JOGO'),('ONDA','CONECTE SUA TORCIDA'),('ARENA 12','VISTA A PAIXAO'),('RESENHA FM','O SOM DA ARQUIBANCADA'),('PATRAS','SPORTS & CO.'),('GOLEIA','SEU PROXIMO GOL'),('MARE 90','NA ONDA DA TORCIDA'),('TRIVELA LAB','IDEIAS EM CAMPO'),('LUME PLAY','O JOGO NA SUA TELA'),('QUADRA 9','MOVIMENTO SEM PAUSA'),('VIBRA 11','VIVA CADA COBRANCA'),('GRAMA & GO','PAIXAO PELO GRAMADO')]
+    sponsors=[('CALMA+','ENERGIA PARA O JOGO'),('ONDA','CONECTE SUA TORCIDA'),('ARENA 12','VISTA A PAIXAO'),('RESENHA FM','O SOM DA ARQUIBANCADA'),('NA MARCA','SEU LEGADO EM CAMPO'),('GOLEIA','SEU PROXIMO GOL'),('MARE 90','NA ONDA DA TORCIDA'),('TRIVELA LAB','IDEIAS EM CAMPO'),('LUME PLAY','O JOGO NA SUA TELA'),('QUADRA 9','MOVIMENTO SEM PAUSA'),('VIBRA 11','VIVA CADA COBRANCA'),('GRAMA & GO','PAIXAO PELO GRAMADO'),('ARDIDAS','TRES VEZES MAIS RACA'),('MIKE','SO VAI'),('PETSHOES','PISADA DE CRAQUE'),('COLA COCA','SABOR DE GOL'),('GUARANA ALELUIA','ENERGIA DOS DEUSES')]
     out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppAdRibbon',7100]))
     clip='_root.ppBrand.ppAdRibbon'
     for i in range(-len(sponsors),len(sponsors)*2):
@@ -242,7 +242,7 @@ def build_stadium(call, put, P, get):
     centered('ppTurnLabel')
     text('ppPrompt', '', 330, 292, 255, 28, 15, 0xFFFFFF, 9205)
     centered('ppPrompt')
-    sponsors=['CALMA+','ONDA','ARENA 12','RESENHA FM','PATRAS','GOLEIA','MARE 90','TRIVELA LAB','LUME PLAY','QUADRA 9','VIBRA 11','GRAMA & GO']
+    sponsors=['CALMA+','ONDA','ARENA 12','RESENHA FM','NA MARCA','GOLEIA','MARE 90','TRIVELA LAB','LUME PLAY','QUADRA 9','VIBRA 11','GRAMA & GO']
     slogans=['ENERGIA PARA O JOGO','CONECTE SUA TORCIDA','VISTA A PAIXAO','O SOM DA ARQUIBANCADA','SPORTS & CO.','SEU PROXIMO GOL','NA ONDA DA TORCIDA','IDEIAS EM CAMPO','O JOGO NA SUA TELA','MOVIMENTO SEM PAUSA','VIVA CADA COBRANCA','PAIXAO PELO GRAMADO']
     for name,values in [('ppSponsors',sponsors),('ppSlogans',slogans)]:
         out.extend(P('_root.'+name)+b''.join(P(v)for v in reversed(values))+P(len(values))+b'\x42\x1d')
@@ -259,4 +259,6 @@ def build_stadium(call, put, P, get):
     animation+=b''.join(animated)+b'\0'
     fn=b'\0'+struct.pack('<HH',0,len(animation))+animation
     out.extend(P('_root.ppAnimateStadium')+b'\x9b\x05\x00'+fn+b'\x1d')
+    for cached in ['ppAdGlass','ppHudBackdrop','ppFieldLines']:
+        out.extend(put('_root.ppBrand.'+cached+'.cacheAsBitmap',1))
     return bytes(out)

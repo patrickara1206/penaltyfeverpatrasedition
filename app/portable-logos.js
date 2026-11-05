@@ -1,0 +1,2 @@
+/* Regular image files render immediately; portable crest embedding waits for a match. */
+(function(){let ready;window.PFPrepareLogos=()=>{if(location.protocol!=='file:'||window.PF_EMBEDDED_LOGOS)return Promise.resolve();return ready||(ready=new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='logos-embedded.js?v=109.3';s.onload=resolve;s.onerror=()=>{ready=null;reject(Error('Reabra a pasta completa do jogo para carregar os escudos.'))};document.head.append(s)}))}})();

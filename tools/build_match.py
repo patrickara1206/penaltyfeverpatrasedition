@@ -130,18 +130,24 @@ def shot(side):
  a+=call('_root','ppPaintShots',[])
  return a+call('flash.external.ExternalInterface','call',['patrasShot',('_root.serija_shuteva',),1 if side=='home' else 0,('_root.gol',),('_root.igr_golovi',),('_root.komp_golovi',)])
 shot_away=shot('away');patches[78]=shot('home')
-score=copy('_root.ppBrand.ppNameHome.text','_root.pp_home')+copy('_root.ppBrand.ppNameAway.text','_root.pp_away')
-score+=copy('_root.ppBrand.ppScoreHome.text','_root.igr_golovi')+copy('_root.ppBrand.ppScoreAway.text','_root.komp_golovi')
+def copy_changed(path,source):return guarded(get(path)+get(source)+b'\x49\x12',copy(path,source))
+score=copy_changed('_root.ppBrand.ppNameHome.text','_root.pp_home')+copy_changed('_root.ppBrand.ppNameAway.text','_root.pp_away')
+score+=copy_changed('_root.ppBrand.ppScoreHome.text','_root.igr_golovi')+copy_changed('_root.ppBrand.ppScoreAway.text','_root.komp_golovi')
 score+=assign('_root.ppBrand.ppTurnLabel.text',get('_root.serija_shuteva')+P(1)+b'\x47')
 score+=member('_root.your_shot_klip','_visible',0)+member('_root.opponents_shot_klip','_visible',0)
-score+=put('_root.ppBrand.ppPrompt.text','')
+# ppPrompt is initialized empty; no per-frame text reset.
 score+=copy('_root.ppBrand.ppAttackLabel._visible','_root.sutIgraca')
 score+=assign('_root.ppBrand.ppDefendLabel._visible',get('_root.sutIgraca')+b'\x12')
 cheer=put('_root.ppGoalCelebrated',1)
 cheer+=guarded(get('_root.sutIgraca'),assign('_root.ppHomeCheerUntil',b'\x34'+P(3200)+b'\x47'))
 cheer+=guarded(get('_root.sutIgraca')+b'\x12',assign('_root.ppAwayCheerUntil',b'\x34'+P(3200)+b'\x47'))
 cheer=guarded(get('_root.gol'),guarded(get('_root.ppGoalCelebrated')+b'\x12',cheer))
-body=repaint+score+cheer+call('_root','ppAnimateStadium',[])+b'\0'
+save_cheer=put('_root.ppSaveCelebrated',1)
+save_cheer+=guarded(get('_root.sutIgraca'),assign('_root.ppAwayCheerUntil',b'\x34'+P(2800)+b'\x47'))
+save_cheer+=guarded(get('_root.sutIgraca')+b'\x12',assign('_root.ppHomeCheerUntil',b'\x34'+P(2800)+b'\x47'))
+save_condition=get('_root.hitLopta')+get('_root.uRuci')+b'\x11'
+save_cheer=guarded(save_condition,guarded(get('_root.ppSaveCelebrated')+b'\x12',save_cheer))
+body=repaint+score+cheer+save_cheer+call('_root','ppAnimateStadium',[])+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
 # Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
@@ -194,11 +200,16 @@ speedhook=guarded(get('_root.sutIgraca')+b'\x12',change)
 # replacing its dive animations or the human aiming controls.
 keepercondition=invoke('Math','random',[])+P(100)+b'\x0c'+get('_root.pp_keeper')+b'\x48'
 keeper=guarded(get('_root.sutIgraca'),guarded(keepercondition,put('_root.odlukaOdbrana',-1)))
+easy_aim=put('_root.odlukaOdbrana',1)
+easy_aim+=assign('_root.xRukavica',get('_root.osaGola')+invoke('Math','random',[])+P(.5)+b'\x0b'+get('_root.sirinaGola')+P(2.5)+b'\x0c\x0c\x47')
+easy_aim+=assign('_root.yRukavica',get('_root.golLinija')+invoke('Math','random',[])+get('_root.visinaGola')+b'\x0c\x0b')
+easy_aim=guarded(get('_root.pp_easy')+P(1)+b'\x49',guarded(get('_root.sutIgraca'),easy_aim))
+keeper+=easy_aim
 patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),('_root.pp_speed',)])
 patches[101]+=copy('_root.trajanjeSuta','_root.pp_pace')+put('_root.timerSuta',350)
 hide_target=member('_root.meta2','_visible',0)+call('_root.meta2','stop',[])
 hide_target+=member('_root.meta','_visible',0)+call('Mouse','show',[])
-patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)
+patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)+put('_root.ppSaveCelebrated',0)
 for f in [102,103,105,106]:patches[f]=repaint
 
 # Callback reports user score, CPU score; original turn resolution reaches frame 82.
@@ -226,6 +237,10 @@ while pos<len(D):
  s=pos;v=struct.unpack_from('<H',D,pos)[0];pos+=2;t=v>>6;n=v&63
  if n==63:n=struct.unpack_from('<I',D,pos)[0];pos+=4
  pos+=n
+ if t==12 and frame==104:
+  # Easy AI commits to a random dive, even after an automatic late kick.
+  # Original trajectory setup and the flight/collision action stay untouched.
+  out+=tag(12,easy_aim+b'\0')
  if t==12 and frame==105:
   # Preserve the classic flight, rebound and keeper collision program byte-for-byte.
   payload=D[pos-n:pos]

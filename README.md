@@ -1,81 +1,31 @@
-# Penalty Fever 2026 Edition · v1.0.4 (prévia)
+# Na Marca · v1.0.9
 
-**Prévia de expansão:** esta versão contém recortes incompletos em três divisões regionais e formatos adaptados, detalhados em [RELEASE-v1.0.4.md](RELEASE-v1.0.4.md) e [CATALOGO-v1.0.4.json](CATALOGO-v1.0.4.json). Não é uma reprodução integral de todos os regulamentos oficiais. A versão estável anterior é a v1.0.3.
+Decisões nos pênaltis, temporadas e carreira, construídas sobre a partida aprovada da v1.0.6. A identidade do site usa verde, azul, amarelo e branco.
 
-**Assinatura Patras.** O motor de cobranças do clássico Penalty Fever Plus, com identidade PF própria, temporadas e um modo Carreira que conecta o mundo do jogo.
-
-![Identidade da edição](previas/identidade-campo.png)
+[Jogar online](https://penaltyfeverpatras.pages.dev/) · [Release v1.0.9](https://github.com/patrickara1206/penaltyfeverpatrasedition/releases/tag/v1.0.9) · [Baixar ZIP portátil](https://github.com/patrickara1206/penaltyfeverpatrasedition/releases/download/v1.0.9/Na-Marca-v1.0.9.zip)
 
 ## Jogar sem instalação
 
-1. Baixe o [ZIP portátil](distribuicao/Penalty-Fever-2026-Edition.zip).
-2. Extraia **toda a pasta** para um local de sua escolha.
-3. Abra **JOGAR.html** em um navegador moderno com JavaScript e WebAssembly: Chrome, Edge ou Firefox, por exemplo.
+1. Extraia o ZIP inteiro.
+2. Abra JOGAR.html em navegador moderno com JavaScript e WebAssembly.
+3. Use o botão ABRIR O JOGO caso o redirecionamento automático seja bloqueado.
 
-O jogo inclui seus recursos. Não requer Flash instalado, Node, Python, terminal, conta, conexão ou permissão de administrador. A pasta pode ser copiada para outro computador. Navegadores antigos e políticas de computadores administrados podem impedir a abertura de arquivos locais. Windows, macOS e Linux dependem de um navegador compatível; não há executável nativo universal.
+Não precisa de Flash instalado, terminal ou administrador. O modo offline inclui seus recursos e uma agenda datada; a agenda ao vivo exige a versão online. Políticas de computadores administrados e navegadores antigos podem limitar a execução. Não existe garantia de compatibilidade ou desempenho em todo computador.
 
-**Verificação da distribuição:** o carregador offline e os dois módulos WebAssembly foram validados sem acesso à rede. A interface e partidas foram testadas em navegador por uma prévia HTTP local. A política do navegador de testes bloqueou a abertura direta `file:`; o duplo clique no arquivo em cada sistema operacional não foi validado. Nenhuma proteção do navegador foi desativada.
+Exporte os saves antes de mudar de navegador ou computador. Os identificadores de armazenamento anteriores foram preservados; o jogo não sincroniza saves pela internet.
 
-## Revisão v1.0.3
+## Novidades e cobertura
 
-Seleção de clubes em carrossel na Partida rápida: escudo central ampliado, vizinhos laterais, globo vetorial e animações. Filtros independentes de país/liga, busca sem acentos, setas e navegação por teclado. A seleção mantém o arquivo clássico separado das equipes atuais.
+Consulte [RELEASE-v1.0.9.md](RELEASE-v1.0.9.md) e [DADOS-v1.0.9.md](DADOS-v1.0.9.md). Foram incluídos 438 elencos de clubes, 209 ordens documentadas, 489 participações nas Copas históricas, 88 elencos de seleções recentes, sete fotografias de troféus e consulta à agenda real de 17 competições. Os clubes sem confirmação mostram cobradores genéricos. Competições adaptadas e imagens de contingência permanecem identificadas. Esta edição não certifica cobertura oficial integral de todas as equipes ou regulamentos.
 
-## Revisão v1.0.2
+## Desenvolvimento e testes
 
-Halo e movimento dos escudos no seletor de clube e na Partida rápida. Primeiras proteções de importação, descompressão e carregamento documentadas em [SECURITY.md](SECURITY.md). Hospedagem e migração dos saves em [PUBLICACAO.md](PUBLICACAO.md).
+O site é estático. Para desenvolvimento, sirva a pasta app com um servidor local. A publicação web é construída com `python tools/build-cloudflare.py dist-cloudflare`; o pacote portátil, com `python tools/package-release.py`.
 
-## Revisão v1.0.1
+Os testes da release incluem física original byte a byte, animação da torcida, cores, ponte Ruffle/resultados, playoffs entre divisões, saves, imagens incorporadas, elencos por edição e carregamento WebAssembly. A validação automatizada não equivale a testar todos os computadores ou provar ausência de todo bug.
 
-Nova identidade em verde e dourado, marca com retorno ao início, logos das competições ampliadas ao passar o mouse, seletor Casa/Fora e guia de regras reorganizado. Fichas históricas com fontes offline: cobertura parcial, detalhada em [CLUB-HISTORY.md](CLUB-HISTORY.md). O levantamento completo dos 824 clubes ainda não foi concluído.
+## Créditos e fontes
 
-## O que esta versão traz
+Motor e parte dos gráficos, animações e áudio: Penalty Fever Plus, FlashFooty / Vladeta M. (2009). A identidade Na Marca e os painéis desta edição são próprios; não há declaração de licença comercial do clássico.
 
-- **PF**, com escudo PF, verde de campo, dourado e painéis próprios.
-- **91 competições**, **1.752 equipes no catálogo atual** e **1.573 clubes em 18 países** no universo da carreira, incluindo os recortes parciais documentados. Há ainda as seleções históricas das Copas. Consulta: 28/10/2026.
-- Divisões inferiores, grupos regionais e playoffs de acesso. Brasil A–D; Inglaterra até League Two; Espanha, Itália, Alemanha e França até a terceira divisão; Argentina com ramos paralelos; EUA e México com os recortes descritos em [FONTES.md](FONTES.md).
-- **Carreira**: perfil do técnico, clube de qualquer divisão incluída, ligas e copas simultâneas, classificação internacional, propostas, transferências, histórico e relatório anual de campeões.
-- Mundiais em ciclos de quatro anos e proposta da seleção de origem após conquistar um título intercontinental. A participação depende de classificação.
-- Quatro dificuldades: **Fácil, Médio, Intermediário e Difícil**. A posição dos clubes atualiza o desafio nas ligas; a velocidade e o tempo de reação aumentam no mata-mata.
-- Cobradores fictícios próprios de cada clube, alternados durante a disputa. Escolha entre Casa e Fora, com cores persistentes durante a corrida.
-- Som durante a partida, consulta às outras ligas com o confronto pausado, exportação/importação de saves e armazenamento local comprimido.
-- Abandono confirmado registra **0 × 1 a 0 × 5**. Fechar ou recarregar também gera a derrota na abertura seguinte. Saves não são protegidos contra edição manual ou restauração de backups antigos.
-
-## Controles
-
-**Ataque:** primeiro clique inicia a corrida; o segundo define a cobrança no tempo da animação. **Defesa:** mire no sinal vermelho e clique. No topo da partida ficam som, consulta ao mundo na Carreira e abandono. O áudio muda imediatamente; a consulta e a confirmação pausam a partida.
-
-## Seus saves
-
-Use **Baixar save** para levar uma carreira a outro navegador ou computador. O formato exportado é JSON, versão 3; as carreiras internas têm versão 1. A importação valida clubes, fases e resultados antes de aplicar os dados. O armazenamento local usa compressão sem perda. Vários perfis e arquivos independentes são permitidos; o limite de armazenamento depende do navegador. Se o jogo informar falta de espaço, exporte o save.
-
-Trocar a pasta, limpar o navegador, usar navegação privada ou abrir em outro navegador pode separar ou apagar o armazenamento local. O JSON exportado é sua cópia de segurança. Importar um save feito durante uma partida aplica a regra de interrupção.
-
-## Regras reais e adaptações do jogo
-
-Cada confronto é uma disputa de pênaltis; não são partidas de 90 minutos. A base conserva os participantes e as estruturas principais das competições originalmente incluídas, com as simplificações do painel Regras. Calendários e datas são gerados pelo jogo. A base não recebe atualizações automáticas pela internet.
-
-A Carreira usa um calendário anual integrado. Em 2026, Champions e Libertadores começam com os participantes da base oficial. Nos anos seguintes, vagas vêm das classificações simuladas dos países incluídos e de convidados. As copas nacionais da Carreira incluem os clubes disponíveis em eliminatórias próprias. Os torneios continentais futuros, a Intercontinental com quatro clubes e os Mundiais da Carreira têm **regras de classificação e formatos próprios da edição**. Não são uma reprodução de todos os regulamentos FIFA/UEFA/CONMEBOL.
-
-Nos acessos, playoffs de Inglaterra, Espanha e Itália são adaptados aos pênaltis. Barrages que cruzam ligas alemãs/francesas, restrições de times B, critérios disciplinares, médias argentinas, certificações e distribuição geográfica futura são simplificados. Os ramos argentinos de nível 3 alimentam a Primera Nacional em paralelo. A Série C cresce para 24 clubes em 2027 e 28 em 2028; depois o jogo mantém esse tamanho. A última divisão incluída de cada país é o limite do universo, sem entradas e saídas para ligas amadoras ausentes. **MLS/USL e o sistema mexicano não têm acesso automático entre si.**
-
-Nos Mundiais: seleções em 2026/2030/2034…; clubes em 2029/2033/2037… Para 2030 em diante, as eliminatórias do jogo usam 64 seleções em 16 grupos, com as três primeiras de cada grupo classificadas. O título intercontinental abre a possibilidade de comandar a seleção e garante uma vaga de clube no próximo ciclo dentro da janela de quatro anos. As demais vagas de clubes vêm da simulação.
-
-Camisas são **estilizadas**, com presets de casa e de fora e alternativas de contraste; não são réplicas licenciadas dos uniformes oficiais de 2026. Escudos e marcas de competições são imagens locais de referência, com as fontes em [LOGOS.md](LOGOS.md). Os elencos são fictícios. O arquivo clássico preserva nomes históricos separados da base atual. Esta versão cobre as divisões listadas, não toda a pirâmide amadora de cada país.
-
-## Validação e código
-
-O [relatório de testes](VALIDACAO.json) registra 170 temporadas completas, 66.295 partidas nessas temporadas e 41 anos de Carreira em testes, além de dificuldade, acesso, integridade de saves e carregamento offline. Testes de interface cobrem partida real, som, uniforme em movimento, abandono, interrupção, exportação/importação e consulta a ligas.
-
-Para desenvolver, consulte [CODIGO-FONTE.md](CODIGO-FONTE.md). Para conferir os pedidos atendidos e suas adaptações, leia [MELHORIAS.md](MELHORIAS.md).
-
-## Créditos
-
-Penalty Fever Plus original: **FlashFooty / Vladeta M.**, 2009. O SWF original e parte dos gráficos, animações e áudio continuam sendo obras de seus autores. Esta é uma adaptação pessoal; não atribui a Patras a autoria do clássico nem declara licença comercial de redistribuição do original.
-
-Emulação: **Ruffle 0.7.1**, licenças Apache 2.0/MIT em `app/LICENSE_APACHE` e `app/LICENSE_MIT`. Compressão: **lz-string 1.5.0**, de pieroxy, licença MIT em `app/LICENSE_LZ_STRING`. A disponibilidade pública do SWF não equivale a uma autorização de uso comercial. Fontes e procedência: [FONTES.md](FONTES.md).
-
-## Atualização do estádio e placar
-
-Arquibancada vetorial com torcedores e bandeiras, placas com cinco marcas fictícias e escudos locais nos menus, tabelas e cabeçalho da partida. O placar mantém seu formato e mostra cinco círculos por equipe: verde para gol, vermelho para cobrança perdida e vazio para tentativa pendente. A etiqueta usa RODADA; na morte súbita, os indicadores acompanham as cinco tentativas mais recentes.
-
-A correção dos uniformes é aplicada após a troca dos objetos de cada um dos 20 quadros do jogador, incluindo corrida e chute. VALIDACAO-CORES.json registra a leitura real de RGB dos dois lados sem divergências; VALIDACAO-VISUAL-ASSETS.json valida as imagens locais e os hooks do SWF.
+Ruffle 0.7.1: Apache 2.0/MIT, em app/LICENSE_APACHE e app/LICENSE_MIT. lz-string 1.5.0, pieroxy: MIT, em app/LICENSE_LZ_STRING. World Cup Database: Joshua C. Fjelstul, CC BY-SA 4.0, em licenses/worldcup/NOTICE.md. Fotografias dos troféus: autoria e licença nos cartões e em licenses/trophy-photos.json. Escudos: [LOGOS.md](LOGOS.md) e app/logos-manifest.json.

@@ -1,0 +1,1 @@
+window.PF_WASM_MODULES={"172de42e6619eac8f371.wasm": ["runtime/wasm-01.js", "runtime/wasm-02.js", "runtime/wasm-03.js"], "878d548199cddef07035.wasm": ["runtime/wasm-04.js", "runtime/wasm-05.js", "runtime/wasm-06.js"]};

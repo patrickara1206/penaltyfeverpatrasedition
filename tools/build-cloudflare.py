@@ -15,7 +15,7 @@ for p,rel in files:
 index=(out/'index.html').read_text(encoding='utf8')
 index=re.sub(r'<script src="runtime/wasm-\d+\.js"></script>','',index)
 index=re.sub(r'<script src="(?:wasm-local|logos-embedded)\.js(?:\?[^"]*)?"></script>','',index)
-index=index.replace("connect-src 'none'","connect-src 'self'")
+index=index.replace("connect-src 'none'","connect-src 'self' https://site.api.espn.com")
 (out/'index.html').write_text(index,encoding='utf8')
 modules={}
 for p in sorted((app/'runtime').glob('*.js')):
@@ -26,7 +26,7 @@ for name,value in modules.items():
  binary=base64.b64decode(value);assert binary.startswith(b'\0asm')and len(binary)<25*1024*1024
  (out/name).write_bytes(binary)
 (out/'_headers').write_text('/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Permissions-Policy: camera=(), microphone=(), geolocation=()\n  X-Frame-Options: DENY\n',encoding='utf8')
-archive=out.parent/'Cloudflare-Penalty-Fever-v1.0.6.zip'
+archive=out.parent/'Cloudflare-Na-Marca-v1.0.9.zip'
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=7)as z:
  allowed={rel for _,rel in files}|set(modules)|{'_headers'}
  for rel in sorted(allowed):z.write(out/rel,rel)

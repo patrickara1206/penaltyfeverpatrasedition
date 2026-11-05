@@ -69,7 +69,7 @@ for t,b in tags(actor,4):
  previous=t,b
 assert actor_frames==20
 assert {102,103,104,105,106}<=hooks,hooks
-for brand in [b'CALMA+',b'ONDA',b'ARENA 12',b'RESENHA FM',b'PATRAS',b'RODADA ',b'ppPaintShots',b'patrasShot']:assert brand in d,brand
+for brand in [b'CALMA+',b'ONDA',b'ARENA 12',b'RESENHA FM',b'NA MARCA',b'RODADA ',b'ppPaintShots',b'patrasShot']:assert brand in d,brand
 assert b'F E V E R   /   2 0 2 6' not in d
 report={'status':'passed','teamsAndNations':len(expected),'competitions':len(data['competitions']),'artworkFiles':len(files),'formats':formats,'artworkBytes':sum(sizes),'actorFramesWithPostPlacementRecolor':actor_frames,'motionRootFramesWithRecolor':sorted(hooks),'matchSha256':hashlib.sha256(raw).hexdigest()}
 (base/'VALIDACAO-VISUAL-ASSETS.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
