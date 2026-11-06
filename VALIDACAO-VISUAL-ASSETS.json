@@ -12,12 +12,11 @@
   "actorFramesWithPostPlacementRecolor": 20,
   "motionRootFramesWithRecolor": [
     75,
-    101,
     102,
     103,
     104,
     105,
     106
   ],
-  "matchSha256": "9693cce3f32b84d4cf5ba60084f67873c99c58b26695ebf13c193d390b85bc6b"
+  "matchSha256": "dbb9ea7a3243c1f71ee3d3f67959a28ee68a652cf674e4bf8765c0c6920465c5"
 }

@@ -3,7 +3,7 @@
   "name": "Na Marca",
   "baseline": "c82ee75",
   "checkedAt": "2026-11-06",
-  "matchSha256": "9693cce3f32b84d4cf5ba60084f67873c99c58b26695ebf13c193d390b85bc6b",
+  "matchSha256": "dbb9ea7a3243c1f71ee3d3f67959a28ee68a652cf674e4bf8765c0c6920465c5",
   "testsPassed": [
     "test-v106.cjs",
     "test-stadium-animation.cjs",
@@ -36,6 +36,7 @@
   ],
   "productionBranch": "v1.0.9",
   "controlCorrection": {
+    "baseline": "c82ee75",
     "nativePhases": [
       101,
       102,
@@ -44,6 +45,11 @@
       105,
       106
     ],
-    "verification": "Original actions byte-for-byte and in order; cosmetic hooks do not alter physics, markers, mouse listeners or timers"
+    "verification": "Native actions preserved; complete physics hook block and launcher parameters identical to v1.0.6",
+    "scope": [
+      "v1.0.6 physics and movement",
+      "native shirt shading",
+      "native jersey number contrast"
+    ]
   }
 }

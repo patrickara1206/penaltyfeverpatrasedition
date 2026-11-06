@@ -61,12 +61,20 @@ def uniform_details(owner,shirt,keeper=False):
  for key in ['_x','_y','_rotation','_xscale','_yscale']:
   out+=copy(path+'.'+key,owner+'.'+shirt+'.'+key)
  return out
+skin+=P('_root.ppNumberOutline')+b''.join(P(v) for v in reversed([0x101D22,0.9,1.4,1.4,2,1,False,False]))+P(8)+P('flash.filters.GlowFilter')+b'\x40\x1d'
+skin+=P('_root.ppNumberFilters')+get('_root.ppNumberOutline')+P(1)+b'\x42\x1d'
+skin+=P('_root.ppShirtShade')+b''.join(P(v) for v in reversed([1,90,0x091B23,0.22,2,2,1,1,True,False,False]))+P(11)+P('flash.filters.DropShadowFilter')+b'\x40\x1d'
+skin+=P('_root.ppShirtFilters')+get('_root.ppShirtShade')+P(1)+b'\x42\x1d'
+
 def jersey_number(side):
  # Keep the original vector glyph and its authored per-frame transforms.
  # Replaced actor instances must be stopped again on the chosen glyph frame.
  series=get('_root.serija_shuteva')+P(13)+b'\x3f'
  frame=(P(1)+series+b'\x47') if side=='home' else (P(13)+series+b'\x0b')
- return invoke('_root.igr.brojka','gotoAndStop',[frame])+b'\x17'+put('_root.igr.brojka._visible',1)
+ b=invoke('_root.igr.brojka','gotoAndStop',[frame])+b'\x17'+put('_root.igr.brojka._visible',1)
+ # Native timeline glyph, with a thin contrasting outline on striped shirts.
+ b+=member('_root.igr.brojka','filters','@_root.ppNumberFilters')
+ return b
 
 # Recolor after each actor timeline change, rather than before it. The old
 # onEnterFrame-only hook ran before gotoAndStop replaced the shirt instances.
@@ -83,6 +91,7 @@ def recolor_side(side):
  b+=invoke('_root.igr.unipruge','gotoAndStop',[frame])+b'\x17'
  number=get('_root.serija_shuteva')+P(10)+b'\x3f'+P(2)+b'\x47'
  b+=jersey_number(side)
+ b+=member('_root.igr.dres1','filters','@_root.ppShirtFilters')
  for var,path,param in [('BojaDresa1','dres1','c1'),('BojaUniPruga','unipruge','c2'),('BojaBroja','brojka','number'),('BojaShortsaICarapa','shorts','shorts')]:
   b+=color('_root.'+var,'_root.igr.'+path)+call('_root.'+var,'setRGB',[('_root.pp_'+side+'_'+param,)])
  return b
@@ -150,9 +159,9 @@ save_cheer=guarded(save_condition,guarded(get('_root.ppSaveCelebrated')+b'\x12',
 body=repaint+score+cheer+save_cheer+call('_root','ppAnimateStadium',[])+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
-# Difficulty uses the classic round input. Flight, keeper decisions and timers
-# are owned exclusively by the original shot actions below.
-for field,value in [('pp_level',1),('pp_round_label','RODADA'),('pp_attack_label','SUA VEZ'),('pp_defend_label','ADVERSARIO'),('pp_home_number',16777215),('pp_away_number',16777215)]:
+# Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
+# level 0..3.9 (marker timing), keeper 0..100 (following probability).
+for field,value in [('pp_speed',12),('pp_level',1),('pp_keeper',30),('pp_pace',75),('pp_round_label','RODADA'),('pp_attack_label','SUA VEZ'),('pp_defend_label','ADVERSARIO'),('pp_home_number',16777215),('pp_away_number',16777215)]:
  skin+=guarded(get('_root.'+field)+b'\x12',put('_root.'+field,value))
 skin+=copy('_root.runda','_root.pp_level')
 skin+=guarded(get('_root.pp_lang')+b'\x12',put('_root.pp_lang','pt'))
@@ -184,10 +193,27 @@ for key,clip in [('attack','ppAttackLabel'),('defend','ppDefendLabel'),('round',
   skin+=assign(path+'._x',x)+put(path+'._y',346)
 skin+=call('flash.external.ExternalInterface','call',['patrasReady'])
 patches[75]=skin
-# Cosmetic hooks run after each unmodified native action. They never rewrite
-# ball velocity, glove coordinates, marker state, mouse listeners or shot timers.
-patches[101]=repaint+call('_root','ppPaintShots',[])+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),12])
-patches[104]=repaint+put('_root.ppGoalCelebrated',0)+put('_root.ppSaveCelebrated',0)
+# A shooter's setup is frame101 (zero-based). Change the CPU speed both at
+# target-preview setup and at final trajectory setup in frame104, whose native
+# script resets pocbrzina to12. Recompute dependent target coordinates.
+scale=get('_root.pp_speed')+P(12)+b'\x0d'
+change=assign('_root.dex',get('_root.dex')+scale+b'\x0c')+assign('_root.dey',get('_root.dey')+scale+b'\x0c')+copy('_root.pocbrzina','_root.pp_speed')
+travel=invoke('Math','floor',[(get('_root.yBelaTacka')+get('_root.golLinija')+b'\x0b'+invoke('Math','abs',[('_root.dey',)])+b'\x0d')])
+change+=assign('_root.brojFrejmovaLopte',travel)
+count=get('_root.brojFrejmovaLopte')+P(1)+b'\x0b'
+change+=assign('_root.meta2._x',get('_root.osaGola')+count+get('_root.dex')+b'\x0c\x47')
+height=get('_root.maksvisina')+invoke('Math','sin',[get('_root.omega')+count+b'\x0c'+get('_root.faktorbrojaca')+b'\x0c'])+b'\x0c'
+change+=assign('_root.meta2._y',get('_root.yBelaTacka')+count+get('_root.dey')+b'\x0c\x47'+height+b'\x0b')
+speedhook=guarded(get('_root.sutIgraca')+b'\x12',change)
+# Greater pp_keeper increases the original precise-following branch, without
+# replacing its dive animations or the human aiming controls.
+keepercondition=invoke('Math','random',[])+P(100)+b'\x0c'+get('_root.pp_keeper')+b'\x48'
+keeper=guarded(get('_root.sutIgraca'),guarded(keepercondition,put('_root.odlukaOdbrana',-1)))
+patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),('_root.pp_speed',)])
+patches[101]+=copy('_root.trajanjeSuta','_root.pp_pace')+put('_root.timerSuta',350)
+hide_target=member('_root.meta2','_visible',0)+call('_root.meta2','stop',[])
+hide_target+=member('_root.meta','_visible',0)+call('Mouse','show',[])
+patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)+put('_root.ppSaveCelebrated',0)
 for f in [102,103,105,106]:patches[f]=repaint
 
 # Callback reports user score, CPU score; original turn resolution reaches frame 82.

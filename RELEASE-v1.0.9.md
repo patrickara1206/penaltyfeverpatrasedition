@@ -1,14 +1,14 @@
 # Na Marca · v1.0.9
 
-## Correção de cobranças e defesas
+## Correção de cobranças, uniformes e números
 
-Restaurados os programas originais completos de preparação, mouse, corrida, mira, decisão do goleiro, trajetória, colisão e escala da bola. Removidas as interferências de velocidade, mira e temporização adicionadas por esta edição. O ajuste de intervalo que cortava a animação foi retirado das configurações; as preferências antigas continuam compatíveis. Visual, uniformes, gramado, torcida, placar, anúncios, elencos, agenda e carregamento sob demanda foram mantidos.
+Física, movimentos, velocidade, temporização, mira e decisão do goleiro restaurados aos ajustes exatos da v1.0.6 (c82ee75), conforme solicitado. A comparação cobre os programas nativos, o bloco completo de ajustes e os parâmetros enviados pelo lançador. Uniformes mantêm as poses originais com sombreamento discreto; números vetoriais recebem contorno para leitura sobre listras, sem redesenhar ou reposicionar os glifos.
 
-O teste compara byte a byte as seis fases nativas e rejeita intervenções extras nos controles. A tag original e os pacotes anteriores são preservados; o ZIP principal da release recebe a correção.
+Nenhuma outra funcionalidade foi alterada. A tag original e os pacotes anteriores são preservados; o ZIP principal da release recebe a correção.
 
 Nova identidade em verde, azul, amarelo e branco, mantendo a partida aprovada da v1.0.6: física original, gramado, torcida, números das camisas e placar.
 
-- Dificuldade: usa a progressão nativa do clássico, sem forçar a mira do goleiro nem mudar a velocidade da bola.
+- Dificuldade: usa os mesmos ajustes de velocidade e decisão do goleiro da v1.0.6.
 - Menus sem pré-carregar os dois motores WebAssembly e o catálogo inteiro de imagens incorporadas. Preparação do mesmo confronto reaproveitada; superfícies estáticas e textos de placar evitam trabalho redundante.
 - Elencos históricos para as 489 participações em Copas de 1930 a 2022; 88 elencos das edições recentes incluídas. Os dados se referem ao elenco da edição, sem afirmar que todos entraram em campo.
 - 438 elencos de clubes documentados, com 14.909 nomes. Em 209 clubes, a última disputa localizada nos calendários consultados fornece a ordem dos cobradores que continuam no elenco. Os demais jogadores não recebem uma ordem presumida.

@@ -3,7 +3,7 @@
 const PFSettings=(()=>{
  const locales={pt:'Português',en:'English',es:'Español',fr:'Français',de:'Deutsch',it:'Italiano',zh:'中文',ar:'العربية',hi:'हिन्दी',ru:'Русский'};
  const words={
- classicTiming:["Cobranças e defesas usam o ritmo original do clássico.", "Shots and saves use the original classic timing.", "Tiros y paradas usan el ritmo original del clásico.", "Tirs et arrêts suivent le rythme original du classique.", "Schüsse und Paraden verwenden das ursprüngliche Timing.", "Tiri e parate usano il ritmo originale del classico.", "射门和扑救使用原版节奏。", "التسديدات والتصديات تتبع توقيت اللعبة الأصلي.", "शॉट और बचाव मूल खेल की गति का उपयोग करते हैं।", "Удары и сейвы используют оригинальный темп игры."],
+ classicTiming:["Cobranças e defesas usam o ritmo da versão 1.0.6.", "Shots and saves use the original classic timing.", "Tiros y paradas usan el ritmo original del clásico.", "Tirs et arrêts suivent le rythme original du classique.", "Schüsse und Paraden verwenden das ursprüngliche Timing.", "Tiri e parate usano il ritmo originale del classico.", "射门和扑救使用原版节奏。", "التسديدات والتصديات تتبع توقيت اللعبة الأصلي.", "शॉट और बचाव मूल खेल की गति का उपयोग करते हैं।", "Удары и сейвы используют оригинальный темп игры."],
  settings:['Configurações','Settings','Configuración','Paramètres','Einstellungen','Impostazioni','设置','الإعدادات','सेटिंग्स','Настройки'],
  language:['Idioma','Language','Idioma','Langue','Sprache','Lingua','语言','اللغة','भाषा','Язык'],
  access:['Acessibilidade','Accessibility','Accesibilidad','Accessibilité','Barrierefreiheit','Accessibilità','无障碍','إمكانية الوصول','सुलभता','Доступность'],
