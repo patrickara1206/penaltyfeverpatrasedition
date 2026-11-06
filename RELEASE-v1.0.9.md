@@ -1,10 +1,12 @@
 # Na Marca · v1.0.9
 
-## Correção de cobranças, uniformes e números
+## Campo integral da v1.0.6
 
-Física, movimentos, velocidade, temporização, mira e decisão do goleiro restaurados aos ajustes exatos da v1.0.6 (c82ee75), conforme solicitado. A comparação cobre os programas nativos, o bloco completo de ajustes e os parâmetros enviados pelo lançador. Uniformes mantêm as poses originais com sombreamento discreto; números vetoriais recebem contorno para leitura sobre listras, sem redesenhar ou reposicionar os glifos.
+O arquivo completo do campo (match.swf) voltou a ser idêntico, byte por byte, ao da v1.0.6 aprovada (c82ee75). Isso inclui física, reações, animações, temporização, uniformes, números e rotinas visuais internas, sem os filtros e ajustes posteriores. Não é apenas uma comparação das funções de trajetória.
 
-Nenhuma outra funcionalidade foi alterada. A tag original e os pacotes anteriores são preservados; o ZIP principal da release recebe a correção.
+A configuração do Ruffle, a dificuldade e os parâmetros do lançador também coincidem com aquela versão. Menus, identidade externa Na Marca, elencos, escudos e recursos externos permanecem na v1.0.9. O campo volta ao visual da v1.0.6, inclusive seus 12 anúncios.
+
+SHA-256 do campo: `0a68bb21b6eb7d06bdc06dd75a255462bbdf2eb5db1411c9619644a2aa070187`.
 
 Nova identidade em verde, azul, amarelo e branco, mantendo a partida aprovada da v1.0.6: física original, gramado, torcida, números das camisas e placar.
 

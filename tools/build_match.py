@@ -61,20 +61,12 @@ def uniform_details(owner,shirt,keeper=False):
  for key in ['_x','_y','_rotation','_xscale','_yscale']:
   out+=copy(path+'.'+key,owner+'.'+shirt+'.'+key)
  return out
-skin+=P('_root.ppNumberOutline')+b''.join(P(v) for v in reversed([0x101D22,0.9,1.4,1.4,2,1,False,False]))+P(8)+P('flash.filters.GlowFilter')+b'\x40\x1d'
-skin+=P('_root.ppNumberFilters')+get('_root.ppNumberOutline')+P(1)+b'\x42\x1d'
-skin+=P('_root.ppShirtShade')+b''.join(P(v) for v in reversed([1,90,0x091B23,0.22,2,2,1,1,True,False,False]))+P(11)+P('flash.filters.DropShadowFilter')+b'\x40\x1d'
-skin+=P('_root.ppShirtFilters')+get('_root.ppShirtShade')+P(1)+b'\x42\x1d'
-
 def jersey_number(side):
  # Keep the original vector glyph and its authored per-frame transforms.
  # Replaced actor instances must be stopped again on the chosen glyph frame.
  series=get('_root.serija_shuteva')+P(13)+b'\x3f'
  frame=(P(1)+series+b'\x47') if side=='home' else (P(13)+series+b'\x0b')
- b=invoke('_root.igr.brojka','gotoAndStop',[frame])+b'\x17'+put('_root.igr.brojka._visible',1)
- # Native timeline glyph, with a thin contrasting outline on striped shirts.
- b+=member('_root.igr.brojka','filters','@_root.ppNumberFilters')
- return b
+ return invoke('_root.igr.brojka','gotoAndStop',[frame])+b'\x17'+put('_root.igr.brojka._visible',1)
 
 # Recolor after each actor timeline change, rather than before it. The old
 # onEnterFrame-only hook ran before gotoAndStop replaced the shirt instances.
@@ -91,7 +83,6 @@ def recolor_side(side):
  b+=invoke('_root.igr.unipruge','gotoAndStop',[frame])+b'\x17'
  number=get('_root.serija_shuteva')+P(10)+b'\x3f'+P(2)+b'\x47'
  b+=jersey_number(side)
- b+=member('_root.igr.dres1','filters','@_root.ppShirtFilters')
  for var,path,param in [('BojaDresa1','dres1','c1'),('BojaUniPruga','unipruge','c2'),('BojaBroja','brojka','number'),('BojaShortsaICarapa','shorts','shorts')]:
   b+=color('_root.'+var,'_root.igr.'+path)+call('_root.'+var,'setRGB',[('_root.pp_'+side+'_'+param,)])
  return b
@@ -139,24 +130,18 @@ def shot(side):
  a+=call('_root','ppPaintShots',[])
  return a+call('flash.external.ExternalInterface','call',['patrasShot',('_root.serija_shuteva',),1 if side=='home' else 0,('_root.gol',),('_root.igr_golovi',),('_root.komp_golovi',)])
 shot_away=shot('away');patches[78]=shot('home')
-def copy_changed(path,source):return guarded(get(path)+get(source)+b'\x49\x12',copy(path,source))
-score=copy_changed('_root.ppBrand.ppNameHome.text','_root.pp_home')+copy_changed('_root.ppBrand.ppNameAway.text','_root.pp_away')
-score+=copy_changed('_root.ppBrand.ppScoreHome.text','_root.igr_golovi')+copy_changed('_root.ppBrand.ppScoreAway.text','_root.komp_golovi')
+score=copy('_root.ppBrand.ppNameHome.text','_root.pp_home')+copy('_root.ppBrand.ppNameAway.text','_root.pp_away')
+score+=copy('_root.ppBrand.ppScoreHome.text','_root.igr_golovi')+copy('_root.ppBrand.ppScoreAway.text','_root.komp_golovi')
 score+=assign('_root.ppBrand.ppTurnLabel.text',get('_root.serija_shuteva')+P(1)+b'\x47')
 score+=member('_root.your_shot_klip','_visible',0)+member('_root.opponents_shot_klip','_visible',0)
-# ppPrompt is initialized empty; no per-frame text reset.
+score+=put('_root.ppBrand.ppPrompt.text','')
 score+=copy('_root.ppBrand.ppAttackLabel._visible','_root.sutIgraca')
 score+=assign('_root.ppBrand.ppDefendLabel._visible',get('_root.sutIgraca')+b'\x12')
 cheer=put('_root.ppGoalCelebrated',1)
 cheer+=guarded(get('_root.sutIgraca'),assign('_root.ppHomeCheerUntil',b'\x34'+P(3200)+b'\x47'))
 cheer+=guarded(get('_root.sutIgraca')+b'\x12',assign('_root.ppAwayCheerUntil',b'\x34'+P(3200)+b'\x47'))
 cheer=guarded(get('_root.gol'),guarded(get('_root.ppGoalCelebrated')+b'\x12',cheer))
-save_cheer=put('_root.ppSaveCelebrated',1)
-save_cheer+=guarded(get('_root.sutIgraca'),assign('_root.ppAwayCheerUntil',b'\x34'+P(2800)+b'\x47'))
-save_cheer+=guarded(get('_root.sutIgraca')+b'\x12',assign('_root.ppHomeCheerUntil',b'\x34'+P(2800)+b'\x47'))
-save_condition=get('_root.hitLopta')+get('_root.uRuci')+b'\x11'
-save_cheer=guarded(save_condition,guarded(get('_root.ppSaveCelebrated')+b'\x12',save_cheer))
-body=repaint+score+cheer+save_cheer+call('_root','ppAnimateStadium',[])+b'\0'
+body=repaint+score+cheer+call('_root','ppAnimateStadium',[])+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
 # Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
@@ -213,7 +198,7 @@ patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flas
 patches[101]+=copy('_root.trajanjeSuta','_root.pp_pace')+put('_root.timerSuta',350)
 hide_target=member('_root.meta2','_visible',0)+call('_root.meta2','stop',[])
 hide_target+=member('_root.meta','_visible',0)+call('Mouse','show',[])
-patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)+put('_root.ppSaveCelebrated',0)
+patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)
 for f in [102,103,105,106]:patches[f]=repaint
 
 # Callback reports user score, CPU score; original turn resolution reaches frame 82.
