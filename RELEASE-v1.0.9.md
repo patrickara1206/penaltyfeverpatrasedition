@@ -1,8 +1,14 @@
 # Na Marca · v1.0.9
 
+## Correção de cobranças e defesas
+
+Restaurados os programas originais completos de preparação, mouse, corrida, mira, decisão do goleiro, trajetória, colisão e escala da bola. Removidas as interferências de velocidade, mira e temporização adicionadas por esta edição. O ajuste de intervalo que cortava a animação foi retirado das configurações; as preferências antigas continuam compatíveis. Visual, uniformes, gramado, torcida, placar, anúncios, elencos, agenda e carregamento sob demanda foram mantidos.
+
+O teste compara byte a byte as seis fases nativas e rejeita intervenções extras nos controles. A tag original e os pacotes anteriores são preservados; o ZIP principal da release recebe a correção.
+
 Nova identidade em verde, azul, amarelo e branco, mantendo a partida aprovada da v1.0.6: física original, gramado, torcida, números das camisas e placar.
 
-- Modo Fácil: o goleiro adversário escolhe um salto aleatório; mantém-se o programa original de trajetória, colisão e rebote.
+- Dificuldade: usa a progressão nativa do clássico, sem forçar a mira do goleiro nem mudar a velocidade da bola.
 - Menus sem pré-carregar os dois motores WebAssembly e o catálogo inteiro de imagens incorporadas. Preparação do mesmo confronto reaproveitada; superfícies estáticas e textos de placar evitam trabalho redundante.
 - Elencos históricos para as 489 participações em Copas de 1930 a 2022; 88 elencos das edições recentes incluídas. Os dados se referem ao elenco da edição, sem afirmar que todos entraram em campo.
 - 438 elencos de clubes documentados, com 14.909 nomes. Em 209 clubes, a última disputa localizada nos calendários consultados fornece a ordem dos cobradores que continuam no elenco. Os demais jogadores não recebem uma ordem presumida.

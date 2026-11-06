@@ -7,6 +7,6 @@ const builder=fs.readFileSync(__dirname+'/build_match.py','utf8');
 assert(builder.includes('0x20B969')&&builder.includes('0xE74B4B'));
 assert(builder.includes('0xE74636')&&builder.includes('0xF29A28'));
 assert(builder.includes("put(path+'._y',346)"));
-assert(builder.includes('speedhook+repaint+hide_target'));
-console.log('PASS v1.0.6: original physics byte equality; green/red attempts; distinct keeper colors; lower-right prompt; hidden defense target');
+assert(!builder.includes('speedhook')&&!builder.includes('easy_aim')&&!builder.includes('hide_target'));
+console.log('PASS: original flight actions; green/red attempts; distinct keeper colors; lower-right prompt; native defense target');
 

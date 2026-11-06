@@ -2,8 +2,8 @@
   "version": "1.0.9",
   "name": "Na Marca",
   "baseline": "c82ee75",
-  "checkedAt": "2026-11-05",
-  "matchSha256": "47a8d0364a36e6f9fd9a8198ea906eb6d73eb643d4f4d352605e493f9bcd9fc2",
+  "checkedAt": "2026-11-06",
+  "matchSha256": "9693cce3f32b84d4cf5ba60084f67873c99c58b26695ebf13c193d390b85bc6b",
   "testsPassed": [
     "test-v106.cjs",
     "test-stadium-animation.cjs",
@@ -16,7 +16,8 @@
     "test-quick-select.cjs",
     "test-edition.cjs",
     "test-v104.cjs",
-    "test-visual-assets.py"
+    "test-visual-assets.py",
+    "test-classic-controls.cjs"
   ],
   "browserChecks": [
     "home and quick selection",
@@ -33,5 +34,16 @@
     "No benchmark across all computers",
     "Direct file URL testing blocked by browser policy; HTTP match and portable loader logic tested"
   ],
-  "productionBranch": "v1.0.9"
+  "productionBranch": "v1.0.9",
+  "controlCorrection": {
+    "nativePhases": [
+      101,
+      102,
+      103,
+      104,
+      105,
+      106
+    ],
+    "verification": "Original actions byte-for-byte and in order; cosmetic hooks do not alter physics, markers, mouse listeners or timers"
+  }
 }

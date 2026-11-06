@@ -18,6 +18,7 @@ jobs:
         run: |
           node tools/test-v109.cjs
           node tools/test-v106.cjs
+          node tools/test-classic-controls.cjs
           node tools/test-stadium-animation.cjs
           node tools/test-v106-motion.cjs
           node tools/test-match-bridge.cjs

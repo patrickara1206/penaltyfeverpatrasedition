@@ -150,9 +150,9 @@ save_cheer=guarded(save_condition,guarded(get('_root.ppSaveCelebrated')+b'\x12',
 body=repaint+score+cheer+save_cheer+call('_root','ppAnimateStadium',[])+b'\0'
 fn=b'\0'+struct.pack('<HH',0,len(body))+body
 skin+=P('_root.ppBrand.onEnterFrame')+b'\x9b\x05\x00'+fn+b'\x1d'
-# Defaults keep old launchers compatible. Front-end ranges: speed 8..17,
-# level 0..3.9 (marker timing), keeper 0..100 (following probability).
-for field,value in [('pp_speed',12),('pp_level',1),('pp_keeper',30),('pp_pace',75),('pp_round_label','RODADA'),('pp_attack_label','SUA VEZ'),('pp_defend_label','ADVERSARIO'),('pp_home_number',16777215),('pp_away_number',16777215)]:
+# Difficulty uses the classic round input. Flight, keeper decisions and timers
+# are owned exclusively by the original shot actions below.
+for field,value in [('pp_level',1),('pp_round_label','RODADA'),('pp_attack_label','SUA VEZ'),('pp_defend_label','ADVERSARIO'),('pp_home_number',16777215),('pp_away_number',16777215)]:
  skin+=guarded(get('_root.'+field)+b'\x12',put('_root.'+field,value))
 skin+=copy('_root.runda','_root.pp_level')
 skin+=guarded(get('_root.pp_lang')+b'\x12',put('_root.pp_lang','pt'))
@@ -184,32 +184,10 @@ for key,clip in [('attack','ppAttackLabel'),('defend','ppDefendLabel'),('round',
   skin+=assign(path+'._x',x)+put(path+'._y',346)
 skin+=call('flash.external.ExternalInterface','call',['patrasReady'])
 patches[75]=skin
-# A shooter's setup is frame101 (zero-based). Change the CPU speed both at
-# target-preview setup and at final trajectory setup in frame104, whose native
-# script resets pocbrzina to12. Recompute dependent target coordinates.
-scale=get('_root.pp_speed')+P(12)+b'\x0d'
-change=assign('_root.dex',get('_root.dex')+scale+b'\x0c')+assign('_root.dey',get('_root.dey')+scale+b'\x0c')+copy('_root.pocbrzina','_root.pp_speed')
-travel=invoke('Math','floor',[(get('_root.yBelaTacka')+get('_root.golLinija')+b'\x0b'+invoke('Math','abs',[('_root.dey',)])+b'\x0d')])
-change+=assign('_root.brojFrejmovaLopte',travel)
-count=get('_root.brojFrejmovaLopte')+P(1)+b'\x0b'
-change+=assign('_root.meta2._x',get('_root.osaGola')+count+get('_root.dex')+b'\x0c\x47')
-height=get('_root.maksvisina')+invoke('Math','sin',[get('_root.omega')+count+b'\x0c'+get('_root.faktorbrojaca')+b'\x0c'])+b'\x0c'
-change+=assign('_root.meta2._y',get('_root.yBelaTacka')+count+get('_root.dey')+b'\x0c\x47'+height+b'\x0b')
-speedhook=guarded(get('_root.sutIgraca')+b'\x12',change)
-# Greater pp_keeper increases the original precise-following branch, without
-# replacing its dive animations or the human aiming controls.
-keepercondition=invoke('Math','random',[])+P(100)+b'\x0c'+get('_root.pp_keeper')+b'\x48'
-keeper=guarded(get('_root.sutIgraca'),guarded(keepercondition,put('_root.odlukaOdbrana',-1)))
-easy_aim=put('_root.odlukaOdbrana',1)
-easy_aim+=assign('_root.xRukavica',get('_root.osaGola')+invoke('Math','random',[])+P(.5)+b'\x0b'+get('_root.sirinaGola')+P(2.5)+b'\x0c\x0c\x47')
-easy_aim+=assign('_root.yRukavica',get('_root.golLinija')+invoke('Math','random',[])+get('_root.visinaGola')+b'\x0c\x0b')
-easy_aim=guarded(get('_root.pp_easy')+P(1)+b'\x49',guarded(get('_root.sutIgraca'),easy_aim))
-keeper+=easy_aim
-patches[101]=speedhook+keeper+refresh+call('_root','ppPaintShots',[])+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),('_root.pp_speed',)])
-patches[101]+=copy('_root.trajanjeSuta','_root.pp_pace')+put('_root.timerSuta',350)
-hide_target=member('_root.meta2','_visible',0)+call('_root.meta2','stop',[])
-hide_target+=member('_root.meta','_visible',0)+call('Mouse','show',[])
-patches[104]=speedhook+repaint+hide_target+put('_root.ppGoalCelebrated',0)+put('_root.ppSaveCelebrated',0)
+# Cosmetic hooks run after each unmodified native action. They never rewrite
+# ball velocity, glove coordinates, marker state, mouse listeners or shot timers.
+patches[101]=repaint+call('_root','ppPaintShots',[])+call('flash.external.ExternalInterface','call',['patrasTurn',('_root.serija_shuteva',),('_root.sutIgraca',),12])
+patches[104]=repaint+put('_root.ppGoalCelebrated',0)+put('_root.ppSaveCelebrated',0)
 for f in [102,103,105,106]:patches[f]=repaint
 
 # Callback reports user score, CPU score; original turn resolution reaches frame 82.
@@ -237,10 +215,6 @@ while pos<len(D):
  s=pos;v=struct.unpack_from('<H',D,pos)[0];pos+=2;t=v>>6;n=v&63
  if n==63:n=struct.unpack_from('<I',D,pos)[0];pos+=4
  pos+=n
- if t==12 and frame==104:
-  # Easy AI commits to a random dive, even after an automatic late kick.
-  # Original trajectory setup and the flight/collision action stay untouched.
-  out+=tag(12,easy_aim+b'\0')
  if t==12 and frame==105:
   # Preserve the classic flight, rebound and keeper collision program byte-for-byte.
   payload=D[pos-n:pos]

@@ -17,14 +17,21 @@ def main():
   assert z.testzip()is None
   assert 'NA MARCA'in z.read('Na-Marca-v1.0.9/app/index.html').decode('utf8')
  ref=request('GET','/git/ref/tags/'+TAG)
- if ref and ref['object']['sha']!=sha:raise RuntimeError('Existing tag belongs to another commit; preserved')
+ # Hotfixes update the portable asset and release notes without rewriting tags.
+ updated=bool(ref and ref['object']['sha']!=sha)
  release=request('GET','/releases/tags/'+TAG)
  if release is None:release=request('POST','/releases',{'tag_name':TAG,'target_commitish':sha,'name':'Na Marca · '+TAG,'body':Path('RELEASE-v1.0.9.md').read_text(encoding='utf8')+'\n\nCódigo: `'+sha+'`\n\nSHA-256: `'+digest+'`','draft':False,'prerelease':False,'make_latest':'true'})
  existing={a['name']:a for a in release['assets']}
  for name,data,mime in [(file.name,blob,'application/zip'),('SHA256-v1.0.9.txt',(digest+'  '+file.name+'\n').encode(),'text/plain')]:
   if name in existing:
-   assert existing[name]['size']==len(data),'Asset already exists with different content; preserved'
-   continue
+   previous=existing[name]
+   if previous.get('digest')=='sha256:'+hashlib.sha256(data).hexdigest():continue
+   # Renaming is reversible and preserves every previously published byte.
+   stem,extension=name.rsplit('.',1)
+   request('PATCH','/releases/assets/'+str(previous['id']),{'name':stem+'-anterior-'+str(previous['id'])+'.'+extension})
   request('POST',release['upload_url'].split('{')[0]+'?name='+name,data,mime)
+ if updated:
+  body='**Pacote corrigido:** [baixar ZIP atual](https://github.com/'+REPO+'/releases/download/'+TAG+'/'+file.name+'). Código atual: ['+sha[:7]+'](https://github.com/'+REPO+'/tree/'+sha+'). A tag original e os arquivos anteriores foram preservados.\n\n'+Path('RELEASE-v1.0.9.md').read_text(encoding='utf8')+'\n\nSHA-256 do ZIP atual: `'+digest+'`'
+  request('PATCH','/releases/'+str(release['id']),{'body':body})
  print(release['html_url'],digest)
 if __name__=='__main__':main()
