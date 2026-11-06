@@ -226,8 +226,15 @@ def build_stadium(call, put, P, get):
     rect(193, 4, 29, 40, 0x1C3C2E)
     rect(193, 4, 29, 2, 0xE8CB79)
     clip='_root.ppBrand'
-    text('ppNameHome', '', 17, 5, 109, 18, 10, 0xF4F6FC, 9200)
-    text('ppNameAway', '', 17, 25, 109, 18, 10, 0xF4F6FC, 9201)
+    text('ppNameHome', '', 35, 5, 91, 18, 10, 0xF4F6FC, 9200)
+    text('ppNameAway', '', 35, 25, 91, 18, 10, 0xF4F6FC, 9201)
+    # Small team crests use the same embedded bitmaps as the waving flags.
+    for side,yy in [('home',7),('away',27)]:
+        path='_root.ppBrand.ppScoreCrest'+side
+        out.extend(P('_root.ppScoreBitmap')+P('pf_'+side+'_crest')+P(1)+get('flash.display.BitmapData')+P('loadBitmap')+b'\x52\x1d')
+        out.extend(call('_root.ppBrand','createEmptyMovieClip',['ppScoreCrest'+side,9210+(side=='away')]))
+        out.extend(call(path,'attachBitmap',[('_root.ppScoreBitmap',),1]))
+        out.extend(put(path+'._x',17)+put(path+'._y',yy)+put(path+'._xscale',22)+put(path+'._yscale',22))
     text('ppScoreHome', '0', 193, 4, 29, 20, 13, 0xE8CB79, 9202)
     centered('ppScoreHome')
     text('ppScoreAway', '0', 193, 24, 29, 20, 13, 0xE8CB79, 9203)

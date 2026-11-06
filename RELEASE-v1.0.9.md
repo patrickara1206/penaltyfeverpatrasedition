@@ -1,12 +1,13 @@
 # Na Marca · v1.0.9
 
-## Campo integral da v1.0.6
+## Escudos, tela cheia opcional e números dos cobradores
 
-O arquivo completo do campo (match.swf) voltou a ser idêntico, byte por byte, ao da v1.0.6 aprovada (c82ee75). Isso inclui física, reações, animações, temporização, uniformes, números e rotinas visuais internas, sem os filtros e ajustes posteriores. Não é apenas uma comparação das funções de trajetória.
+- Partidas do dia: escudos com os nomes menores embaixo; aliases conciliam nomes da agenda com o catálogo local.
+- Placar no Ruffle: escudos proporcionais à esquerda dos nomes.
+- Configurações: preferência persistente para iniciar o player em tela cheia, com entrada pedida no clique de início da partida; o navegador pode recusar e o botão manual continua disponível.
+- Número da camisa vinculado ao mesmo cobrador documentado que aparece na tela (por exemplo, Arrascaeta 10). Dígitos vetoriais acompanham a pose original.
 
-A configuração do Ruffle, a dificuldade e os parâmetros do lançador também coincidem com aquela versão. Menus, identidade externa Na Marca, elencos, escudos e recursos externos permanecem na v1.0.9. O campo volta ao visual da v1.0.6, inclusive seus 12 anúncios.
-
-SHA-256 do campo: `0a68bb21b6eb7d06bdc06dd75a255462bbdf2eb5db1411c9619644a2aa070187`.
+Física, reações e animações dos atores seguem a v1.0.6. O SWF agora difere apenas nos trechos gráficos que inicializam escudos e imprimem números; os demais registros e as ações nativas são comparados com c82ee75 pelos testes. A configuração e os parâmetros de dificuldade do Ruffle permanecem iguais.
 
 Nova identidade em verde, azul, amarelo e branco, mantendo a partida aprovada da v1.0.6: física original, gramado, torcida, números das camisas e placar.
 

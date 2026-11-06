@@ -61,12 +61,43 @@ def uniform_details(owner,shirt,keeper=False):
  for key in ['_x','_y','_rotation','_xscale','_yscale']:
   out+=copy(path+'.'+key,owner+'.'+shirt+'.'+key)
  return out
+NUMBER_DRAW=b''
 def jersey_number(side):
- # Keep the original vector glyph and its authored per-frame transforms.
- # Replaced actor instances must be stopped again on the chosen glyph frame.
+ global NUMBER_DRAW
+ # Native number clip supplies each pose. Only its printed digits are replaced.
  series=get('_root.serija_shuteva')+P(13)+b'\x3f'
  frame=(P(1)+series+b'\x47') if side=='home' else (P(13)+series+b'\x0b')
- return invoke('_root.igr.brojka','gotoAndStop',[frame])+b'\x17'+put('_root.igr.brojka._visible',1)
+ b=invoke('_root.igr.brojka','gotoAndStop',[frame])+b'\x17'
+ path='_root.igr.ppRealNumber'
+ b+=guarded(get(path)+b'\x12',call('_root.igr','createEmptyMovieClip',['ppRealNumber',9801]))
+ array='_root.pp_'+side+'_shirtNumbers'
+ idx=get('_root.serija_shuteva')+get(array+'.length')+b'\x3f'
+ b+=assign('_root.ppCurrentNumber',get(array)+idx+b'\x4e')
+ # Small vector strokes avoid device-font loading and support all shirt numbers.
+ segments=[((0,0),(5,0)),((5,0),(5,5)),((5,5),(5,10)),((0,10),(5,10)),((0,5),(0,10)),((0,0),(0,5)),((0,5),(5,5))]
+ masks=[63,6,91,79,102,109,125,7,127,111]
+ draw=call(path,'clear',[])+call(path,'lineStyle',[1.6,('_root.ppNumberInk',),100])
+ for place in [10,1]:
+  digit=invoke('Math','floor',[get('_root.ppCurrentNumber')+P(10)+b'\x0d']) if place==10 else get('_root.ppCurrentNumber')+P(10)+b'\x3f'
+  part=assign('_root.ppDigit',digit)
+  part+=put('_root.ppDigitX',-6 if place==10 else 1)
+  if place==1:part+=guarded(get('_root.ppCurrentNumber')+P(10)+b'\x48',put('_root.ppDigitX',-3))
+  for number in range(10):
+   glyph=b''
+   for k,(start,end) in enumerate(segments):
+    if masks[number]&(1<<k):
+     x1=get('_root.ppDigitX')+P(start[0])+b'\x47';x2=get('_root.ppDigitX')+P(end[0])+b'\x47'
+     glyph+=invoke(path,'moveTo',[x1,P(start[1]-7)])+b'\x17'+invoke(path,'lineTo',[x2,P(end[1]-7)])+b'\x17'
+   part+=guarded(get('_root.ppDigit')+P(number)+b'\x49',glyph)
+  if place==10:part=guarded(get('_root.ppCurrentNumber')+P(10)+b'\x48\x12',part)
+  draw+=guarded(P(0)+get('_root.ppCurrentNumber')+b'\x48',part)
+ draw+=copy(path+'.ppPrintedNumber','_root.ppCurrentNumber')
+ NUMBER_DRAW=draw
+ b+=copy('_root.ppNumberInk','_root.pp_'+side+'_number')
+ b+=guarded(get(path+'.ppPrintedNumber')+get('_root.ppCurrentNumber')+b'\x49\x12',call('_root','ppDrawNumber',[]))
+ for key in ['_x','_y','_rotation','_xscale','_yscale']:b+=copy(path+'.'+key,'_root.igr.brojka.'+key)
+ b+=put('_root.igr.brojka._visible',0)
+ return b
 
 # Recolor after each actor timeline change, rather than before it. The old
 # onEnterFrame-only hook ran before gotoAndStop replaced the shirt instances.
@@ -87,6 +118,8 @@ def recolor_side(side):
   b+=color('_root.'+var,'_root.igr.'+path)+call('_root.'+var,'setRGB',[('_root.pp_'+side+'_'+param,)])
  return b
 refresh=guarded(get('_root.sutIgraca'),recolor_side('home'))+guarded(get('_root.sutIgraca')+b'\x12',recolor_side('away'))
+fn=b'\0'+struct.pack('<HH',0,len(NUMBER_DRAW)+1)+NUMBER_DRAW+b'\0'
+skin+=P('_root.ppDrawNumber')+b'\x9b\x05\x00'+fn+b'\x1d'
 refresh+=put('_root.ppKeeperColor',0xE74636)
 refresh+=guarded(get('_root.sutIgraca'),put('_root.ppKeeperColor',0xF29A28))
 for var,path,value in [('ppKeeperShirt','dres_i',('_root.ppKeeperColor',)),('ppKeeperHair','glava_i.kosa_i',0x49301F)]:
@@ -176,6 +209,9 @@ for key,clip in [('attack','ppAttackLabel'),('defend','ppDefendLabel'),('round',
  else:
   x=P(580)+width+b'\x0b'
   skin+=assign(path+'._x',x)+put(path+'._y',346)
+for side in ['home','away']:
+ skin+=guarded(get('_root.pp_'+side+'_numbers')+b'\x12',put('_root.pp_'+side+'_numbers','0'))
+ skin+=assign('_root.pp_'+side+'_shirtNumbers',invoke('_root.pp_'+side+'_numbers','split',[',']))
 skin+=call('flash.external.ExternalInterface','call',['patrasReady'])
 patches[75]=skin
 # A shooter's setup is frame101 (zero-based). Change the CPU speed both at

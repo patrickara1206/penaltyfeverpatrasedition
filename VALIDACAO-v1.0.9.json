@@ -3,7 +3,7 @@
   "name": "Na Marca",
   "baseline": "c82ee75",
   "checkedAt": "2026-11-06",
-  "matchSha256": "0a68bb21b6eb7d06bdc06dd75a255462bbdf2eb5db1411c9619644a2aa070187",
+  "matchSha256": "a9d1498dca048125c9d260a2af9b2e62931bc88447e4e71796616938d0879484",
   "testsPassed": [
     "test-v106.cjs",
     "test-stadium-animation.cjs",
@@ -26,7 +26,10 @@
     "natural 0-3 match result and return button",
     "dated 22-fixture snapshot with Brasilia times",
     "live fixture query: 22 results, no console errors",
-    "web Ruffle with on-demand WASM and documented crests in Easy mode"
+    "web Ruffle with on-demand WASM and documented crests in Easy mode",
+    "Daily crests and small names in dated fixture cards",
+    "Ruffle auto fullscreen preference enabled and match entered fullscreen",
+    "Scorebug team crests and documented shirt number rendered"
   ],
   "limits": [
     "No certification of all regulations, crests or rosters",
@@ -37,7 +40,7 @@
   "productionBranch": "v1.0.9",
   "controlCorrection": {
     "baseline": "c82ee75",
-    "verification": "Entire match.swf byte-identical to approved v1.0.6, plus matching runtime config, difficulty and launcher parameters",
+    "verification": "v1.0.6 physics and actor timelines unchanged; only graphic initialization and cosmetic number hook differ",
     "scope": [
       "entire approved v1.0.6 field runtime",
       "latest menus and external data preserved"
